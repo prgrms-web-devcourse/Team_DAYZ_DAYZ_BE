@@ -15,6 +15,8 @@ public class BaseEntity extends BaseTimeEntity{
     @Column(name = "updated_by")
     private String updatedBy;
 
+    private boolean useFlag;
+
     public void changeCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
