@@ -19,7 +19,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-@Table(name = "onedayclasses")
+@Table(name = "onedayclass")
 public class OneDayClass {
 
     @Id

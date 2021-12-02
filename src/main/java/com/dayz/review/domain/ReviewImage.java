@@ -1,5 +1,7 @@
-package com.dayz.onedayclass.domain;
+package com.dayz.review.domain;
 
+
+import com.dayz.common.entity.BaseEntity;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,21 +15,21 @@ import lombok.Getter;
 
 @Entity
 @Getter
-@Table(name = "onedayclass_iamges")
-public class OneDayClassImage {
+@Table(name = "post_image")
+public class ReviewImage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "image_uuid", nullable = false)
-    private UUID image_Uuid;
+    private UUID imageUuid;
 
-    @Column(name = "sequence", nullable = false)
+    @Column(name = "sequence")
     private int sequence;
-    
+
     @ManyToOne
-    @JoinColumn(name = "onedayclass_id")
-    private OneDayClass oneDayClass;
+    @JoinColumn(name = "review_id")
+    private Review review;
 
 }

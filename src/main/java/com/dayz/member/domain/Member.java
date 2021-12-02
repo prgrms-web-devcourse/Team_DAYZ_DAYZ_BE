@@ -14,7 +14,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import lombok.Getter;
@@ -53,11 +52,5 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "auth", nullable = false)
     private Auth auth;
-
-    @Column(name = "nickname", nullable = false, length = 50)
-    private String nickname;
-
-    @OneToMany(mappedBy = "member")
-    private List<Follow> follows = new ArrayList<>();
 
 }

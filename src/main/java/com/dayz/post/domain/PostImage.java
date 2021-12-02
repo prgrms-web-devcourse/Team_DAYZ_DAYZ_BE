@@ -1,12 +1,15 @@
 package com.dayz.post.domain;
 
 import com.dayz.common.entity.BaseEntity;
+import com.dayz.member.domain.Member;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 
@@ -24,5 +27,9 @@ public class PostImage extends BaseEntity {
 
     @Column(name="sequence")
     private int sequence;
+
+    @ManyToOne
+    @JoinColumn(name="post_id")
+    private Post post;
 
 }

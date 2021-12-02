@@ -1,5 +1,6 @@
 package com.dayz.follow.domain;
 
+import com.dayz.atelier.domain.Atelier;
 import com.dayz.common.entity.BaseEntity;
 import com.dayz.member.domain.Member;
 import javax.persistence.Column;
@@ -25,5 +26,9 @@ public class Follow extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @ManyToOne
+    @JoinColumn(name = "atelier_id")
+    private Atelier atelier;
 
 }

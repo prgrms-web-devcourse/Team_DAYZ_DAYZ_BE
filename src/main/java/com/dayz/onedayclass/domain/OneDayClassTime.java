@@ -33,4 +33,8 @@ public class OneDayClassTime extends BaseEntity {
     @Column(name = "status", length = 20, nullable = false)
     private String status;
 
+    @ManyToOne
+    @JoinColumn(name = "onedayclass_id")
+    private OneDayClass oneDayClass;
+
 }

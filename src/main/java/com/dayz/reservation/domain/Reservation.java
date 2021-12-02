@@ -2,6 +2,8 @@ package com.dayz.reservation.domain;
 
 import com.dayz.common.entity.BaseEntity;
 import com.dayz.common.enums.ReservationStatue;
+import com.dayz.member.domain.Member;
+import com.dayz.onedayclass.domain.OneDayClassTime;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +12,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import lombok.Getter;
@@ -43,5 +47,13 @@ public class Reservation extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private ReservationStatue status;
+
+    @ManyToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    @ManyToOne
+    @JoinColumn(name = "onedayclass_time_id")
+    private OneDayClassTime oneDayClassTime;
 
 }
