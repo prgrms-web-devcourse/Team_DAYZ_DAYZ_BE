@@ -41,17 +41,8 @@ public class OneDayClass {
     @Column(name = "max_people_number", nullable = false)
     private int max_people_number;
 
-    @Column(name = "use_flag")
-    private boolean use_flag;
-
-    @OneToMany(mappedBy = "onedayclass")
-    private List<Curriculum> curriculums = new ArrayList<>();
-
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-
-    @OneToMany(mappedBy = "onedayclass")
-    private List<Review> reviews = new ArrayList<>();
 
 }
