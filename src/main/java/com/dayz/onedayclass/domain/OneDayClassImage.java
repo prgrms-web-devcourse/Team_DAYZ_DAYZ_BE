@@ -26,11 +26,4 @@ public class OneDayClassImage {
     @Column(name = "sequence", nullable = false)
     private int sequence;
 
-    @Column(name = "use_flag")
-    private boolean use_flag;
-
-    @ManyToOne
-    @JoinColumn(name = "onedayclass_id")
-    private OneDayClass oneDayClass;
-
 }

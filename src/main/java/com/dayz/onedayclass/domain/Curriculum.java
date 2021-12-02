@@ -25,7 +25,4 @@ public class Curriculum extends BaseEntity {
     @Column(name = "content", length = 1000, nullable = false)
     private String content;
 
-    @Column(name = "use_flag")
-    private boolean use_flag;
-
 }
