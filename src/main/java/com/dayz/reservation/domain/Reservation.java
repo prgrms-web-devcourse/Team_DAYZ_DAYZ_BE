@@ -1,7 +1,7 @@
 package com.dayz.reservation.domain;
 
 import com.dayz.common.entity.BaseEntity;
-import com.dayz.common.enums.ReservationStatue;
+import com.dayz.common.enums.ReservationStatus;
 import com.dayz.member.domain.Member;
 import com.dayz.onedayclass.domain.OneDayClassTime;
 import java.time.LocalDateTime;
@@ -46,7 +46,7 @@ public class Reservation extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private ReservationStatue status;
+    private ReservationStatus status;
 
     @ManyToOne
     @JoinColumn(name = "member_id")

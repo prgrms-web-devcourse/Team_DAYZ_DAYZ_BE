@@ -3,15 +3,14 @@ package com.dayz.common.enums;
 import lombok.Getter;
 
 @Getter
-public enum Auth {
+public enum TimeStatus {
 
-    USER("USER"),
-    ATELIER("ATELIER"),
-    ADMIN("ADMIN");
+    PROCESS("PROCESS"),
+    CLOSED("CLOSED");
 
     private String value;
 
-    Auth(String value) {
+    TimeStatus(String value) {
         this.value = value;
     }
 

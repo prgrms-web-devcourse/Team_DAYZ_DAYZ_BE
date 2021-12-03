@@ -1,9 +1,12 @@
 package com.dayz.onedayclass.domain;
 
 import com.dayz.common.entity.BaseEntity;
+import com.dayz.common.enums.TimeStatus;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,8 +33,8 @@ public class OneDayClassTime extends BaseEntity {
     @Column(name = "end_at", nullable = false)
     private Long end_at;
 
-    @Column(name = "status", length = 20, nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private TimeStatus status;
 
     @ManyToOne
     @JoinColumn(name = "onedayclass_id")

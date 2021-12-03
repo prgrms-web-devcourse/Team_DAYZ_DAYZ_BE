@@ -3,15 +3,14 @@ package com.dayz.common.enums;
 import lombok.Getter;
 
 @Getter
-public enum Auth {
+public enum ReservationStatus {
 
-    USER("USER"),
-    ATELIER("ATELIER"),
-    ADMIN("ADMIN");
+    ACCEPTED("ACCEPTED"),
+    CANCELED("CANCELED");
 
     private String value;
 
-    Auth(String value) {
+    ReservationStatus(String value) {
         this.value = value;
     }
 
