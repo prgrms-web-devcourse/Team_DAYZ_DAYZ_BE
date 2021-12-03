@@ -1,7 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.6.1'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'org.asciidoctor.convert' version '1.5.8'
+    id "org.asciidoctor.jvm.convert" version "3.3.2"
     id 'java'
 }
 
@@ -49,3 +49,24 @@ asciidoctor {
     inputs.dir snippetsDir
     dependsOn test
 }
+
+bootJar {
+    dependsOn asciidoctor
+    from("${asciidoctor.outputDir}")
+    into 'static/docs'
+}
+
+asciidoctor.doFirst {
+    delete file('src/main/resources/static/docs')
+}
+
+task copyDocument(type: Copy) {
+    dependsOn asciidoctor
+    from file("build/docs/asciidoc")
+    into file("src/main/resources/static/docs")
+}
+
+build {
+    dependsOn copyDocument
+}
+

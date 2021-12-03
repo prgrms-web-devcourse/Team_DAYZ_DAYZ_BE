@@ -1,0 +1,18 @@
+ifndef::snippets[]
+:snippets: ./build/generated-snippets
+endif::[]
+
+== Comment
+
+=== 댓글 생성
+
+==== /api/
+
+.CURL
+include::{snippets}/comment-save/curl-request.adoc[]
+
+.Request
+include::{snippets}/comment-save/http-request.adoc[]
+
+.Response
+include::{snippets}/comment-save/http-response.adoc[]
