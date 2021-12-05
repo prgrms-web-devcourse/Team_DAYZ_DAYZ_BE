@@ -40,5 +40,17 @@ spring:
     web:
       pageable:
         default-page-size: 20
+cloud:
+  aws:
+    credentials:
+      accessKey: AKIASRDLDX3TH6XLQR5M
+      secretKey: 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
+    s3:
+      bucket: team-dayz-s3
+      bucket_path: https://team-dayz-s3.s3.ap-northeast-2.amazonaws.com/ # 이미지 저장 시 이 부분을 불러와서 URL 파싱을 진행한다.
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
 logging.level:
   org.hibernate.SQL: debug
