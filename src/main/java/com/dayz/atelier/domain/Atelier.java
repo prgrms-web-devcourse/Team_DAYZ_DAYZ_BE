@@ -6,9 +6,12 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,7 +32,8 @@ public class Atelier extends BaseEntity {
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    @Embedded
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
     private Address address;
 
     @Column(name = "intro", length = 1000)
@@ -48,7 +52,7 @@ public class Atelier extends BaseEntity {
         Atelier atelier = new Atelier();
         atelier.setId(id);
         atelier.setName(name);
-        atelier.setAddress(address);
+        atelier.changeAddress(address);
         atelier.setIntro(intro);
         atelier.setWorkTime(workTime);
         atelier.setBusinessNumber(businessNumber);
@@ -60,13 +64,17 @@ public class Atelier extends BaseEntity {
     public static Atelier of(String name, Address address, String intro, WorkTime workTime, String businessNumber, UUID profileImageUuid) {
         Atelier atelier = new Atelier();
         atelier.setName(name);
-        atelier.setAddress(address);
+        atelier.changeAddress(address);
         atelier.setIntro(intro);
         atelier.setWorkTime(workTime);
         atelier.setBusinessNumber(businessNumber);
         atelier.setProfileImageUuid(profileImageUuid);
 
         return atelier;
+    }
+
+    public void changeAddress(Address address) {
+        this.setAddress(address);
     }
 
 }

@@ -5,10 +5,12 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
@@ -44,7 +46,8 @@ public class Member extends BaseEntity {
     @JoinColumn(name = "permission_id")
     private Permission permission;
 
-    @Embedded
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
     private Address address;
 
     public static Member of(Long id,
@@ -62,6 +65,7 @@ public class Member extends BaseEntity {
         member.setProviderId(providerId);
         member.setProfileImageUUID(profileImageUUID);
         member.setPermission(permission);
+        member.changeAddress(address);
 
         return member;
     }
@@ -79,8 +83,13 @@ public class Member extends BaseEntity {
         member.setProviderId(providerId);
         member.setProfileImageUUID(profileImageUUID);
         member.setPermission(permission);
+        member.changeAddress(address);
 
         return member;
+    }
+
+    public void changeAddress(Address address) {
+        this.setAddress(address);
     }
 
 }
