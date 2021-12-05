@@ -1,7 +1,6 @@
 package com.dayz.onedayclass.domain;
 
 import com.dayz.common.entity.BaseEntity;
-import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,10 +9,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter(AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "curriculum")
 public class Curriculum extends BaseEntity {
 
@@ -30,5 +34,35 @@ public class Curriculum extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "onedayclass_id")
     private OneDayClass oneDayClass;
+
+    public static Curriculum of(Long id,
+            int step,
+            String content,
+            OneDayClass oneDayClass
+    ) {
+        Curriculum curriculum = new Curriculum();
+        curriculum.setId(id);
+        curriculum.setStep(step);
+        curriculum.setContent(content);
+        curriculum.changeOneDayClass(oneDayClass);
+
+        return curriculum;
+    }
+
+    public static Curriculum of(int step,
+            String content,
+            OneDayClass oneDayClass
+    ) {
+        Curriculum curriculum = new Curriculum();
+        curriculum.setStep(step);
+        curriculum.setContent(content);
+        curriculum.changeOneDayClass(oneDayClass);
+
+        return curriculum;
+    }
+
+    public void changeOneDayClass(OneDayClass oneDayClass) {
+        this.setOneDayClass(oneDayClass);
+    }
 
 }

@@ -1,5 +1,6 @@
 package com.dayz.atelier.domain;
 
+import com.dayz.common.entity.BaseEntity;
 import com.dayz.member.domain.Address;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -8,20 +9,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
-@Table(
-        name = "atelier",
-        uniqueConstraints = {
-                @UniqueConstraint(name = "UK_atelier_name", columnNames = {"name"}),
-                @UniqueConstraint(name = "UK_member_business_number", columnNames = {"business_number"})
-        })
-public class Atelier {
+@Setter(AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "atelier")
+public class Atelier extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,5 +43,30 @@ public class Atelier {
 
     @Column(name = "profile_img_uuid")
     private UUID profileImageUuid;
+
+    public static Atelier of(Long id, String name, Address address, String intro, WorkTime workTime, String businessNumber, UUID profileImageUuid) {
+        Atelier atelier = new Atelier();
+        atelier.setId(id);
+        atelier.setName(name);
+        atelier.setAddress(address);
+        atelier.setIntro(intro);
+        atelier.setWorkTime(workTime);
+        atelier.setBusinessNumber(businessNumber);
+        atelier.setProfileImageUuid(profileImageUuid);
+
+        return atelier;
+    }
+
+    public static Atelier of(String name, Address address, String intro, WorkTime workTime, String businessNumber, UUID profileImageUuid) {
+        Atelier atelier = new Atelier();
+        atelier.setName(name);
+        atelier.setAddress(address);
+        atelier.setIntro(intro);
+        atelier.setWorkTime(workTime);
+        atelier.setBusinessNumber(businessNumber);
+        atelier.setProfileImageUuid(profileImageUuid);
+
+        return atelier;
+    }
 
 }

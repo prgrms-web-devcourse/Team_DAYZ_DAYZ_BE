@@ -10,11 +10,16 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Entity
 @Getter
+@Setter(AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name="comment")
 public class Comment extends BaseEntity{
 
@@ -28,5 +33,18 @@ public class Comment extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
+
+    public static Comment of(Long id, String content, Post post) {
+        Comment comment = new Comment();
+        comment.setId(id);
+        comment.setContent(content);
+        comment.changePost(post);
+
+        return comment;
+    }
+
+    public void changePost(Post post) {
+        this.setPost(post);
+    }
 
 }

@@ -11,10 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter(AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "review")
 public class Review extends BaseEntity {
 
@@ -38,4 +43,47 @@ public class Review extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "onedayclass_id")
     private OneDayClass oneDayClass;
+
+    public static Review of(Long id,
+            String title,
+            String content,
+            int score,
+            Member member,
+            OneDayClass oneDayClass
+    ) {
+        Review review = new Review();
+        review.setId(id);
+        review.setTitle(title);
+        review.setContent(content);
+        review.setScore(score);
+        review.changeMember(member);
+        review.changeOneDayClass(oneDayClass);
+
+        return review;
+    }
+
+    public static Review of(String title,
+            String content,
+            int score,
+            Member member,
+            OneDayClass oneDayClass
+    ) {
+        Review review = new Review();
+        review.setTitle(title);
+        review.setContent(content);
+        review.setScore(score);
+        review.changeMember(member);
+        review.changeOneDayClass(oneDayClass);
+
+        return review;
+    }
+
+    public void changeMember(Member member) {
+        this.setMember(member);
+    }
+
+    public void changeOneDayClass(OneDayClass oneDayClass) {
+        this.setOneDayClass(oneDayClass);
+    }
+
 }

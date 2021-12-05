@@ -11,10 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
+@Setter(AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "follow")
 public class Follow extends BaseEntity {
 
@@ -30,5 +35,30 @@ public class Follow extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "atelier_id")
     private Atelier atelier;
+
+    public static Follow of(Long id, Member member, Atelier atelier) {
+        Follow follow = new Follow();
+        follow.setId(id);
+        follow.changeMember(member);
+        follow.changeAtelier(atelier);
+
+        return follow;
+    }
+
+    public static Follow of(Member member, Atelier atelier) {
+        Follow follow = new Follow();
+        follow.changeMember(member);
+        follow.changeAtelier(atelier);
+
+        return follow;
+    }
+
+    public void changeMember(Member member) {
+        this.setMember(member);
+    }
+
+    public void changeAtelier(Atelier atelier) {
+        this.setAtelier(atelier);
+    }
 
 }
