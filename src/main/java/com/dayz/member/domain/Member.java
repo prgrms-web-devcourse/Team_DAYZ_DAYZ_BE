@@ -1,56 +1,95 @@
 package com.dayz.member.domain;
 
 import com.dayz.common.entity.BaseEntity;
-import com.dayz.common.enums.Auth;
-import com.dayz.follow.domain.Follow;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Getter
-@Table(
-        name = "member",
-        uniqueConstraints = {
-            @UniqueConstraint(name = "UK_member_email", columnNames = {"email"}),
-            @UniqueConstraint(name = "UK_member_nickname", columnNames = {"nickname"})
-        }
-)
+@Setter(AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "member")
 public class Member extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "member_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 50)
-    private String name;
+    @Column(name = "name")
+    private String username;
 
-    @Column(name = "email", nullable = false, length = 100)
-    private String email;
+    @Column(name = "provider")
+    private String provider;
 
-    @Column(name = "password", nullable = false, length = 1000)
-    private String password;
+    @Column(name = "provider_id")
+    private String providerId;
 
-    @Column(name = "profile_img_uuid")
-    private UUID profileImageUuid;
+    @Column(name = "profile_image_uuid")
+    private UUID profileImageUUID;
 
-    @Embedded
+    @OneToOne(optional = false)
+    @JoinColumn(name = "permission_id")
+    private Permission permission;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
     private Address address;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "auth", nullable = false)
-    private Auth auth;
+    public static Member of(Long id,
+            String username,
+            String provider,
+            String providerId,
+            UUID profileImageUUID,
+            Permission permission,
+            Address address
+    ) {
+        Member member = new Member();
+        member.setId(id);
+        member.setUsername(username);
+        member.setProvider(provider);
+        member.setProviderId(providerId);
+        member.setProfileImageUUID(profileImageUUID);
+        member.setPermission(permission);
+        member.changeAddress(address);
+
+        return member;
+    }
+
+    public static Member of(String username,
+            String provider,
+            String providerId,
+            UUID profileImageUUID,
+            Permission permission,
+            Address address
+    ) {
+        Member member = new Member();
+        member.setUsername(username);
+        member.setProvider(provider);
+        member.setProviderId(providerId);
+        member.setProfileImageUUID(profileImageUUID);
+        member.setPermission(permission);
+        member.changeAddress(address);
+
+        return member;
+    }
+
+    public void changeAddress(Address address) {
+        this.setAddress(address);
+    }
 
 }
