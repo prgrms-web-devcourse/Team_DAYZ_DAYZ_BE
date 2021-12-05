@@ -5,6 +5,7 @@ import com.dayz.member.domain.Member;
 import com.dayz.onedayclass.domain.OneDayClass;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -36,11 +37,11 @@ public class Review extends BaseEntity {
     @Column(name = "score")
     private int score;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "onedayclass_id")
     private OneDayClass oneDayClass;
 

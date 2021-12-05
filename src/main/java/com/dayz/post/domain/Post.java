@@ -4,6 +4,7 @@ import com.dayz.common.entity.BaseEntity;
 import com.dayz.member.domain.Member;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,7 +30,7 @@ public class Post extends BaseEntity {
     @Column(name = "content", nullable = false, length = 1000)
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 

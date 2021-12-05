@@ -3,6 +3,7 @@ package com.dayz.onedayclass.domain;
 import com.dayz.common.entity.BaseEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +32,7 @@ public class Curriculum extends BaseEntity {
     @Column(name = "content", length = 1000, nullable = false)
     private String content;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "onedayclass_id")
     private OneDayClass oneDayClass;
 
