@@ -22,7 +22,7 @@ public class BaseEntity {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    private boolean useFlag;
+    private boolean useFlag = true;
 
     public void changeUseFlag(boolean useFlag) {
         this.useFlag = useFlag;
