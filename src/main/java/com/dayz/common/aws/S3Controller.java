@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class S3Controller {
 
     @Value("${cloud.aws.s3.bucket_path}")
-    private final String BUCKET_ADDRESS;
+    private String BUCKET_ADDRESS;
 
     private final AwsS3Service awsS3Service;
 
