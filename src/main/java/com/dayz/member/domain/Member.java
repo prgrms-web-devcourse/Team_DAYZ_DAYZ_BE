@@ -39,8 +39,8 @@ public class Member extends BaseEntity {
     @Column(name = "provider_id")
     private String providerId;
 
-    @Column(name = "profile_image_uuid")
-    private UUID profileImageUUID;
+    @Column(name = "profile_image_url")
+    private String profileImageUrl;
 
     @OneToOne(optional = false)
     @JoinColumn(name = "permission_id")
@@ -54,7 +54,7 @@ public class Member extends BaseEntity {
             String username,
             String provider,
             String providerId,
-            UUID profileImageUUID,
+            String profileImageUrl,
             Permission permission,
             Address address
     ) {
@@ -63,7 +63,7 @@ public class Member extends BaseEntity {
         member.setUsername(username);
         member.setProvider(provider);
         member.setProviderId(providerId);
-        member.setProfileImageUUID(profileImageUUID);
+        member.setProfileImageUrl(profileImageUrl);
         member.setPermission(permission);
         member.changeAddress(address);
 
@@ -73,7 +73,7 @@ public class Member extends BaseEntity {
     public static Member of(String username,
             String provider,
             String providerId,
-            UUID profileImageUUID,
+            String profileImageUrl,
             Permission permission,
             Address address
     ) {
@@ -81,7 +81,7 @@ public class Member extends BaseEntity {
         member.setUsername(username);
         member.setProvider(provider);
         member.setProviderId(providerId);
-        member.setProfileImageUUID(profileImageUUID);
+        member.setProfileImageUrl(profileImageUrl);
         member.setPermission(permission);
         member.changeAddress(address);
 

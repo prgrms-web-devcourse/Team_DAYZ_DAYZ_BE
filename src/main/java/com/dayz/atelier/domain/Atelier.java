@@ -2,6 +2,7 @@ package com.dayz.atelier.domain;
 
 import com.dayz.common.entity.BaseEntity;
 import com.dayz.member.domain.Address;
+import com.dayz.member.domain.Member;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -12,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -36,6 +38,9 @@ public class Atelier extends BaseEntity {
     @JoinColumn(name = "address_id")
     private Address address;
 
+    @Column(name = "address_detail", nullable = false)
+    private String detail;
+
     @Column(name = "intro", length = 1000)
     private String intro;
 
@@ -48,33 +53,47 @@ public class Atelier extends BaseEntity {
     @Column(name = "profile_img_uuid")
     private UUID profileImageUuid;
 
-    public static Atelier of(Long id, String name, Address address, String intro, WorkTime workTime, String businessNumber, UUID profileImageUuid) {
+    @OneToOne
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    public static Atelier of(Long id, String name, Address address, String detail, String intro, WorkTime workTime, String businessNumber,
+            UUID profileImageUuid, Member member) {
         Atelier atelier = new Atelier();
         atelier.setId(id);
         atelier.setName(name);
         atelier.changeAddress(address);
+        atelier.setDetail(detail);
         atelier.setIntro(intro);
         atelier.setWorkTime(workTime);
         atelier.setBusinessNumber(businessNumber);
         atelier.setProfileImageUuid(profileImageUuid);
+        atelier.changeMember(member);
 
         return atelier;
     }
 
-    public static Atelier of(String name, Address address, String intro, WorkTime workTime, String businessNumber, UUID profileImageUuid) {
+    public static Atelier of(String name, Address address, String detail, String intro, WorkTime workTime, String businessNumber,
+            UUID profileImageUuid, Member member) {
         Atelier atelier = new Atelier();
         atelier.setName(name);
         atelier.changeAddress(address);
+        atelier.setDetail(detail);
         atelier.setIntro(intro);
         atelier.setWorkTime(workTime);
         atelier.setBusinessNumber(businessNumber);
         atelier.setProfileImageUuid(profileImageUuid);
+        atelier.changeMember(member);
 
         return atelier;
     }
 
     public void changeAddress(Address address) {
         this.setAddress(address);
+    }
+
+    private void changeMember(Member member) {
+        this.setMember(member);
     }
 
 }
