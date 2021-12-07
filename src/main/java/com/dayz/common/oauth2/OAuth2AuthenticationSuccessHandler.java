@@ -1,10 +1,14 @@
 package com.dayz.common.oauth2;
 
+import com.dayz.common.dto.ApiResponse;
 import com.dayz.common.jwt.Jwt;
 import com.dayz.member.domain.Member;
 import com.dayz.member.service.MemberService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,10 +56,13 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
         return memberService.join(oAuth2User, registrationId);
     }
 
-    private String generateLoginSuccessJson(Member member) {
+    private String generateLoginSuccessJson(Member member) throws JsonProcessingException {
         String token = generateToken(member);
+        ObjectMapper mapper = new ObjectMapper();
+        ApiResponse<Map<String, String>> response = ApiResponse.ok(Map.of("token", token));
+        String responseString = mapper.writeValueAsString(response);
         log.debug("Jwt({}) created for oauth2 login user {}", token, member.getUsername());
-        return "{\"token\":\"" + token + "\", \"username\":\"" + member.getUsername() + "\", \"permission\":\"" + member.getPermission().getName() + "\"}";
+        return responseString;
     }
 
     private String generateToken(Member member) {
