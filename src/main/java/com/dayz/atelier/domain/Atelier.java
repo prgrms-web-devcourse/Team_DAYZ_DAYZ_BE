@@ -3,6 +3,7 @@ package com.dayz.atelier.domain;
 import com.dayz.common.entity.BaseEntity;
 import com.dayz.member.domain.Address;
 import com.dayz.member.domain.Member;
+import com.dayz.onedayclass.domain.OneDayClass;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -13,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
@@ -51,14 +53,22 @@ public class Atelier extends BaseEntity {
     private String businessNumber;
 
     @Column(name = "profile_img_uuid")
-    private UUID profileImageUuid;
+    private String profileImageUrl;
 
     @OneToOne
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public static Atelier of(Long id, String name, Address address, String detail, String intro, WorkTime workTime, String businessNumber,
-            UUID profileImageUuid, Member member) {
+    public static Atelier of(Long id,
+            String name,
+            Address address,
+            String detail,
+            String intro,
+            WorkTime workTime,
+            String businessNumber,
+            String profileImageUrl,
+            Member member
+    ) {
         Atelier atelier = new Atelier();
         atelier.setId(id);
         atelier.setName(name);
@@ -67,14 +77,21 @@ public class Atelier extends BaseEntity {
         atelier.setIntro(intro);
         atelier.setWorkTime(workTime);
         atelier.setBusinessNumber(businessNumber);
-        atelier.setProfileImageUuid(profileImageUuid);
+        atelier.setProfileImageUrl(profileImageUrl);
         atelier.changeMember(member);
 
         return atelier;
     }
 
-    public static Atelier of(String name, Address address, String detail, String intro, WorkTime workTime, String businessNumber,
-            UUID profileImageUuid, Member member) {
+    public static Atelier of(String name,
+            Address address,
+            String detail,
+            String intro,
+            WorkTime workTime,
+            String businessNumber,
+            String profileImageUrl,
+            Member member
+    ) {
         Atelier atelier = new Atelier();
         atelier.setName(name);
         atelier.changeAddress(address);
@@ -82,7 +99,7 @@ public class Atelier extends BaseEntity {
         atelier.setIntro(intro);
         atelier.setWorkTime(workTime);
         atelier.setBusinessNumber(businessNumber);
-        atelier.setProfileImageUuid(profileImageUuid);
+        atelier.setProfileImageUrl(profileImageUrl);
         atelier.changeMember(member);
 
         return atelier;
