@@ -40,9 +40,11 @@ public final class Jwt {
     if (expirySeconds > 0) {
       builder.withExpiresAt(new Date(now.getTime() + expirySeconds * 1_000L));
     }
+    builder.withClaim("id", claims.id);
+    builder.withClaim("providerId", claims.providerId);
     builder.withClaim("username", claims.username);
     builder.withArrayClaim("roles", claims.roles);
-    builder.withClaim("providerId", claims.providerId);
+
     return builder.sign(algorithm);
   }
 
@@ -71,16 +73,22 @@ public final class Jwt {
   }
 
   static public class Claims {
+    Long id;
+    String providerId;
     String username;
     String[] roles;
     Date iat;
     Date exp;
-    Long id;
-    String providerId;
 
     private Claims() {/*no-op*/}
 
     Claims(DecodedJWT decodedJWT) {
+      Claim id = decodedJWT.getClaim("id");
+      if (!id.isNull())
+        this.id = id.asLong();
+      Claim providerId = decodedJWT.getClaim("providerId");
+      if (!id.isNull())
+        this.providerId = providerId.asString();
       Claim username = decodedJWT.getClaim("username");
       if (!username.isNull())
         this.username = username.asString();
@@ -90,32 +98,26 @@ public final class Jwt {
       }
       this.iat = decodedJWT.getIssuedAt();
       this.exp = decodedJWT.getExpiresAt();
-      Claim id = decodedJWT.getClaim("id");
-      if (!id.isNull())
-        this.id = id.asLong();
-      Claim providerId = decodedJWT.getClaim("providerId");
-      if (!id.isNull())
-        this.providerId = id.asString();
     }
 
     public static Claims from(Long id, String providerId, String username, String[] roles) {
       Claims claims = new Claims();
-      claims.username = username;
-      claims.roles = roles;
       claims.id = id;
       claims.providerId = providerId;
+      claims.username = username;
+      claims.roles = roles;
 
       return claims;
     }
 
     public Map<String, Object> asMap() {
       Map<String, Object> map = new HashMap<>();
+      map.put("id", id);
+      map.put("providerId", providerId);
       map.put("username", username);
       map.put("roles", roles);
       map.put("iat", iat());
       map.put("exp", exp());
-      map.put("id", "id");
-      map.put("providerId", "providerId");
       return map;
     }
 

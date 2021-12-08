@@ -21,8 +21,8 @@ public class MemberController {
     private final MemberService memberService;
 
     @ResponseStatus(HttpStatus.OK)
-    @GetMapping(path = "/info", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ApiResponse<ReadMemberInfoResponse> me(@AuthenticationPrincipal JwtAuthentication authentication) {
+    @GetMapping(path = "/info", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResponse<ReadMemberInfoResponse> me() {
         ReadMemberInfoResponse memberInfo = memberService.getMemberInfo();
 
         return ApiResponse.<ReadMemberInfoResponse>ok(memberInfo);

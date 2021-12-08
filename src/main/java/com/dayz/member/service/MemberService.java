@@ -31,12 +31,11 @@ public class MemberService {
 
     @Transactional(readOnly = true)
     public ReadMemberInfoResponse getMemberInfo() {
-        JwtAuthentication authentication = (JwtAuthentication) SecurityContextHolder.getContext().getAuthentication();
-
-        Member foundMember = memberRepository.findById(authentication.getId())
+        JwtAuthentication principal = (JwtAuthentication)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Member foundMember = memberRepository.findById(principal.getId())
                 .orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
 
-        return memberConverter.convertToReadMemberInfoResponse(foundMember, authentication.getToken());
+        return memberConverter.convertToReadMemberInfoResponse(foundMember, principal.getToken());
     }
 
     @Transactional(readOnly = true)

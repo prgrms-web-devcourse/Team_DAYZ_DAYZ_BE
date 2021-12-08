@@ -66,7 +66,7 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
     }
 
     private String generateToken(Member member) {
-        return jwt.sign(Jwt.Claims.from(member.getUsername(), new String[]{member.getPermission().getName()}, member.getProviderId()));
+        return jwt.sign(Jwt.Claims.from(member.getId(), member.getProviderId(), member.getUsername(), new String[]{member.getPermission().getName()}));
     }
 
 }
