@@ -75,7 +75,8 @@ public final class Jwt {
     String[] roles;
     Date iat;
     Date exp;
-    String id;
+    Long id;
+    String providerId;
 
     private Claims() {/*no-op*/}
 
@@ -91,14 +92,19 @@ public final class Jwt {
       this.exp = decodedJWT.getExpiresAt();
       Claim id = decodedJWT.getClaim("id");
       if (!id.isNull())
-        this.id = id.asString();
+        this.id = id.asLong();
+      Claim providerId = decodedJWT.getClaim("providerId");
+      if (!id.isNull())
+        this.providerId = id.asString();
     }
 
-    public static Claims from(String username, String[] roles, String id) {
+    public static Claims from(Long id, String providerId, String username, String[] roles) {
       Claims claims = new Claims();
       claims.username = username;
       claims.roles = roles;
       claims.id = id;
+      claims.providerId = providerId;
+
       return claims;
     }
 
@@ -109,6 +115,7 @@ public final class Jwt {
       map.put("iat", iat());
       map.put("exp", exp());
       map.put("id", "id");
+      map.put("providerId", "providerId");
       return map;
     }
 

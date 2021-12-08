@@ -1,5 +1,6 @@
 package com.dayz.member.domain;
 
+import com.dayz.atelier.domain.Atelier;
 import com.dayz.common.entity.BaseEntity;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -50,6 +51,9 @@ public class Member extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")
     private Address address;
+
+    @OneToOne(optional = false, mappedBy = "member")
+    private Atelier atelier;
 
     public static Member of(Long id,
             String username,

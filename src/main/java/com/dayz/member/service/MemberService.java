@@ -1,13 +1,19 @@
 package com.dayz.member.service;
 
+import com.dayz.common.enums.ErrorInfo;
+import com.dayz.common.exception.BusinessException;
+import com.dayz.common.jwt.JwtAuthentication;
+import com.dayz.member.converter.MemberConverter;
 import com.dayz.member.domain.Member;
 import com.dayz.member.domain.MemberRepository;
 import com.dayz.member.domain.Permission;
 import com.dayz.member.domain.PermissionRepository;
+import com.dayz.member.dto.ReadMemberInfoResponse;
 import java.util.Map;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +27,17 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final PermissionRepository permissionRepository;
+    private final MemberConverter memberConverter;
+
+    @Transactional(readOnly = true)
+    public ReadMemberInfoResponse getMemberInfo() {
+        JwtAuthentication authentication = (JwtAuthentication) SecurityContextHolder.getContext().getAuthentication();
+
+        Member foundMember = memberRepository.findById(authentication.getId())
+                .orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
+
+        return memberConverter.convertToReadMemberInfoResponse(foundMember, authentication.getToken());
+    }
 
     @Transactional(readOnly = true)
     public Optional<Member> findByUsername(String username) {
