@@ -17,6 +17,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.util.Assert;
 
 @Entity
 @Getter
@@ -58,6 +59,12 @@ public class Member extends BaseEntity {
             Permission permission,
             Address address
     ) {
+        Assert.notNull(id,"id must not be null!");
+        Assert.notNull(username,"username must not be null!");
+        Assert.notNull(provider,"provider must not be null!");
+        Assert.notNull(providerId,"providerId must not be null!");
+        Assert.notNull(permission,"permission must not be null!");
+
         Member member = new Member();
         member.setId(id);
         member.setUsername(username);
@@ -77,6 +84,11 @@ public class Member extends BaseEntity {
             Permission permission,
             Address address
     ) {
+        Assert.notNull(username,"username must not be null!");
+        Assert.notNull(provider,"provider must not be null!");
+        Assert.notNull(providerId,"providerId must not be null!");
+        Assert.notNull(permission,"permission must not be null!");
+
         Member member = new Member();
         member.setUsername(username);
         member.setProvider(provider);
