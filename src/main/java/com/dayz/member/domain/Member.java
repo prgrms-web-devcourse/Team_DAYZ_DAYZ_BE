@@ -1,5 +1,6 @@
 package com.dayz.member.domain;
 
+import com.dayz.atelier.domain.Atelier;
 import com.dayz.common.entity.BaseEntity;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -17,6 +18,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.util.Assert;
 
 @Entity
 @Getter
@@ -50,6 +52,9 @@ public class Member extends BaseEntity {
     @JoinColumn(name = "address_id")
     private Address address;
 
+    @OneToOne(optional = false, mappedBy = "member")
+    private Atelier atelier;
+
     public static Member of(Long id,
             String username,
             String provider,
@@ -58,6 +63,12 @@ public class Member extends BaseEntity {
             Permission permission,
             Address address
     ) {
+        Assert.notNull(id,"id must not be null!");
+        Assert.notNull(username,"username must not be null!");
+        Assert.notNull(provider,"provider must not be null!");
+        Assert.notNull(providerId,"providerId must not be null!");
+        Assert.notNull(permission,"permission must not be null!");
+
         Member member = new Member();
         member.setId(id);
         member.setUsername(username);
@@ -77,6 +88,11 @@ public class Member extends BaseEntity {
             Permission permission,
             Address address
     ) {
+        Assert.notNull(username,"username must not be null!");
+        Assert.notNull(provider,"provider must not be null!");
+        Assert.notNull(providerId,"providerId must not be null!");
+        Assert.notNull(permission,"permission must not be null!");
+
         Member member = new Member();
         member.setUsername(username);
         member.setProvider(provider);
