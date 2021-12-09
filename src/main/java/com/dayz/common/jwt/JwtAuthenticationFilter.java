@@ -4,6 +4,7 @@ import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toList;
 import static org.apache.logging.log4j.util.Strings.isNotEmpty;
 
+import com.dayz.member.service.MemberService;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -31,9 +32,12 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 
   private final Jwt jwt;
 
-  public JwtAuthenticationFilter(String headerKey, Jwt jwt) {
+  private final MemberService memberService;
+
+  public JwtAuthenticationFilter(String headerKey, Jwt jwt, MemberService memberService) {
     this.headerKey = headerKey;
     this.jwt = jwt;
+    this.memberService = memberService;
   }
 
   @Override
@@ -57,7 +61,8 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
           if (isNotEmpty(username) && authorities.size() > 0) {
             JwtAuthenticationToken authentication =
               new JwtAuthenticationToken(new JwtAuthentication(id, providerId, token, username), null, authorities);
-            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+//            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            authentication.setDetails(memberService.findById(id));
             SecurityContextHolder.getContext().setAuthentication(authentication);
           }
         } catch (Exception e) {

@@ -2,6 +2,7 @@ package com.dayz.member.controller;
 
 import com.dayz.common.dto.ApiResponse;
 import com.dayz.common.jwt.JwtAuthentication;
+import com.dayz.common.jwt.JwtUtil;
 import com.dayz.member.dto.ReadMemberInfoResponse;
 import com.dayz.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +21,12 @@ public class MemberController {
 
     private final MemberService memberService;
 
+    private final JwtUtil jwtUtil;
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(path = "/info", produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<ReadMemberInfoResponse> me() {
         ReadMemberInfoResponse memberInfo = memberService.getMemberInfo();
-
         return ApiResponse.<ReadMemberInfoResponse>ok(memberInfo);
     }
 

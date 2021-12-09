@@ -46,6 +46,13 @@ public class MemberService {
     }
 
     @Transactional(readOnly = true)
+    public Member findById(Long memberId) {
+        Assert.notNull(memberId,"memberId must be provided.");
+
+        return memberRepository.findById(memberId).orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
+    }
+
+    @Transactional(readOnly = true)
     public Optional<Member> findByProviderAndProviderId(String provider, String providerId) {
         Assert.notNull(provider,"provider must be provided.");
         Assert.notNull(providerId,"providerId must be provided.");
