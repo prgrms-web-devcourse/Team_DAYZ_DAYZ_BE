@@ -1,12 +1,10 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: test
-    password: 1234
-    url: jdbc:mysql://localhost:3306/dayz?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    driver-class-name: org.h2.Driver
+    username: ${DB_ID}
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}
   jpa:
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: false
     generate-ddl: true
     hibernate:
@@ -25,8 +23,8 @@ spring:
         registration:
           kakao:
             client-name: kakao
-            client-id: 98ba936f16138a377eeaaf5102b4448f
-            client-secret: XqMTJkk7WujNWwezoJqEyXoLGH3jVwKK
+            client-id: ${KAKAO_RESTAPI_KEY}
+            client-secret: ${KAKAO_CLIENT_SECRETE}
             scope: profile_nickname, profile_image
             redirect-uri: "http://localhost:8080/login/oauth2/code/{registrationId}"
             authorization-grant-type: authorization_code
@@ -40,11 +38,11 @@ spring:
 cloud:
   aws:
     credentials:
-      accessKey: aaa
-      secretKey: aaa
+      accessKey: ${AWS_ACCESS_KEY_ID}
+      secretKey: ${AWS_SECRET_ACCESS_KEY}
     s3:
-      bucket: team-dayz-s3
-      bucket_path: https://team-dayz-s3.s3.ap-northeast-2.amazonaws.com/ # 이미지 저장 시 이 부분을 불러와서 URL 파싱을 진행한다.
+      bucket: ${BUCKET_NAME}
+      bucket_path: ${BUCKET_PATH} # 이미지 저장 시 이 부분을 불러와서 URL 파싱을 진행한다.
     region:
       static: ap-northeast-2
     stack:
@@ -54,7 +52,7 @@ server:
 jwt:
   header: Authorization
   issuer: dayz
-  client-secret: EENY5W0eegTf1naQB2eDeyCLl5kRS2b8xa5c4qLdS0hmVjtbvo8tOyhPMcAmtPuQ
+  client-secret: ${JWT_CLIENT_SECRETE}
   expiry-seconds: 60
 logging.level:
   org.hibernate.SQL: debug

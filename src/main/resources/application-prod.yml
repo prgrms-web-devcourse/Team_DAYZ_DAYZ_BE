@@ -43,8 +43,8 @@ cloud:
       accessKey: ${AWS_ACCESS_KEY_ID}
       secretKey: ${AWS_SECRET_ACCESS_KEY}
     s3:
-      bucket: team-dayz-s3
-      bucket_path: https://team-dayz-s3.s3.ap-northeast-2.amazonaws.com/ # 이미지 저장 시 이 부분을 불러와서 URL 파싱을 진행한다.
+      bucket: ${BUCKET_NAME}
+      bucket_path: ${BUCKET_PATH} # 이미지 저장 시 이 부분을 불러와서 URL 파싱을 진행한다.
     region:
       static: ap-northeast-2
     stack:
