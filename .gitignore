@@ -38,6 +38,3 @@ out/
 
 ### envFile
 .env
-
-### resource
-src/main/resources/application.yml
