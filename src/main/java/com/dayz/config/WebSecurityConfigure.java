@@ -101,8 +101,9 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
             .authorizeRequests()
-            .antMatchers("/api/v1/login").permitAll()
-            .antMatchers("/api/v1/*").hasAnyRole("USER", "ATELIER","ADMIN")
+//            .antMatchers("/api/v1/login").permitAll()
+//            .antMatchers("/api/v1/*").hasAnyRole("USER", "ATELIER","ADMIN")
+            .anyRequest().permitAll()
             .and()
             /**
              * formLogin, csrf, headers, http-basic, rememberMe, logout filter 비활성화
