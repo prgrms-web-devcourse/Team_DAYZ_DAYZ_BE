@@ -27,7 +27,7 @@ class CategoryServiceTest {
     private CategoryService categoryService;
 
     @Test
-    @DisplayName("모든 카테고리 목록을 조회 힐 수 있다.")
+    @DisplayName("모든 카테고리 목록을 조회 할 수 있다.")
     void getAllCategoryList_success() {
         // given
         List<Category> categories = List.of(
