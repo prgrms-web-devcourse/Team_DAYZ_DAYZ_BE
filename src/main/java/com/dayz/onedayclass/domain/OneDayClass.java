@@ -1,5 +1,6 @@
 package com.dayz.onedayclass.domain;
 
+import com.dayz.atelier.domain.Atelier;
 import com.dayz.category.domain.Category;
 import com.dayz.common.entity.BaseEntity;
 import com.dayz.review.domain.Review;
@@ -52,6 +53,10 @@ public class OneDayClass extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "atelier_id")
+    private Atelier atelier;
 
     public static OneDayClass of(Long id, String name, String intro, int price, Long requiredTime, int maxPeopleNumber, Category category) {
         OneDayClass oneDayClass = new OneDayClass();
