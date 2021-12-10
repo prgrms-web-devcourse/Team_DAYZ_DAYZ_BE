@@ -28,8 +28,8 @@ import org.springframework.util.Assert;
 public class Member extends BaseEntity {
 
     @Id
-    @Column(name = "member_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
     private Long id;
 
     @Column(name = "name")

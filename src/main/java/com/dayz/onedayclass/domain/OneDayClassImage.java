@@ -24,10 +24,11 @@ public class OneDayClassImage {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "onedayclass_image_id")
     private Long id;
 
-    @Column(name = "image_uuid", nullable = false)
-    private UUID imageUuid;
+    @Column(name = "image_file_name", nullable = false)
+    private String imageFileName;
 
     @Column(name = "sequence", nullable = false)
     private int sequence;
@@ -37,13 +38,13 @@ public class OneDayClassImage {
     private OneDayClass oneDayClass;
 
     public static OneDayClassImage of(Long id,
-            UUID imageUuid,
+            String imageFileName,
             int sequence,
             OneDayClass oneDayClass
     ) {
         OneDayClassImage oneDayClassImage = new OneDayClassImage();
         oneDayClassImage.setId(id);
-        oneDayClassImage.setImageUuid(imageUuid);
+        oneDayClassImage.setImageFileName(imageFileName);
         oneDayClassImage.setSequence(sequence);
         oneDayClassImage.setOneDayClass(oneDayClass);
 
@@ -51,12 +52,12 @@ public class OneDayClassImage {
     }
 
     public static OneDayClassImage of(
-            UUID imageUuid,
+            String imageFileName,
             int sequence,
             OneDayClass oneDayClass
     ) {
         OneDayClassImage oneDayClassImage = new OneDayClassImage();
-        oneDayClassImage.setImageUuid(imageUuid);
+        oneDayClassImage.setImageFileName(imageFileName);
         oneDayClassImage.setSequence(sequence);
         oneDayClassImage.setOneDayClass(oneDayClass);
 

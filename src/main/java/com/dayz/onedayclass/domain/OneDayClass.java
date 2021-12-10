@@ -30,6 +30,7 @@ public class OneDayClass {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "onedayclass_id")
     private Long id;
 
     @Column(name = "name", length = 50, nullable = false)

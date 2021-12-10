@@ -21,15 +21,16 @@ import lombok.Setter;
 @Getter
 @Setter(AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "post_image")
+@Table(name = "review_image")
 public class ReviewImage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "review_image_id")
     private Long id;
 
-    @Column(name = "image_uuid", nullable = false)
-    private UUID imageUuid;
+    @Column(name = "image_file_name", nullable = false)
+    private String imageFileName;
 
     @Column(name = "sequence")
     private int sequence;
@@ -39,25 +40,25 @@ public class ReviewImage extends BaseEntity {
     private Review review;
 
     public static ReviewImage of(Long id,
-            UUID imageUuid,
+            String imageFileName,
             int sequence,
             Review review
     ) {
         ReviewImage reviewImage = new ReviewImage();
         reviewImage.setId(id);
-        reviewImage.setImageUuid(imageUuid);
+        reviewImage.setImageFileName(imageFileName);
         reviewImage.setSequence(sequence);
         reviewImage.changeReview(review);
 
         return reviewImage;
     }
 
-    public static ReviewImage of(UUID imageUuid,
+    public static ReviewImage of(String imageFileName,
             int sequence,
             Review review
     ) {
         ReviewImage reviewImage = new ReviewImage();
-        reviewImage.setImageUuid(imageUuid);
+        reviewImage.setImageFileName(imageFileName);
         reviewImage.setSequence(sequence);
         reviewImage.changeReview(review);
 
