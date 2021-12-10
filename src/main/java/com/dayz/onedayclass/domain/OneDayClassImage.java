@@ -1,5 +1,6 @@
 package com.dayz.onedayclass.domain;
 
+import com.dayz.common.entity.BaseEntity;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @Setter(AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "onedayclass_iamge")
-public class OneDayClassImage {
+public class OneDayClassImage extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

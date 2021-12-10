@@ -1,6 +1,7 @@
 package com.dayz.onedayclass.domain;
 
 import com.dayz.category.domain.Category;
+import com.dayz.common.entity.BaseEntity;
 import com.dayz.review.domain.Review;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ import lombok.Setter;
 @Setter(AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "onedayclass")
-public class OneDayClass {
+public class OneDayClass extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
