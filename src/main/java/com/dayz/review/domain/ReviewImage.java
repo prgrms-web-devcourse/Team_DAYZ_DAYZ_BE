@@ -2,7 +2,6 @@ package com.dayz.review.domain;
 
 
 import com.dayz.common.entity.BaseEntity;
-import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;

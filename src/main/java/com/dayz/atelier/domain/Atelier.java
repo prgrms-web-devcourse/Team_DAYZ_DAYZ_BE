@@ -3,7 +3,6 @@ package com.dayz.atelier.domain;
 import com.dayz.common.entity.BaseEntity;
 import com.dayz.member.domain.Address;
 import com.dayz.member.domain.Member;
-import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -55,7 +54,8 @@ public class Atelier extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    public static Atelier of(Long id, String name, Address address, String detail, String intro, WorkTime workTime, String businessNumber, Member member) {
+    public static Atelier of(Long id, String name, Address address, String detail, String intro, WorkTime workTime, String businessNumber,
+            Member member) {
         Atelier atelier = new Atelier();
         atelier.setId(id);
         atelier.setName(name);

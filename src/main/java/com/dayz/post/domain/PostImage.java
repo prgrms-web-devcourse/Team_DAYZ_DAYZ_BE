@@ -1,7 +1,6 @@
 package com.dayz.post.domain;
 
 import com.dayz.common.entity.BaseEntity;
-import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -46,6 +45,10 @@ public class PostImage extends BaseEntity {
         postImage.setPost(post);
 
         return postImage;
+    }
+
+    public void changePost(Post post) {
+        this.setPost(post);
     }
 
 }
