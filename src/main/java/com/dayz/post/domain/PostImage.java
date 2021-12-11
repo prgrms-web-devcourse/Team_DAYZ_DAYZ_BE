@@ -1,6 +1,7 @@
 package com.dayz.post.domain;
 
 import com.dayz.common.entity.BaseEntity;
+import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,22 +28,25 @@ public class PostImage extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "image_uuid", nullable = false)
-    private UUID imageUuid;
+    @Column(name = "image_url", nullable = false)
+    private String imageUrl;
 
     @Column(name = "sequence")
     private int sequence;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Post post;
-
-    public static PostImage of(Long id, UUID imageUuid, int sequence, Post post) {
+    public static PostImage of(Long id, String imageUrl, int sequence) {
         PostImage postImage = new PostImage();
         postImage.setId(id);
-        postImage.setImageUuid(imageUuid);
+        postImage.setImageUrl(imageUrl);
         postImage.setSequence(sequence);
-        postImage.setPost(post);
+
+        return postImage;
+    }
+
+    public static PostImage of(String imageUrl, int sequence) {
+        PostImage postImage = new PostImage();
+        postImage.setImageUrl(imageUrl);
+        postImage.setSequence(sequence);
 
         return postImage;
     }
