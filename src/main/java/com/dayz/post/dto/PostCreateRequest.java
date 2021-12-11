@@ -12,16 +12,16 @@ import lombok.Setter;
 @Setter
 public class PostCreateRequest {
 
-//    @NotNull
+    @NotNull
     private String content;
 
-//    @NotNull
+    @NotNull
     private Member member;
 
-//    @NotNull
+    @NotNull
     private OneDayClass oneDayClass;
 
-//    @NotNull
+    @NotNull
     private List<PostImage> postImages;
 
 }
