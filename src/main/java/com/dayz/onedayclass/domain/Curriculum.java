@@ -24,6 +24,7 @@ public class Curriculum extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "curriculum_id")
     private Long id;
 
     @Column(name = "step", nullable = false)
