@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReadOneDayClassesByCategoryResult {
 
-    private Long classId;
+    private Long oneDayClassId;
 
     private String name;
 
@@ -20,7 +20,7 @@ public class ReadOneDayClassesByCategoryResult {
 
     public static ReadOneDayClassesByCategoryResult of(Long classId, String name, String intro, String imageUrl) {
         ReadOneDayClassesByCategoryResult readOneDayClassesByCategoryResult = new ReadOneDayClassesByCategoryResult();
-        readOneDayClassesByCategoryResult.setClassId(classId);
+        readOneDayClassesByCategoryResult.setOneDayClassId(classId);
         readOneDayClassesByCategoryResult.setName(name);
         readOneDayClassesByCategoryResult.setIntro(intro);
         readOneDayClassesByCategoryResult.setImageUrl(imageUrl);
