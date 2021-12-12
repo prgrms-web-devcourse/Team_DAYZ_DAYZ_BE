@@ -1,6 +1,5 @@
 package com.dayz.category.service;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -8,7 +7,7 @@ import static org.hamcrest.Matchers.*;
 import com.dayz.category.domain.Category;
 import com.dayz.category.domain.CategoryRepository;
 import com.dayz.category.dto.ReadAllCategoriesResponse;
-import com.dayz.category.dto.ReadAllCategoriesResponse.ReadAllCategoryResult;
+import com.dayz.category.dto.ReadAllCategoriesResponse.CategoryResult;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,7 +43,7 @@ class CategoryServiceTest {
 
         // then
         assertThat(allCategoryList.getCategories().size(), is(categories.size()));
-        assertThat(allCategoryList.getCategories().stream().map(ReadAllCategoryResult::getCategoryId), samePropertyValuesAs(categories.stream().map(Category::getId)));
+        assertThat(allCategoryList.getCategories().stream().map(CategoryResult::getCategoryId), samePropertyValuesAs(categories.stream().map(Category::getId)));
     }
 
 }

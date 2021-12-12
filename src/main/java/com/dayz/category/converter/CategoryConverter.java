@@ -2,6 +2,7 @@ package com.dayz.category.converter;
 
 import com.dayz.category.domain.Category;
 import com.dayz.category.dto.ReadAllCategoriesResponse;
+import com.dayz.category.dto.ReadAllCategoriesResponse.CategoryResult;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
@@ -17,8 +18,8 @@ public class CategoryConverter {
         );
     }
 
-    public ReadAllCategoriesResponse.ReadAllCategoryResult convertToReadAllCategoryResult(Category category) {
-        return ReadAllCategoriesResponse.ReadAllCategoryResult.of(category.getId(), category.getName());
+    public CategoryResult convertToReadAllCategoryResult(Category category) {
+        return CategoryResult.of(category.getId(), category.getName());
     }
 
 }

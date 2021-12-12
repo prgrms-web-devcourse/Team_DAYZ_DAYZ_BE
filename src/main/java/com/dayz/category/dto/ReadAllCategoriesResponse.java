@@ -12,9 +12,9 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReadAllCategoriesResponse {
 
-    private List<ReadAllCategoryResult> categories = new ArrayList<>();
+    private List<CategoryResult> categories = new ArrayList<>();
 
-    public static ReadAllCategoriesResponse of(List<ReadAllCategoryResult> categories) {
+    public static ReadAllCategoriesResponse of(List<CategoryResult> categories) {
         ReadAllCategoriesResponse readAllCategoriesResponse = new ReadAllCategoriesResponse();
         readAllCategoriesResponse.setCategories(categories);
 
@@ -24,18 +24,18 @@ public class ReadAllCategoriesResponse {
     @Getter
     @Setter(AccessLevel.PRIVATE)
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
-    public static class ReadAllCategoryResult {
+    public static class CategoryResult {
 
         private Long categoryId;
 
         private String name;
 
-        public static ReadAllCategoryResult of(Long categoryId, String name) {
-            ReadAllCategoryResult readAllCategoryResult = new ReadAllCategoryResult();
-            readAllCategoryResult.setCategoryId(categoryId);
-            readAllCategoryResult.setName(name);
+        public static CategoryResult of(Long categoryId, String name) {
+            CategoryResult categoryResult = new CategoryResult();
+            categoryResult.setCategoryId(categoryId);
+            categoryResult.setName(name);
 
-            return readAllCategoryResult;
+            return categoryResult;
         }
 
     }
