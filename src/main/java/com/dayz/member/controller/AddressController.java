@@ -22,9 +22,7 @@ public class AddressController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ApiResponse<ReadAllAddressResponse> addresses(@LoginMember Member member) {
-
-        Long id = member.getId();
+    public ApiResponse<ReadAllAddressResponse> addresses() {
         return ApiResponse.<ReadAllAddressResponse>ok(addressService.getAllAddresses());
     }
 
