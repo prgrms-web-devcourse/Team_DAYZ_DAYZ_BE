@@ -18,8 +18,8 @@ public class CategoryConverter {
         );
     }
 
-    public CategoryResult convertToReadAllCategoryResult(Category category) {
-        return CategoryResult.of(category.getId(), category.getName());
+    public ReadAllCategoriesResponse.CategoryResult convertToReadAllCategoryResult(Category category) {
+        return ReadAllCategoriesResponse.CategoryResult.of(category.getId(), category.getName());
     }
 
 }
