@@ -61,8 +61,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
           if (isNotEmpty(username) && authorities.size() > 0) {
             JwtAuthenticationToken authentication =
               new JwtAuthenticationToken(new JwtAuthentication(id, providerId, token, username), null, authorities);
-//            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            authentication.setDetails(memberService.findById(id));
+            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
           }
         } catch (Exception e) {
