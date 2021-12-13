@@ -1,27 +1,51 @@
 package com.dayz.post.dto;
 
-import com.dayz.member.domain.Member;
-import com.dayz.onedayclass.domain.OneDayClass;
-import com.dayz.post.domain.PostImage;
+import java.util.ArrayList;
 import java.util.List;
-import javax.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
+@Setter(AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostCreateRequest {
 
-    @NotNull
+    private List<PostImagesRequest> postImages = new ArrayList<>();
+
     private String content;
 
-    @NotNull
-    private Member member;
+    private Long atelierId;
 
-    @NotNull
-    private OneDayClass oneDayClass;
+    private Long oneDayClassId;
 
-    @NotNull
-    private List<PostImage> postImages;
+    public static PostCreateRequest of(String content, Long atelierId, Long oneDayClassId, List<PostImagesRequest> postImages) {
+        PostCreateRequest postCreateRequest = new PostCreateRequest();
+        postCreateRequest.setContent(content);
+        postCreateRequest.setAtelierId(atelierId);
+        postCreateRequest.setOneDayClassId(oneDayClassId);
+        postCreateRequest.setPostImages(postImages);
+
+        return postCreateRequest;
+    }
+
+    @Getter
+    @Setter(AccessLevel.PRIVATE)
+    @NoArgsConstructor(access = AccessLevel.PROTECTED)
+    public static class PostImagesRequest {
+
+        private String fileName;
+
+        private int sequence;
+
+        public static PostImagesRequest of(String fileName, int sequence) {
+            PostImagesRequest postImagesRequest = new PostImagesRequest();
+            postImagesRequest.setSequence(sequence);
+            postImagesRequest.setFileName(fileName);
+
+            return postImagesRequest;
+        }
+    }
 
 }

@@ -28,24 +28,24 @@ public class PostImage extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "image_url", nullable = false)
-    private String imageUrl;
+    @Column(name = "file_name", nullable = false)
+    private String fileName;
 
     @Column(name = "sequence")
     private int sequence;
 
-    public static PostImage of(Long id, String imageUrl, int sequence) {
+    public static PostImage of(Long id, String fileName, int sequence) {
         PostImage postImage = new PostImage();
         postImage.setId(id);
-        postImage.setImageUrl(imageUrl);
+        postImage.setFileName(fileName);
         postImage.setSequence(sequence);
 
         return postImage;
     }
 
-    public static PostImage of(String imageUrl, int sequence) {
+    public static PostImage of(String fileName, int sequence) {
         PostImage postImage = new PostImage();
-        postImage.setImageUrl(imageUrl);
+        postImage.setFileName(fileName);
         postImage.setSequence(sequence);
 
         return postImage;

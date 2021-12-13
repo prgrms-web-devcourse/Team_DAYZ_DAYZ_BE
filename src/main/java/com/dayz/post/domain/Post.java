@@ -38,52 +38,69 @@ public class Post extends BaseEntity {
     @Column(name = "content", nullable = false, length = 1000)
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "member_id")
+//    private Member member;
+//
+//    @ManyToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "onedayclass_id")
+//    private OneDayClass oneDayClass;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "onedayclass_id")
-    private OneDayClass oneDayClass;
+    private Long memberId;
+
+    private Long oneDayClassId;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private List<PostImage> postImages = new ArrayList<>();
 
-    public static Post of(Long id, String content, Member member, OneDayClass oneDayClass) {
+//    public static Post of(Long id, String content, Member member, OneDayClass oneDayClass) {
+//        Post post = new Post();
+//        post.setId(id);
+//        post.setContent(content);
+//        post.changeMember(member);
+//        post.changeClass(oneDayClass);
+//
+//        return post;
+//    }
+//
+//    public static Post of(String content, Member member, OneDayClass oneDayClass) {
+//        Post post = new Post();
+//        post.setContent(content);
+//        post.changeMember(member);
+//        post.changeClass(oneDayClass);
+//
+//        return post;
+//    }
+
+    public static Post of(Long id, String content, Long memberId, Long oneDayClassId) {
         Post post = new Post();
         post.setId(id);
         post.setContent(content);
-        post.changeMember(member);
-        post.changeClass(oneDayClass);
-        post.postImages = new ArrayList<>();
+        post.setMemberId(memberId);
+        post.setOneDayClassId(oneDayClassId);
 
         return post;
     }
 
-    public static Post of(String content, Member member, OneDayClass oneDayClass) {
+    public static Post of(String content, Long memberId, Long oneDayClassId) {
         Post post = new Post();
         post.setContent(content);
-        post.changeMember(member);
-        post.changeClass(oneDayClass);
-        post.postImages = new ArrayList<>();
+        post.setMemberId(memberId);
+        post.setOneDayClassId(oneDayClassId);
 
         return post;
     }
 
-    public void changeMember(Member member) {
-        this.setMember(member);
-    }
+//    public void changeMember(Member member) {
+//        this.setMember(member);
+//    }
+//
+//    public void changeClass(OneDayClass oneDayClass) {
+//        this.setOneDayClass(oneDayClass);
+//    }
 
-    public void changeClass(OneDayClass oneDayClass) {
-        this.setOneDayClass(oneDayClass);
-    }
-
-    public void setPostImages(List<PostImage> postImageList) {
-        if(Objects.nonNull(this.postImages)) {
-            this.postImages.removeAll(postImages);
-        }
-
+    public void addPostImages(List<PostImage> postImageList) {
         this.postImages = postImageList;
     }
 

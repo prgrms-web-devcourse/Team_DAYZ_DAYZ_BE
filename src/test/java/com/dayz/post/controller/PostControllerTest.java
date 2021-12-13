@@ -1,9 +1,7 @@
 package com.dayz.post.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 import com.dayz.category.domain.Category;
 import com.dayz.member.domain.Address;
@@ -11,15 +9,14 @@ import com.dayz.member.domain.Member;
 import com.dayz.member.domain.Permission;
 import com.dayz.onedayclass.domain.OneDayClass;
 import com.dayz.post.domain.Post;
-import com.dayz.post.domain.PostImage;
 import com.dayz.post.domain.PostImageRepository;
 import com.dayz.post.domain.PostRepository;
 import com.dayz.post.dto.PostCreateRequest;
+import com.dayz.post.dto.PostCreateRequest.PostImagesRequest;
 import com.dayz.post.service.PostService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,20 +51,18 @@ class PostControllerTest {
         Permission permission = Permission.of("USER");
         Address address = Address.of(1L, 1L, "서울시", "송파구");
         Category category = Category.of("도자기");
-        OneDayClass oneDayClass = OneDayClass.of("원데이클래스", "클래스설명", 30000, 2310923000L, 5, category);
+        OneDayClass oneDayClass = OneDayClass.of(1L,"원데이클래스", "클래스설명", 30000, 2310923000L, 5, category);
         Member member = Member.of("TestMember", "kakao", "1231424", "url", permission, address);
 
-        Post post = Post.of("content Test", member, oneDayClass);
-        List<PostImage> postImages = new ArrayList<>();
-        postImages.add(PostImage.of("imageUrl1", 1));
-        postImages.add(PostImage.of("imageUrl2", 2));
-        postImages.add(PostImage.of("imageUrl3", 3));
+        Post post = Post.of("content Test", member.getId(), oneDayClass.getId());
 
-        PostCreateRequest pr = new PostCreateRequest();
-        pr.setContent("Post Test");
-        pr.setMember(member);
-        pr.setOneDayClass(oneDayClass);
-        pr.setPostImages(postImages);
+        List<PostImagesRequest> postImagesRequests = new ArrayList<>();
+
+        postImagesRequests.add(PostImagesRequest.of("imageUrl1", 1));
+        postImagesRequests.add(PostImagesRequest.of("imageUrl2", 2));
+        postImagesRequests.add(PostImagesRequest.of("imageUrl3", 3));
+
+        PostCreateRequest pr = PostCreateRequest.of("Content Test", 1L, oneDayClass.getId(), postImagesRequests);
 
         mockMvc.perform(post("/api/v1/posts")
                 .contentType(MediaType.APPLICATION_JSON)
