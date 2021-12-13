@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface OneDayClassRepository extends JpaRepository<OneDayClass, Long> {
 
-    @Query("select o from OneDayClass o where o.category.id = :categoryId and o.atelier.address.cityId = :cityId and o.atelier.address.regionId = :regionId and o.useFlag = true")
+    @Query("select o from OneDayClass o inner join  o.category inner join o.atelier where o.category.id = :categoryId and o.atelier.address.cityId = :cityId and o.atelier.address.regionId = :regionId and o.useFlag = true")
     Page<OneDayClass> findOneDayClassByCategoryId(
             @Param("categoryId") Long categoryId,
             @Param("cityId") Long cityId,
