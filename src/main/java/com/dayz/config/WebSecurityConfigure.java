@@ -5,6 +5,7 @@ import com.dayz.common.jwt.JwtAuthenticationFilter;
 import com.dayz.common.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
 import com.dayz.common.oauth2.OAuth2AuthenticationSuccessHandler;
 import com.dayz.member.service.MemberService;
+import java.util.Arrays;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,8 @@ import org.springframework.security.oauth2.client.web.AuthorizationRequestReposi
 import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -32,9 +35,12 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
 
   private final MemberService memberService;
 
-  public WebSecurityConfigure(JwtConfigure jwtConfigure, MemberService memberService) {
+  private final CorsProperties corsProperties;
+
+  public WebSecurityConfigure(JwtConfigure jwtConfigure, MemberService memberService, CorsProperties corsProperties) {
     this.jwtConfigure = jwtConfigure;
     this.memberService = memberService;
+    this.corsProperties = corsProperties;
   }
 
   @Override
@@ -96,10 +102,29 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
 //    return new AuthenticatedPrincipalOAuth2AuthorizedClientRepository(authorizedClientService);
 //  }
 
+  /*
+   * Cors 설정
+   * */
+  @Bean
+  public UrlBasedCorsConfigurationSource corsConfigurationSource() {
+    UrlBasedCorsConfigurationSource corsConfigSource = new UrlBasedCorsConfigurationSource();
+
+    CorsConfiguration corsConfig = new CorsConfiguration();
+    corsConfig.setAllowedHeaders(Arrays.asList(corsProperties.getAllowedHeaders().split(",")));
+    corsConfig.setAllowedMethods(Arrays.asList(corsProperties.getAllowedMethods().split(",")));
+    corsConfig.setAllowedOrigins(Arrays.asList(corsProperties.getAllowedOrigins().split(",")));
+    corsConfig.setAllowCredentials(true);
+    corsConfig.setMaxAge(corsConfig.getMaxAge());
+
+    corsConfigSource.registerCorsConfiguration("/**", corsConfig);
+    return corsConfigSource;
+  }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
+            .cors()
+            .and()
             .authorizeRequests()
 //            .antMatchers("/api/v1/login").permitAll()
 //            .antMatchers("/api/v1/*").hasAnyRole("USER", "ATELIER","ADMIN")
