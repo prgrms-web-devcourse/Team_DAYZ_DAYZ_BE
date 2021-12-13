@@ -42,9 +42,9 @@ public class AddressConverter {
         return ReadAllAddressResponse.AddressByCityResult.RegionByCityResult.of(addressByCityId.getRegionId(), addressByCityId.getRegionName());
     }
 
-    public EditMemberAddressResponse convertToSaveMemberAddressResponse(Address address) {
+    public EditMemberAddressResponse convertToEditMemberAddressResponse(Address address) {
         return EditMemberAddressResponse
-                .of(address.getId(), address.getCityId(), address.getCityName(), address.getRegionId(), address.getRegionName());
+                .of(address.getCityId(), address.getCityName(), address.getRegionId(), address.getRegionName());
     }
 
 }

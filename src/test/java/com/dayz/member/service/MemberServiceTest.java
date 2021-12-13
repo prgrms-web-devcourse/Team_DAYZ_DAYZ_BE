@@ -65,7 +65,7 @@ class MemberServiceTest {
 
         // then
         assertThat(editMemberAddressResponse, notNullValue());
-        assertThat(editMemberAddressResponse, samePropertyValuesAs(addressConverter.convertToSaveMemberAddressResponse(editedAddress)));
+        assertThat(editMemberAddressResponse, samePropertyValuesAs(addressConverter.convertToEditMemberAddressResponse(editedAddress)));
     }
 
 }

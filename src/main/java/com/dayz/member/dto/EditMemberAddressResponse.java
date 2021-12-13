@@ -10,8 +10,6 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EditMemberAddressResponse {
 
-    private Long addressId;
-
     private Long cityId;
 
     private String cityName;
@@ -20,9 +18,8 @@ public class EditMemberAddressResponse {
 
     private String regionName;
 
-    public static EditMemberAddressResponse of(Long addressId, Long cityId, String cityName, Long regionId, String regionName) {
+    public static EditMemberAddressResponse of(Long cityId, String cityName, Long regionId, String regionName) {
         EditMemberAddressResponse editMemberAddressResponse = new EditMemberAddressResponse();
-        editMemberAddressResponse.setAddressId(addressId);
         editMemberAddressResponse.setCityId(cityId);
         editMemberAddressResponse.setCityName(cityName);
         editMemberAddressResponse.setRegionId(regionId);

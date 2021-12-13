@@ -37,7 +37,6 @@ public class MemberService {
 
     private final AddressConverter addressConverter;
 
-    @Transactional(readOnly = true)
     public ReadMemberInfoResponse getMemberInfo(Long memberId, String token) {
         Member foundMember = memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
@@ -45,21 +44,18 @@ public class MemberService {
         return memberConverter.convertToReadMemberInfoResponse(foundMember, token);
     }
 
-    @Transactional(readOnly = true)
     public Optional<Member> findByUsername(String username) {
         Assert.notNull(username, "username must be provided.");
 
         return memberRepository.findByUsername(username);
     }
 
-    @Transactional(readOnly = true)
     public Member findById(Long memberId) {
         Assert.notNull(memberId, "memberId must be provided.");
 
         return memberRepository.findById(memberId).orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
     }
 
-    @Transactional(readOnly = true)
     public Optional<Member> findByProviderAndProviderId(String provider, String providerId) {
         Assert.notNull(provider, "provider must be provided.");
         Assert.notNull(providerId, "providerId must be provided.");
@@ -82,7 +78,6 @@ public class MemberService {
                     Map<String, Object> attributes = oauth2User.getAttributes();
                     @SuppressWarnings("unchecked")
                     Map<String, Object> properties = (Map<String, Object>) attributes.get("properties");
-//                    checkArgument(properties != null, "OAuth2User properties is empty");
                     String nickname = (String) properties.get("nickname");
                     String profileImage = (String) properties.get("profile_image");
                     String name = "ROLE_USER";
@@ -105,7 +100,7 @@ public class MemberService {
 
         member.changeAddress(foundAddress);
 
-        return addressConverter.convertToSaveMemberAddressResponse(foundAddress);
+        return addressConverter.convertToEditMemberAddressResponse(foundAddress);
     }
 
 }
