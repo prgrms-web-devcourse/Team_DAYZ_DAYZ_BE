@@ -81,7 +81,7 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
   @Bean
   public OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler() {
     Jwt jwt = getApplicationContext().getBean(Jwt.class);
-    return new OAuth2AuthenticationSuccessHandler(jwt, memberService);
+    return new OAuth2AuthenticationSuccessHandler(jwt, memberService, (HttpCookieOAuth2AuthorizationRequestRepository)authorizationRequestRepository());
   }
 
   @Bean
