@@ -21,9 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-@ExtendWith(MockitoExtension.class)
-@ActiveProfiles("test")
+
 @DisplayName("AddressService 단위테스트")
+@ExtendWith(MockitoExtension.class)
 class AddressServiceTest {
 
     @InjectMocks

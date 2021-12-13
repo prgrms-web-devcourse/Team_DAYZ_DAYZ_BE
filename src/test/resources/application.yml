@@ -1,12 +1,10 @@
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    driver-class-name: org.h2.Driver
     username: sa
     password:
     url: jdbc:h2:mem:testdb
   jpa:
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     open-in-view: false
     generate-ddl: true
     hibernate:
@@ -25,10 +23,10 @@ spring:
         registration:
           kakao:
             client-name: kakao
-            client-id: ${KAKAO_RESTAPI_KEY}
-            client-secret: ${KAKAO_CLIENT_SECRETE}
+            client-id: 11111
+            client-secret: 11111
             scope: profile_nickname, profile_image
-            redirect-uri: http://${SERVER_HOST}/login/oauth2/code/{registrationId}
+            redirect-uri: http://localhost:8080/login/oauth2/code/{registrationId}
             authorization-grant-type: authorization_code
             client-authentication-method: POST
         provider:
@@ -40,17 +38,17 @@ spring:
 cloud:
   aws:
     credentials:
-      accessKey: ${AWS_ACCESS_KEY_ID}
-      secretKey: ${AWS_SECRET_ACCESS_KEY}
+      accessKey: 1111
+      secretKey: 1111
     s3:
-      bucket: ${BUCKET_NAME}
-      bucket_path: ${BUCKET_PATH} # 이미지 저장 시 이 부분을 불러와서 URL 파싱을 진행한다.
+      bucket: 1111
+      bucket_path: 1111 # 이미지 저장 시 이 부분을 불러와서 URL 파싱을 진행한다.
     region:
       static: ap-northeast-2
     stack:
       auto: false
 cors:
-  allowed-origins: ${CORS_ALLOWED_ORIGINS_LOCAL}
+  allowed-origins: 1111
   allowed-methods: GET,POST,PUT,DELETE,OPTIONS
   allowed-headers: '*'
   max-age: 3600
@@ -59,7 +57,7 @@ server:
 jwt:
   header: Authorization
   issuer: dayz
-  client-secret: ${JWT_CLIENT_SECRETE}
+  client-secret: 1111
   expiry-seconds: 60000
 logging.level:
   org.hibernate.SQL: debug

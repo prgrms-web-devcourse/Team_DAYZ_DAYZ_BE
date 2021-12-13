@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
 @DisplayName("CategoryController 통합 테스트")
 class CategoryControllerTest {
 
