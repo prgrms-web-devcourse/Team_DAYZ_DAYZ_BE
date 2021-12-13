@@ -55,6 +55,6 @@ jwt:
   header: Authorization
   issuer: dayz
   client-secret: ${JWT_CLIENT_SECRETE}
-  expiry-seconds: 60
+  expiry-seconds: 60000
 logging.level:
   org.hibernate.SQL: debug
