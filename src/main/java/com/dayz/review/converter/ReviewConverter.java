@@ -1,10 +1,7 @@
 package com.dayz.review.converter;
 
-import com.dayz.member.domain.Member;
-import com.dayz.onedayclass.domain.OneDayClass;
-import com.dayz.reservation.domain.ReservationRepository;
+import com.dayz.common.util.ImageUrlUtil;
 import com.dayz.review.domain.Review;
-import com.dayz.review.domain.ReviewImage;
 import com.dayz.review.dto.ReadAllAtelierReviewsResponse;
 import com.dayz.review.dto.ReadAllMyReviewsResponse;
 import com.dayz.review.dto.ReadAllMyReviewsResponse.MemberResult;
@@ -19,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ReviewConverter {
 
-    private final ReservationRepository reservationRepository;
+    private final ImageUrlUtil imageUrlUtil;
 
     public ReadAllMyReviewsResponse convertReviewResponse(Review review) {
 
@@ -29,8 +26,8 @@ public class ReviewConverter {
         OneDayClassResult oneDayClassResult = OneDayClassResult.of(review.getOneDayClass().getId(),
             review.getOneDayClass().getName());
 
-        List<ReviewImageResult> reviewImageResult = review.getReviewImage().stream()
-            .map(reviewImage -> ReviewImageResult.of(reviewImage.getImageFileName(),
+        List<ReviewImageResult> reviewImageResult = review.getReviewImages().stream()
+            .map(reviewImage -> ReviewImageResult.of(imageUrlUtil.makeImageUrl(reviewImage.getImageFileName()),
                 reviewImage.getSequence())).collect(Collectors.toList());
 
         return ReadAllMyReviewsResponse.of(review.getId(), review.getTitle(), review.getContent(),
@@ -46,8 +43,8 @@ public class ReviewConverter {
         com.dayz.review.dto.ReadAllAtelierReviewsResponse.OneDayClassResult oneDayClassResult = com.dayz.review.dto.ReadAllAtelierReviewsResponse.OneDayClassResult.of(review.getOneDayClass().getId(),
             review.getOneDayClass().getName());
 
-        List<com.dayz.review.dto.ReadAllAtelierReviewsResponse.ReviewImageResult> reviewImageResult = review.getReviewImage().stream()
-            .map(reviewImage -> com.dayz.review.dto.ReadAllAtelierReviewsResponse.ReviewImageResult.of(reviewImage.getImageFileName(),
+        List<com.dayz.review.dto.ReadAllAtelierReviewsResponse.ReviewImageResult> reviewImageResult = review.getReviewImages().stream()
+            .map(reviewImage -> com.dayz.review.dto.ReadAllAtelierReviewsResponse.ReviewImageResult.of(imageUrlUtil.makeImageUrl(reviewImage.getImageFileName()),
                 reviewImage.getSequence())).collect(Collectors.toList());
 
         return ReadAllAtelierReviewsResponse.of(review.getId(), review.getTitle(), review.getContent(),
