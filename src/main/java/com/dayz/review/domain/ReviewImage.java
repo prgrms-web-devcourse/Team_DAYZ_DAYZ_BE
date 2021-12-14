@@ -2,6 +2,7 @@ package com.dayz.review.domain;
 
 
 import com.dayz.common.entity.BaseEntity;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.util.Assert;
 
 @Entity
 @Getter
@@ -43,6 +45,10 @@ public class ReviewImage extends BaseEntity {
             int sequence,
             Review review
     ) {
+        Assert.notNull(id,"ReviewImage의 imageUrl 값이 null입니다");
+        Assert.notNull(imageFileName,"ReviewImage의 imageUrl 값이 null입니다");
+        Assert.notNull(sequence,"ReviewImage sequence null 입니다.");
+
         ReviewImage reviewImage = new ReviewImage();
         reviewImage.setId(id);
         reviewImage.setImageFileName(imageFileName);
@@ -56,16 +62,35 @@ public class ReviewImage extends BaseEntity {
             int sequence,
             Review review
     ) {
+        Assert.notNull(imageFileName,"ReviewImage의 imageUrl 값이 null입니다");
+        Assert.notNull(sequence,"ReviewImage sequence null 입니다.");
+
         ReviewImage reviewImage = new ReviewImage();
         reviewImage.setImageFileName(imageFileName);
         reviewImage.setSequence(sequence);
-        reviewImage.changeReview(review);
+        if(Objects.nonNull(review))
+        {
+            reviewImage.setReview(review);
+        }
+        return reviewImage;
+    }
+    public static ReviewImage of(String imageFileName,
+        int sequence) {
+        Assert.notNull(imageFileName,"ReviewImage의 imageUrl 값이 null입니다");
+        Assert.notNull(sequence,"ReviewImage sequence null 입니다.");
 
+        ReviewImage reviewImage = new ReviewImage();
+        reviewImage.setImageFileName(imageFileName);
+        reviewImage.setSequence(sequence);
         return reviewImage;
     }
 
     public void changeReview(Review review) {
-        this.setReview(review);
+        if (Objects.nonNull(this.review)) {
+            review.getReviewImage().remove(this);
+        }
+        review.getReviewImage().add(this);
+        this.review = review;
     }
 
 }
