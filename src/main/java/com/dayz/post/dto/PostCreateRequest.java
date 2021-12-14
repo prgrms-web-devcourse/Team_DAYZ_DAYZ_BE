@@ -25,7 +25,9 @@ public class PostCreateRequest {
         postCreateRequest.setContent(content);
         postCreateRequest.setAtelierId(atelierId);
         postCreateRequest.setOneDayClassId(oneDayClassId);
-        postCreateRequest.setPostImages(postImages);
+        if(postImages.size() > 0) {
+            postCreateRequest.setPostImages(postImages);
+        }
 
         return postCreateRequest;
     }

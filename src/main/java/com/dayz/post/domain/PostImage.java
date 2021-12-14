@@ -16,6 +16,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.util.Assert;
 
 @Entity
 @Getter
@@ -34,7 +35,13 @@ public class PostImage extends BaseEntity {
     @Column(name = "sequence")
     private int sequence;
 
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
+
     public static PostImage of(Long id, String fileName, int sequence) {
+        Assert.notNull(fileName, "FileName must not be null.");
+
         PostImage postImage = new PostImage();
         postImage.setId(id);
         postImage.setFileName(fileName);
@@ -44,6 +51,8 @@ public class PostImage extends BaseEntity {
     }
 
     public static PostImage of(String fileName, int sequence) {
+        Assert.notNull(fileName, "FileName must not be null.");
+
         PostImage postImage = new PostImage();
         postImage.setFileName(fileName);
         postImage.setSequence(sequence);
