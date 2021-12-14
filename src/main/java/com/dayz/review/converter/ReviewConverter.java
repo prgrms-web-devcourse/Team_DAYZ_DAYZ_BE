@@ -3,6 +3,9 @@ package com.dayz.review.converter;
 import com.dayz.common.util.ImageUrlUtil;
 import com.dayz.review.domain.Review;
 import com.dayz.review.dto.ReadAllAtelierReviewsResponse;
+import com.dayz.review.dto.ReadAllAtelierReviewsResponse.AtelierMemberResult;
+import com.dayz.review.dto.ReadAllAtelierReviewsResponse.AtelierOneDayClassResult;
+import com.dayz.review.dto.ReadAllAtelierReviewsResponse.AtelierReviewImageResult;
 import com.dayz.review.dto.ReadAllMyReviewsResponse;
 import com.dayz.review.dto.ReadAllMyReviewsResponse.MemberResult;
 import com.dayz.review.dto.ReadAllMyReviewsResponse.OneDayClassResult;
@@ -37,19 +40,19 @@ public class ReviewConverter {
 
     public ReadAllAtelierReviewsResponse convertReadAllAtelierReviewsResponse(Review review) {
 
-        com.dayz.review.dto.ReadAllAtelierReviewsResponse.MemberResult memberResult = com.dayz.review.dto.ReadAllAtelierReviewsResponse.MemberResult.of(review.getMember().getId(),
+        AtelierMemberResult atelierMemberResult = AtelierMemberResult.of(review.getMember().getId(),
             review.getMember().getUsername(), review.getMember().getProfileImageUrl());
 
-        com.dayz.review.dto.ReadAllAtelierReviewsResponse.OneDayClassResult oneDayClassResult = com.dayz.review.dto.ReadAllAtelierReviewsResponse.OneDayClassResult.of(review.getOneDayClass().getId(),
+        AtelierOneDayClassResult atelierOneDayClassResult = AtelierOneDayClassResult.of(review.getOneDayClass().getId(),
             review.getOneDayClass().getName());
 
-        List<com.dayz.review.dto.ReadAllAtelierReviewsResponse.ReviewImageResult> reviewImageResult = review.getReviewImages().stream()
-            .map(reviewImage -> com.dayz.review.dto.ReadAllAtelierReviewsResponse.ReviewImageResult.of(imageUrlUtil.makeImageUrl(reviewImage.getImageFileName()),
+        List<AtelierReviewImageResult> atelierReviewImageResult = review.getReviewImages().stream()
+            .map(reviewImage -> AtelierReviewImageResult.of(imageUrlUtil.makeImageUrl(reviewImage.getImageFileName()),
                 reviewImage.getSequence())).collect(Collectors.toList());
 
         return ReadAllAtelierReviewsResponse.of(review.getId(), review.getTitle(), review.getContent(),
-            review.getScore(), review.getCreatedAt(), memberResult, oneDayClassResult,
-            reviewImageResult);
+            review.getScore(), review.getCreatedAt(), atelierMemberResult, atelierOneDayClassResult,
+            atelierReviewImageResult);
     }
 
 }

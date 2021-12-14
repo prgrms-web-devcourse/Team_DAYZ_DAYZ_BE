@@ -22,15 +22,15 @@ public class ReadAllAtelierReviewsResponse {
 
     private LocalDateTime createdAt;
 
-    private MemberResult member;
+    private AtelierMemberResult member;
 
-    private OneDayClassResult oneDayClass;
+    private AtelierOneDayClassResult oneDayClass;
 
-    private List<ReviewImageResult> reviewImage;
+    private List<AtelierReviewImageResult> reviewImages;
 
     public static ReadAllAtelierReviewsResponse of(Long id, String title, String content, int score,
         LocalDateTime createdAt,
-        MemberResult member, OneDayClassResult oneDayClass, List<ReviewImageResult> reviewImages) {
+        AtelierMemberResult member, AtelierOneDayClassResult oneDayClass, List<AtelierReviewImageResult> reviewImages) {
         ReadAllAtelierReviewsResponse reviewResponse = new ReadAllAtelierReviewsResponse();
         reviewResponse.setId(id);
         reviewResponse.setTitle(title);
@@ -39,14 +39,14 @@ public class ReadAllAtelierReviewsResponse {
         reviewResponse.setCreatedAt(createdAt);
         reviewResponse.setMember(member);
         reviewResponse.setOneDayClass(oneDayClass);
-        reviewResponse.setReviewImage(reviewImages);
+        reviewResponse.setReviewImages(reviewImages);
 
         return reviewResponse;
     }
 
     @Getter
     @Setter(AccessLevel.PRIVATE)
-    public static class MemberResult {
+    public static class AtelierMemberResult {
 
         private Long id;
 
@@ -54,46 +54,46 @@ public class ReadAllAtelierReviewsResponse {
 
         private String profileImageUrl;
 
-        public static MemberResult of(Long id, String username, String profileImageUrl) {
-            MemberResult memberResult = new MemberResult();
-            memberResult.setId(id);
-            memberResult.setUsername(username);
-            memberResult.setProfileImageUrl(profileImageUrl);
+        public static AtelierMemberResult of(Long id, String username, String profileImageUrl) {
+            AtelierMemberResult atelierMemberResult = new AtelierMemberResult();
+            atelierMemberResult.setId(id);
+            atelierMemberResult.setUsername(username);
+            atelierMemberResult.setProfileImageUrl(profileImageUrl);
 
-            return memberResult;
+            return atelierMemberResult;
         }
     }
 
     @Getter
     @Setter(AccessLevel.PRIVATE)
-    public static class OneDayClassResult {
+    public static class AtelierOneDayClassResult {
 
         private Long id;
 
         private String name;
 
-        public static OneDayClassResult of(Long id, String name) {
-            OneDayClassResult oneDayClassResult = new OneDayClassResult();
-            oneDayClassResult.setId(id);
-            oneDayClassResult.setName(name);
+        public static AtelierOneDayClassResult of(Long id, String name) {
+            AtelierOneDayClassResult atelierOneDayClassResult = new AtelierOneDayClassResult();
+            atelierOneDayClassResult.setId(id);
+            atelierOneDayClassResult.setName(name);
 
-            return oneDayClassResult;
+            return atelierOneDayClassResult;
         }
     }
 
     @Getter
     @Setter(AccessLevel.PRIVATE)
-    public static class ReviewImageResult {
+    public static class AtelierReviewImageResult {
 
         private String imageurl;
 
         private int sequence;
 
-        public static ReviewImageResult of(String imageurl, int sequence) {
-            ReviewImageResult reviewImageResult = new ReviewImageResult();
-            reviewImageResult.setImageurl(imageurl);
-            reviewImageResult.setSequence(sequence);
-            return reviewImageResult;
+        public static AtelierReviewImageResult of(String imageurl, int sequence) {
+            AtelierReviewImageResult atelierReviewImageResult = new AtelierReviewImageResult();
+            atelierReviewImageResult.setImageurl(imageurl);
+            atelierReviewImageResult.setSequence(sequence);
+            return atelierReviewImageResult;
         }
     }
 }

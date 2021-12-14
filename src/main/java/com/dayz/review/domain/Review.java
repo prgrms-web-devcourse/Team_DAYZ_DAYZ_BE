@@ -61,7 +61,8 @@ public class Review extends BaseEntity {
         String content,
         int score,
         Member member,
-        OneDayClass oneDayClass,List<ReviewImage> reviewImages
+        OneDayClass oneDayClass,
+        List<ReviewImage> reviewImages
     ) {
         Assert.notNull(id,"Review id 값이 null입니다");
         Assert.notNull(title,"Review title이 null 입니다.");

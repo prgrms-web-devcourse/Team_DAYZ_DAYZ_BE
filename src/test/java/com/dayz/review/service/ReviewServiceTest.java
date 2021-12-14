@@ -21,6 +21,9 @@ import com.dayz.review.domain.Review;
 import com.dayz.review.domain.ReviewImage;
 import com.dayz.review.domain.ReviewRepository;
 import com.dayz.review.dto.ReadAllAtelierReviewsResponse;
+import com.dayz.review.dto.ReadAllAtelierReviewsResponse.AtelierMemberResult;
+import com.dayz.review.dto.ReadAllAtelierReviewsResponse.AtelierOneDayClassResult;
+import com.dayz.review.dto.ReadAllAtelierReviewsResponse.AtelierReviewImageResult;
 import com.dayz.review.dto.ReadAllMyReviewsResponse;
 import com.dayz.review.dto.ReadAllMyReviewsResponse.MemberResult;
 import com.dayz.review.dto.ReadAllMyReviewsResponse.OneDayClassResult;
@@ -140,12 +143,12 @@ class ReviewServiceTest {
         ReadAllAtelierReviewsResponse of = ReadAllAtelierReviewsResponse.of(review.getId(), review.getTitle(),
             review.getContent(),
             review.getScore(), review.getCreatedAt(),
-            com.dayz.review.dto.ReadAllAtelierReviewsResponse.MemberResult.of(review.getMember().getId(),
+            AtelierMemberResult.of(review.getMember().getId(),
                 review.getMember().getUsername(), review.getMember().getProfileImageUrl()),
-            com.dayz.review.dto.ReadAllAtelierReviewsResponse.OneDayClassResult.of(review.getOneDayClass().getId(),
+            AtelierOneDayClassResult.of(review.getOneDayClass().getId(),
                 review.getOneDayClass().getName()),
             review.getReviewImages().stream()
-                .map(reviewImage -> ReadAllAtelierReviewsResponse.ReviewImageResult.of(reviewImage.getImageFileName(),
+                .map(reviewImage -> AtelierReviewImageResult.of(reviewImage.getImageFileName(),
                     reviewImage.getSequence())).collect(Collectors.toList()));
 
         given(reviewRepository.findAllByAtelierId(1L, pageRequest)).willReturn(reviewPage);
