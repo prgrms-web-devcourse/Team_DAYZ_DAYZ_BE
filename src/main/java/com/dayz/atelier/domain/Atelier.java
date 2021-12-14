@@ -3,7 +3,6 @@ package com.dayz.atelier.domain;
 import com.dayz.common.entity.BaseEntity;
 import com.dayz.member.domain.Address;
 import com.dayz.member.domain.Member;
-import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -29,6 +28,7 @@ public class Atelier extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "atelier_id")
     private Long id;
 
     @Column(name = "name", nullable = false, length = 50)
@@ -50,15 +50,12 @@ public class Atelier extends BaseEntity {
     @Column(name = "business_number", nullable = false, length = 20)
     private String businessNumber;
 
-    @Column(name = "profile_img_uuid")
-    private UUID profileImageUuid;
-
     @OneToOne
     @JoinColumn(name = "member_id")
     private Member member;
 
     public static Atelier of(Long id, String name, Address address, String detail, String intro, WorkTime workTime, String businessNumber,
-            UUID profileImageUuid, Member member) {
+            Member member) {
         Atelier atelier = new Atelier();
         atelier.setId(id);
         atelier.setName(name);
@@ -67,14 +64,12 @@ public class Atelier extends BaseEntity {
         atelier.setIntro(intro);
         atelier.setWorkTime(workTime);
         atelier.setBusinessNumber(businessNumber);
-        atelier.setProfileImageUuid(profileImageUuid);
         atelier.changeMember(member);
 
         return atelier;
     }
 
-    public static Atelier of(String name, Address address, String detail, String intro, WorkTime workTime, String businessNumber,
-            UUID profileImageUuid, Member member) {
+    public static Atelier of(String name, Address address, String detail, String intro, WorkTime workTime, String businessNumber, Member member) {
         Atelier atelier = new Atelier();
         atelier.setName(name);
         atelier.changeAddress(address);
@@ -82,7 +77,6 @@ public class Atelier extends BaseEntity {
         atelier.setIntro(intro);
         atelier.setWorkTime(workTime);
         atelier.setBusinessNumber(businessNumber);
-        atelier.setProfileImageUuid(profileImageUuid);
         atelier.changeMember(member);
 
         return atelier;

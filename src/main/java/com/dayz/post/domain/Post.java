@@ -34,6 +34,7 @@ public class Post extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
     private Long id;
 
     @Column(name = "content", nullable = false, length = 1000)
@@ -87,6 +88,10 @@ public class Post extends BaseEntity {
 
     public void addPostImages(List<PostImage> postImageList) {
         this.postImages = postImageList;
+    }
+
+    public void changeOneDayClass(OneDayClass oneDayClass) {
+        this.setOneDayClass(oneDayClass);
     }
 
 }
