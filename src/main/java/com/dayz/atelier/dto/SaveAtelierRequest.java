@@ -1,7 +1,10 @@
 package com.dayz.atelier.dto;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,17 +21,18 @@ public class SaveAtelierRequest {
     @NotBlank(message = "businessNumber is not blank")
     private String businessNumber;
 
-    @NotBlank(message = "address is not null")
+    @NotNull(message = "address is not null")
     private AddressResult address;
 
     private String intro;
 
     @NotBlank(message = "workStartTime is not blank")
+    @Pattern(regexp = "^(([0-1]{1}[0-9]{1})|([2]{1}[0-3]{1})):(([0-5]{1}[0-9]{1}))$", message = "workStartTime must be HH:mm format")
     private String workStartTime;
 
     @NotBlank(message = "workEndTime is not blank")
+    @Pattern(regexp = "^(([0-1]{1}[0-9]{1})|([2]{1}[0-3]{1})):(([0-5]{1}[0-9]{1}))$", message = "workEndTime must be HH:mm format")
     private String workEndTime;
-
 
     public static SaveAtelierRequest of(String name, String businessNumber, AddressResult address, String workStartTime, String workEndTime) {
         SaveAtelierRequest saveAtelierRequest = new SaveAtelierRequest();

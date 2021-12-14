@@ -6,6 +6,7 @@ import com.dayz.atelier.service.AtelierService;
 import com.dayz.common.aop.LoginMember;
 import com.dayz.common.dto.ApiResponse;
 import com.dayz.member.domain.Member;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,7 +25,7 @@ public class AtelierController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ApiResponse<SaveAtelierResponse> saveAtelier(@LoginMember Member member, @RequestBody SaveAtelierRequest request) {
+    public ApiResponse<SaveAtelierResponse> saveAtelier(@LoginMember Member member, @Valid @RequestBody SaveAtelierRequest request) {
 
         SaveAtelierResponse response = this.atelierService.savaAtelierInfo(member.getId(), request);
 
