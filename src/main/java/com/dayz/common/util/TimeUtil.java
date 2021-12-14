@@ -15,6 +15,7 @@ public class TimeUtil {
     SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.KOREA);
 
     public Long timeStringToSecond(String timeString) {
+
         Date d = null;
         try {
             d = sdf.parse(timeString);
