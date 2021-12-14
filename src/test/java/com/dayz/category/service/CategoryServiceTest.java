@@ -1,30 +1,35 @@
 package com.dayz.category.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.given;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.samePropertyValuesAs;
+import static org.mockito.BDDMockito.given;
 
+import com.dayz.category.converter.CategoryConverter;
 import com.dayz.category.domain.Category;
 import com.dayz.category.domain.CategoryRepository;
 import com.dayz.category.dto.ReadAllCategoriesResponse;
-import com.dayz.category.dto.ReadAllCategoriesResponse.ReadAllCategoryResult;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.Spy;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 @DisplayName("CategoryService 단위테스트")
-@SpringBootTest
 class CategoryServiceTest {
+
+    @InjectMocks
+    private CategoryService categoryService;
 
     @Mock
     private CategoryRepository categoryRepository;
 
-    @Autowired
-    private CategoryService categoryService;
+    @Spy
+    private CategoryConverter categoryConverter;
 
     @Test
     @DisplayName("모든 카테고리 목록을 조회 할 수 있다.")
@@ -44,7 +49,7 @@ class CategoryServiceTest {
 
         // then
         assertThat(allCategoryList.getCategories().size(), is(categories.size()));
-        assertThat(allCategoryList.getCategories().stream().map(ReadAllCategoryResult::getCategoryId), samePropertyValuesAs(categories.stream().map(Category::getId)));
+        assertThat(allCategoryList.getCategories().stream().map(ReadAllCategoriesResponse.CategoryResult::getCategoryId), samePropertyValuesAs(categories.stream().map(Category::getId)));
     }
 
 }
