@@ -10,7 +10,7 @@ spring:
     open-in-view: false
     generate-ddl: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
@@ -55,7 +55,7 @@ cors:
   allowed-headers: '*'
   max-age: 3600
 server:
-  port: 8080
+  port: 63458
 jwt:
   header: Authorization
   issuer: dayz
