@@ -56,6 +56,7 @@ public class SaveAtelierRequest {
         @NotNull(message = "regionId is not null")
         private Long regionId;
 
+        @NotBlank(message = "detail is not blank")
         private String detail;
 
         public static AddressResult of(Long cityId, Long regionId, String detail) {

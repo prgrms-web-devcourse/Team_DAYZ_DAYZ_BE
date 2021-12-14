@@ -27,7 +27,7 @@ public class AtelierController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<SaveAtelierResponse> saveAtelier(@LoginMember Member member, @Valid @RequestBody SaveAtelierRequest request) {
 
-        SaveAtelierResponse response = this.atelierService.savaAtelierInfo(member.getId(), request);
+        SaveAtelierResponse response = atelierService.savaAtelierInfo(member.getId(), request);
 
         return ApiResponse.<SaveAtelierResponse>ok(response);
     }
