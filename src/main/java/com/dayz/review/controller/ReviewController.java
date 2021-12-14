@@ -8,8 +8,6 @@ import com.dayz.member.domain.Member;
 import com.dayz.review.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-//import org.springframework.security.core.annotation.AuthenticationPrincipal;
-//import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +27,7 @@ public class ReviewController {
         return ApiResponse.ok(reviewService.getAllReviews(pageRequest, member.getId()));
     }
 
-    @GetMapping(value = "/reviews/atelier/{atelierId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/reviews/ateliers/{atelierId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<CustomPageResponse> getAtelierReviews(
         @PathVariable("atelierId") Long atelierId, @RequestBody CustomPageRequest pageRequest) {
         return ApiResponse.ok(reviewService.getAllAtelierReviews(pageRequest, atelierId));
