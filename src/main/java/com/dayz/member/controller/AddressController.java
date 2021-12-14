@@ -1,6 +1,8 @@
 package com.dayz.member.controller;
 
+import com.dayz.common.aop.LoginMember;
 import com.dayz.common.dto.ApiResponse;
+import com.dayz.member.domain.Member;
 import com.dayz.member.dto.ReadAllAddressResponse;
 import com.dayz.member.service.AddressService;
 import lombok.RequiredArgsConstructor;

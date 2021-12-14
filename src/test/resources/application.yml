@@ -1,0 +1,63 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+    url: jdbc:h2:mem:testdb
+  jpa:
+    open-in-view: false
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+        default_batch_fetch_size: 100
+  data:
+    web:
+      pageable:
+        default-page-size: 20
+  security:
+    oauth2:
+      client:
+        registration:
+          kakao:
+            client-name: kakao
+            client-id: 11111
+            client-secret: 11111
+            scope: profile_nickname, profile_image
+            redirect-uri: http://localhost:8080/login/oauth2/code/{registrationId}
+            authorization-grant-type: authorization_code
+            client-authentication-method: POST
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+cloud:
+  aws:
+    credentials:
+      accessKey: 1111
+      secretKey: 1111
+    s3:
+      bucket: 1111
+      bucket_path: 1111 # 이미지 저장 시 이 부분을 불러와서 URL 파싱을 진행한다.
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
+cors:
+  allowed-origins: 1111
+  allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+  allowed-headers: '*'
+  max-age: 3600
+server:
+  port: 8080
+jwt:
+  header: Authorization
+  issuer: dayz
+  client-secret: 1111
+  expiry-seconds: 60000
+logging.level:
+  org.hibernate.SQL: debug

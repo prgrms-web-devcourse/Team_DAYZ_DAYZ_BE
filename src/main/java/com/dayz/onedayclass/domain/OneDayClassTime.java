@@ -28,6 +28,7 @@ public class OneDayClassTime extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "onedayclass_time_id")
     private Long id;
 
     @Column(name = "class_date", nullable = false)

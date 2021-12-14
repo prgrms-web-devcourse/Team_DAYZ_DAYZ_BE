@@ -31,9 +31,10 @@ public class Reservation extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "reservation_id")
     private Long id;
 
-    @Column(name = "reservation_code", nullable = false, length = 100)
+    @Column(name = "reservation_code", length = 100)
     private String code;
 
     @Column(name = "people_number")

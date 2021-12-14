@@ -2,6 +2,7 @@ package com.dayz.post.domain;
 
 import com.dayz.common.entity.BaseEntity;
 import com.dayz.member.domain.Member;
+import com.dayz.onedayclass.domain.OneDayClass;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,6 +26,7 @@ public class Post extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
     private Long id;
 
     @Column(name = "content", nullable = false, length = 1000)
@@ -33,6 +35,10 @@ public class Post extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "onedayclass_id")
+    private OneDayClass oneDayClass;
 
     public static Post of(Long id, String content, Member member) {
         Post post = new Post();
@@ -53,6 +59,10 @@ public class Post extends BaseEntity {
 
     public void changeMember(Member member) {
         this.setMember(member);
+    }
+
+    public void changeOneDayClass(OneDayClass oneDayClass) {
+        this.setOneDayClass(oneDayClass);
     }
 
 }
