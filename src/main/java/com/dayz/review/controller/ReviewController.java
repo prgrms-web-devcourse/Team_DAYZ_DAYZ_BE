@@ -29,7 +29,7 @@ public class ReviewController {
         return ApiResponse.ok(reviewService.getAllReviews(pageRequest, member.getId()));
     }
 
-    @GetMapping(value = "/reviews/{atelierId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/reviews/atelier/{atelierId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<CustomPageResponse> getAtelierReviews(
         @PathVariable("atelierId") Long atelierId, @RequestBody CustomPageRequest pageRequest) {
         return ApiResponse.ok(reviewService.getAllAtelierReviews(pageRequest, atelierId));

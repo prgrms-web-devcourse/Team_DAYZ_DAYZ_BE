@@ -53,7 +53,7 @@ public class Review extends BaseEntity {
     private OneDayClass oneDayClass;
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ReviewImage> reviewImage = new ArrayList<>();
+    private List<ReviewImage> reviewImages = new ArrayList<>();
 
 
     public static Review of(Long id,
@@ -61,7 +61,7 @@ public class Review extends BaseEntity {
         String content,
         int score,
         Member member,
-        OneDayClass oneDayClass,List<ReviewImage> reviewImage
+        OneDayClass oneDayClass,List<ReviewImage> reviewImages
     ) {
         Assert.notNull(id,"Review id 값이 null입니다");
         Assert.notNull(title,"Review title이 null 입니다.");
@@ -77,8 +77,8 @@ public class Review extends BaseEntity {
         review.setScore(score);
         review.changeMember(member);
         review.changeOneDayClass(oneDayClass);
-        if(Objects.nonNull(reviewImage) &&reviewImage.size()>0){
-            review.addReviewImage(reviewImage);
+        if(Objects.nonNull(reviewImages) &&reviewImages.size()>0){
+            review.addReviewImage(reviewImages);
         }
 
         return review;
@@ -88,7 +88,8 @@ public class Review extends BaseEntity {
         String content,
         int score,
         Member member,
-        OneDayClass oneDayClass,List<ReviewImage> reviewImage
+        OneDayClass oneDayClass,
+        List<ReviewImage> reviewImages
     ) {
         Assert.notNull(title,"Review title이 null 입니다.");
         Assert.notNull(content,"Review content이 null 입니다.");
@@ -102,8 +103,8 @@ public class Review extends BaseEntity {
         review.setScore(score);
         review.changeMember(member);
         review.changeOneDayClass(oneDayClass);
-        if(Objects.nonNull(reviewImage) &&reviewImage.size()>0){
-            review.addReviewImage(reviewImage);
+        if(Objects.nonNull(reviewImages) &&reviewImages.size()>0){
+            review.addReviewImage(reviewImages);
         }
 
         return review;
@@ -140,8 +141,8 @@ public class Review extends BaseEntity {
         this.setOneDayClass(oneDayClass);
     }
 
-    public void addReviewImage(List<ReviewImage> reviewImage){
-        reviewImage.forEach(reviewImage1->reviewImage1.changeReview(this));
+    public void addReviewImage(List<ReviewImage> reviewImages){
+        reviewImages.forEach(reviewImage1->reviewImage1.changeReview(this));
     }
 
 }

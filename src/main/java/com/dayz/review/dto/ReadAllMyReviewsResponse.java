@@ -85,13 +85,13 @@ public class ReadAllMyReviewsResponse {
     @Setter(AccessLevel.PRIVATE)
     public static class ReviewImageResult {
 
-        private String imageurl;
+        private String imageUrl;
 
         private int sequence;
 
         public static ReviewImageResult of(String imageurl, int sequence) {
             ReviewImageResult reviewImageResult = new ReviewImageResult();
-            reviewImageResult.setImageurl(imageurl);
+            reviewImageResult.setImageUrl(imageurl);
             reviewImageResult.setSequence(sequence);
             return reviewImageResult;
         }
