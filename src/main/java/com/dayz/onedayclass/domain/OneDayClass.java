@@ -52,7 +52,7 @@ public class OneDayClass extends BaseEntity {
     @JoinColumn(name = "atelier_id")
     private Atelier atelier;
 
-    public static OneDayClass of(Long id, String name, String intro, int price, Long requiredTime, int maxPeopleNumber, Category category) {
+    public static OneDayClass of(Long id, String name, String intro, int price, Long requiredTime, int maxPeopleNumber, Category category, Atelier atelier) {
         OneDayClass oneDayClass = new OneDayClass();
         oneDayClass.setId(id);
         oneDayClass.setName(name);
@@ -65,7 +65,7 @@ public class OneDayClass extends BaseEntity {
         return oneDayClass;
     }
 
-    public static OneDayClass of(String name, String intro, int price, Long requiredTime, int maxPeopleNumber, Category category) {
+    public static OneDayClass of(String name, String intro, int price, Long requiredTime, int maxPeopleNumber, Category category, Atelier atelier) {
         OneDayClass oneDayClass = new OneDayClass();
         oneDayClass.setName(name);
         oneDayClass.setIntro(intro);
