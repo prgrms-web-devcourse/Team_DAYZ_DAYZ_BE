@@ -82,7 +82,7 @@ class ReviewControllerTest {
     @Test
     @DisplayName("공방 별 후기 전체 조회 컨트롤러 테스트")
     void getAtelierReviews() throws Exception {
-        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/reviews/{atelierId}",1)
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/reviews/atelier/{atelierId}",1)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(CustomPageRequest.of(0, 10, CustomSort.of("createdAt", "ASC"))))
                 .header("Authorization", token))

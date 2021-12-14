@@ -62,7 +62,7 @@ public class ReviewImage extends BaseEntity {
             int sequence,
             Review review
     ) {
-        Assert.notNull(imageFileName,"ReviewImage의 imageUrl 값이 null입니다");
+        Assert.notNull(imageFileName,"ReviewImage의 imageFileName 값이 null입니다");
         Assert.notNull(sequence,"ReviewImage sequence null 입니다.");
 
         ReviewImage reviewImage = new ReviewImage();
@@ -76,20 +76,21 @@ public class ReviewImage extends BaseEntity {
     }
     public static ReviewImage of(String imageFileName,
         int sequence) {
-        Assert.notNull(imageFileName,"ReviewImage의 imageUrl 값이 null입니다");
+        Assert.notNull(imageFileName,"ReviewImage의 imageFileName 값이 null입니다");
         Assert.notNull(sequence,"ReviewImage sequence null 입니다.");
 
         ReviewImage reviewImage = new ReviewImage();
         reviewImage.setImageFileName(imageFileName);
         reviewImage.setSequence(sequence);
+
         return reviewImage;
     }
 
     public void changeReview(Review review) {
         if (Objects.nonNull(this.review)) {
-            review.getReviewImage().remove(this);
+            review.getReviewImages().remove(this);
         }
-        review.getReviewImage().add(this);
+        review.getReviewImages().add(this);
         this.review = review;
     }
 

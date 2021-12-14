@@ -115,7 +115,7 @@ class ReviewServiceTest {
                 review.getMember().getUsername(), review.getMember().getProfileImageUrl()),
             OneDayClassResult.of(review.getOneDayClass().getId(),
                 review.getOneDayClass().getName()),
-            review.getReviewImage().stream()
+            review.getReviewImages().stream()
                 .map(reviewImage -> ReviewImageResult.of(reviewImage.getImageFileName(),
                     reviewImage.getSequence())).collect(Collectors.toList()));
 
@@ -144,7 +144,7 @@ class ReviewServiceTest {
                 review.getMember().getUsername(), review.getMember().getProfileImageUrl()),
             com.dayz.review.dto.ReadAllAtelierReviewsResponse.OneDayClassResult.of(review.getOneDayClass().getId(),
                 review.getOneDayClass().getName()),
-            review.getReviewImage().stream()
+            review.getReviewImages().stream()
                 .map(reviewImage -> ReadAllAtelierReviewsResponse.ReviewImageResult.of(reviewImage.getImageFileName(),
                     reviewImage.getSequence())).collect(Collectors.toList()));
 
