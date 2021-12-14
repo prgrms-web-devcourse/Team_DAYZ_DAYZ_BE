@@ -86,7 +86,7 @@ public class Atelier extends BaseEntity {
         this.setAddress(address);
     }
 
-    private void changeMember(Member member) {
+    public void changeMember(Member member) {
         this.setMember(member);
     }
 

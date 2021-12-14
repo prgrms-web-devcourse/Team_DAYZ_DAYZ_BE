@@ -108,4 +108,12 @@ public class Member extends BaseEntity {
         this.setAddress(address);
     }
 
+    public void changeAtelier(Atelier atelier) {
+        atelier.changeMember(this);
+    }
+
+    public void changePermission(Permission permission) {
+        this.setPermission(permission);
+    }
+
 }
