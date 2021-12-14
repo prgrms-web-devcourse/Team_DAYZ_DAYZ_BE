@@ -14,7 +14,7 @@ public class JwtAuthentication {
 
   public final String providerId;
 
-  JwtAuthentication(Long id, String providerId, String token, String username) {
+  public JwtAuthentication(Long id, String providerId, String token, String username) {
 //    checkArgument(isNotEmpty(token), "token must be provided.");
 //    checkArgument(isNotEmpty(username), "username must be provided.");
     Assert.notNull(id, "id must not be null!");
