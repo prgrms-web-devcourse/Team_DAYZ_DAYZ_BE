@@ -3,6 +3,7 @@ package com.dayz.comment.controller;
 import com.dayz.comment.dto.CommentCreateRequest;
 import com.dayz.comment.service.CommentService;
 import com.dayz.common.dto.ApiResponse;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +19,6 @@ public class CommentController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse createComment(CommentCreateRequest request) {
-        return ApiResponse.ok(commentService.save(request));
+        return ApiResponse.ok(Map.of("commentId",commentService.save(request)));
     }
 }
