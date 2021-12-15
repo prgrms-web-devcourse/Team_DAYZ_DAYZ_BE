@@ -37,14 +37,14 @@ public class PostCreateRequest {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class PostImagesRequest {
 
-        private String fileName;
+        private String imageUrl;
 
         private int sequence;
 
-        public static PostImagesRequest of(String fileName, int sequence) {
+        public static PostImagesRequest of(String imageUrl, int sequence) {
             PostImagesRequest postImagesRequest = new PostImagesRequest();
             postImagesRequest.setSequence(sequence);
-            postImagesRequest.setFileName(fileName);
+            postImagesRequest.setImageUrl(imageUrl);
 
             return postImagesRequest;
         }

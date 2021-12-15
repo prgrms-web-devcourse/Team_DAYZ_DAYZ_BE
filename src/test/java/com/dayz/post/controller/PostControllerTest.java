@@ -68,7 +68,7 @@ class PostControllerTest {
         OneDayClass oneDayClass = OneDayClass.of(1L,"원데이클래스", "클래스설명", 30000, 2310923000L, 5, category);
         Member member = Member.of("TestMember", "kakao", "1231424", "url", permission, address);
         WorkTime workTime = WorkTime.of(2020202020L, 202020202020L);
-        Atelier atelier = Atelier.of(1L, "공방", address, "100", "intro", workTime, "01010101010", "image", member);
+        Atelier atelier = Atelier.of(1L, "공방", address, "100", "intro", workTime, "01010101010",member);
 
         atelierRepository.save(atelier);
 

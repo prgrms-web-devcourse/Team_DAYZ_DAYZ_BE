@@ -42,7 +42,7 @@ public class PostConverter {
     }
 
     public PostImage convertToImage(PostImagesRequest postImagesRequest) {
-        return PostImage.of(postImagesRequest.getFileName(), postImagesRequest.getSequence());
+        return PostImage.of(postImagesRequest.getImageUrl(), postImagesRequest.getSequence());
     }
 
 }
