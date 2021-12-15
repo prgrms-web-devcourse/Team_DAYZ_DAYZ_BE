@@ -30,7 +30,7 @@ public class PostConverter {
 
         Atelier atelier = atelierRepository.findById(request.getAtelierId()).orElseThrow(() -> new BusinessException(ErrorInfo.ATELIER_NOT_FOUND));
         Member member = memberRepository.findById(atelier.getMember().getId()).orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
-        OneDayClass oneDayClass = oneDayClassRepository.findById(request.getOneDayClassId()).orElseThrow(() -> new BusinessException(ErrorInfo.ONEDAYCLASS_NOT_FOUND));
+        OneDayClass oneDayClass = oneDayClassRepository.findById(request.getOneDayClassId()).orElseThrow(() -> new BusinessException(ErrorInfo.ONE_DAY_CLASS_NOT_FOUND));
 
         Post post = Post.of(
                 request.getContent(),
