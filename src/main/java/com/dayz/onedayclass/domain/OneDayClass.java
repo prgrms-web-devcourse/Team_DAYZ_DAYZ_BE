@@ -59,8 +59,11 @@ public class OneDayClass extends BaseEntity {
     @OneToMany(mappedBy = "oneDayClass")
     List<OneDayClassImage> oneDayClassImages = new ArrayList<>();
 
+    @OneToMany(mappedBy = "oneDayClass")
+    List<Curriculum> curriculums = new ArrayList<>();
+
     public static OneDayClass of(Long id, String name, String intro, int price, Long requiredTime, int maxPeopleNumber, Category category,
-            Atelier atelier, List<OneDayClassImage> oneDayClassImages) {
+            Atelier atelier, List<OneDayClassImage> oneDayClassImages, List<Curriculum> curriculums) {
         OneDayClass oneDayClass = new OneDayClass();
         oneDayClass.setId(id);
         oneDayClass.setName(name);
@@ -75,11 +78,15 @@ public class OneDayClass extends BaseEntity {
             oneDayClassImages.forEach(oneDayClass::addOneDayClassImage);
         }
 
+        if (Objects.nonNull(curriculums) && curriculums.size() > 0) {
+            curriculums.forEach(oneDayClass::addCurriculum);
+        }
+
         return oneDayClass;
     }
 
     public static OneDayClass of(String name, String intro, int price, Long requiredTime, int maxPeopleNumber, Category category, Atelier atelier,
-            List<OneDayClassImage> oneDayClassImages) {
+            List<OneDayClassImage> oneDayClassImages, List<Curriculum> curriculums) {
         OneDayClass oneDayClass = new OneDayClass();
         oneDayClass.setName(name);
         oneDayClass.setIntro(intro);
@@ -93,6 +100,10 @@ public class OneDayClass extends BaseEntity {
             oneDayClassImages.forEach(oneDayClass::addOneDayClassImage);
         }
 
+        if (Objects.nonNull(curriculums) && curriculums.size() > 0) {
+            curriculums.forEach(oneDayClass::addCurriculum);
+        }
+
         return oneDayClass;
     }
 
@@ -102,6 +113,10 @@ public class OneDayClass extends BaseEntity {
 
     public void addOneDayClassImage(OneDayClassImage oneDayClassImage) {
         oneDayClassImage.changeOneDayClass(this);
+    }
+
+    public void addCurriculum(Curriculum curriculum) {
+        curriculum.changeOneDayClass(this);
     }
 
 }

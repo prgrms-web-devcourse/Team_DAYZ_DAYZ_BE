@@ -28,6 +28,7 @@ import com.dayz.review.dto.ReadAllMyReviewsResponse;
 import com.dayz.review.dto.ReadAllMyReviewsResponse.MemberResult;
 import com.dayz.review.dto.ReadAllMyReviewsResponse.OneDayClassResult;
 import com.dayz.review.dto.ReadAllMyReviewsResponse.ReviewImageResult;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
@@ -84,7 +85,7 @@ class ReviewServiceTest {
                 Atelier.of(1L, "노공방임", Address.of(1L, 3L, "서울시", "서초구"), "대륭 서초타워 2층",
                     "겁나 멋진 공방입니다.", WorkTime.of(32400000L, 68400000L), "123456789",
                     Member.of(2L, "최유저", "kakao", "20201022", null, Permission.of("ROLE_USER"),
-                        Address.of(1L, 1L, "서울시", "강남구")))), reviewImage);
+                        Address.of(1L, 1L, "서울시", "강남구"))), new ArrayList<>(), new ArrayList<>()), reviewImage);
 
         reviewResult = Review.of( 1L,"아주 재밌어용", "시간 가는줄 몰랐네요", 5,
             Member.of(1L, "김유저", "kakao", "2019948491", null, Permission.of("ROLE_USER"),
@@ -93,7 +94,7 @@ class ReviewServiceTest {
                 Atelier.of(1L, "노공방임", Address.of(1L, 3L, "서울시", "서초구"), "대륭 서초타워 2층",
                     "겁나 멋진 공방입니다.", WorkTime.of(32400000L, 68400000L), "123456789",
                     Member.of(2L, "최유저", "kakao", "20201022", null, Permission.of("ROLE_USER"),
-                        Address.of(1L, 1L, "서울시", "강남구")))), reviewImage);
+                        Address.of(1L, 1L, "서울시", "강남구"))), new ArrayList<>(), new ArrayList<>()), reviewImage);
 
         review2 = Review.of(2L, "안 재밌어용", "노잼이에용", 3,
             Member.of(2L, "박유저", "kakao", "20201022", null, Permission.of("ROLE_USER"),
@@ -102,7 +103,7 @@ class ReviewServiceTest {
                 Atelier.of(2L, "개멋진공방임", Address.of(1L, 4L, "서울시", "동작구"), "대륭 서초타워 2층", " 공방입니다.",
                     WorkTime.of(32400000L, 68400000L), "123456789",
                     Member.of(3L, "서유저", "kakao", "20201022", null, Permission.of("ROLE_USER"),
-                        Address.of(1L, 1L, "서울시", "강남구")))), reviewImage);
+                        Address.of(1L, 1L, "서울시", "강남구"))), new ArrayList<>(), new ArrayList<>()), reviewImage);
     }
 
     @Test
