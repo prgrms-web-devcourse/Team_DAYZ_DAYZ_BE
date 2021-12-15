@@ -1,12 +1,18 @@
 package com.dayz.post.controller;
 
 import com.dayz.common.dto.ApiResponse;
+import com.dayz.common.dto.CustomPageRequest;
+import com.dayz.common.dto.CustomPageResponse;
+import com.dayz.common.jwt.JwtAuthentication;
+import com.dayz.post.domain.Post;
 import com.dayz.post.dto.PostCreateRequest;
 import com.dayz.post.dto.ReadPostDetailResponse;
+import com.dayz.post.dto.ReadPostDetailsResult;
 import com.dayz.post.service.PostService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +37,19 @@ public class PostController {
         ReadPostDetailResponse response = postService.getPostDetail(postId);
 
         return ApiResponse.<ReadPostDetailResponse>ok(response);
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResponse<CustomPageResponse<ReadPostDetailsResult>> readPostDetails(
+            @AuthenticationPrincipal JwtAuthentication authentication,
+            @Valid @RequestBody CustomPageRequest request
+    ) {
+        CustomPageResponse<ReadPostDetailsResult> response = postService.getPostDetails(
+                authentication.getId(),
+                request.convertToPageRequest(Post.class)
+        );
+
+        return ApiResponse.<CustomPageResponse<ReadPostDetailsResult>>ok(response);
     }
 
 }
