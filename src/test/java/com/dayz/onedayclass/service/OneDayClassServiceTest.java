@@ -13,6 +13,7 @@ import com.dayz.common.dto.CustomPageRequest;
 import com.dayz.common.dto.CustomPageResponse;
 import com.dayz.common.dto.CustomSort;
 import com.dayz.common.util.ImageUrlUtil;
+import com.dayz.common.util.TimeUtil;
 import com.dayz.member.domain.Address;
 import com.dayz.member.domain.Member;
 import com.dayz.member.domain.Permission;
@@ -46,7 +47,7 @@ class OneDayClassServiceTest {
     private OneDayClassRepository oneDayClassRepository;
 
     @Spy
-    private OneDayClassConverter oneDayClassConverter = new OneDayClassConverter(new ImageUrlUtil());
+    private OneDayClassConverter oneDayClassConverter = new OneDayClassConverter(new ImageUrlUtil(), new TimeUtil());
 
     @Test
     @DisplayName("카테고리 별 원데이 클래스 목록을 조회 할 수 있다.")
@@ -59,11 +60,11 @@ class OneDayClassServiceTest {
         Atelier atelier = Atelier.of("개멋진공방", address, "대륭 서초타워 2층", "겁나 멋진 공방입니다.", WorkTime.of(32400000L, 68400000L), "123456789", member);
 
         List<OneDayClass> oneDayClasses = List.of(
-                OneDayClass.of(1L, "도자기 만들기 클래스 1", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>()),
-                OneDayClass.of(2L, "도자기 만들기 클래스 2", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>()),
-                OneDayClass.of(3L, "도자기 만들기 클래스 3", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>()),
-                OneDayClass.of(4L, "도자기 만들기 클래스 4", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>()),
-                OneDayClass.of(5L, "도자기 만들기 클래스 5", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>())
+                OneDayClass.of(1L, "도자기 만들기 클래스 1", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>(), new ArrayList<>()),
+                OneDayClass.of(2L, "도자기 만들기 클래스 2", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>(), new ArrayList<>()),
+                OneDayClass.of(3L, "도자기 만들기 클래스 3", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>(), new ArrayList<>()),
+                OneDayClass.of(4L, "도자기 만들기 클래스 4", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>(), new ArrayList<>()),
+                OneDayClass.of(5L, "도자기 만들기 클래스 5", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>(), new ArrayList<>())
                 );
         Page<OneDayClass> oneDayClassPage = new PageImpl<>(oneDayClasses);
 
