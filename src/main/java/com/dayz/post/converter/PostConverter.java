@@ -1,5 +1,6 @@
 package com.dayz.post.converter;
 
+import com.dayz.common.util.ImageUrlUtil;
 import com.dayz.member.domain.Member;
 import com.dayz.onedayclass.domain.OneDayClass;
 import com.dayz.post.domain.Post;
@@ -14,6 +15,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PostConverter {
 
+    private final ImageUrlUtil imageUrlUtil;
+
     public Post convertToPost(String content, Member member, OneDayClass oneDayClass, List<PostImagesRequest> postImagesRequests) {
 
         Post post = Post.of(
@@ -26,7 +29,7 @@ public class PostConverter {
     }
 
     public PostImage convertToImage(PostImagesRequest postImagesRequest) {
-        return PostImage.of(postImagesRequest.getImageUrl(), postImagesRequest.getSequence());
+        return PostImage.of(imageUrlUtil.extractFileName(postImagesRequest.getImageFileName()), postImagesRequest.getSequence());
     }
 
 }

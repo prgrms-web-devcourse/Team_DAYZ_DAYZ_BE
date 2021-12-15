@@ -44,15 +44,15 @@ public class PostCreateRequest {
     public static class PostImagesRequest {
 
         @NotBlank(message = "imageUrl must not be null.")
-        private String imageUrl;
+        private String imageFileName;
 
         @NotBlank(message = "sequence must not be null.")
         private int sequence;
 
-        public static PostImagesRequest of(String imageUrl, int sequence) {
+        public static PostImagesRequest of(String imageFileName, int sequence) {
             PostImagesRequest postImagesRequest = new PostImagesRequest();
             postImagesRequest.setSequence(sequence);
-            postImagesRequest.setImageUrl(imageUrl);
+            postImagesRequest.setImageFileName(imageFileName);
 
             return postImagesRequest;
         }
