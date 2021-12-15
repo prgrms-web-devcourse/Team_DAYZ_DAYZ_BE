@@ -3,6 +3,7 @@ package com.dayz.post.controller;
 import com.dayz.common.dto.ApiResponse;
 import com.dayz.post.dto.PostCreateRequest;
 import com.dayz.post.service.PostService;
+import java.util.Map;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -20,7 +21,7 @@ public class PostController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse createPost(@RequestBody @Valid PostCreateRequest request) {
-        return ApiResponse.ok(postService.save(request));
+        return ApiResponse.ok(Map.of("postId",postService.save(request)));
     }
 
 }
