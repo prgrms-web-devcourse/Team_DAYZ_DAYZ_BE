@@ -6,6 +6,7 @@ import com.dayz.common.dto.CustomPageRequest;
 import com.dayz.common.dto.CustomPageResponse;
 import com.dayz.member.domain.Member;
 import com.dayz.onedayclass.domain.OneDayClass;
+import com.dayz.onedayclass.dto.ReadOneDayClassDetailResponse;
 import com.dayz.onedayclass.dto.ReadOneDayClassesByCategoryResult;
 import com.dayz.onedayclass.service.OneDayClassService;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,16 @@ public class OneDayClassController {
                 .getOneDayClassesByCategory(member, categoryId, pageRequest.convertToPageRequest(OneDayClass.class));
 
         return ApiResponse.<CustomPageResponse<ReadOneDayClassesByCategoryResult>>ok(response);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(value = "/{classId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResponse<ReadOneDayClassDetailResponse> findOneDayClassesDetail(
+            @PathVariable("classId") Long classId) {
+
+        ReadOneDayClassDetailResponse response = oneDayClassService.getOneDayClassDetail(classId);
+
+        return ApiResponse.<ReadOneDayClassDetailResponse>ok(response);
     }
 
 }
