@@ -4,6 +4,7 @@ import com.dayz.atelier.domain.Atelier;
 import com.dayz.atelier.domain.AtelierRepository;
 import com.dayz.common.enums.ErrorInfo;
 import com.dayz.common.exception.BusinessException;
+import com.dayz.common.util.ImageUrlUtil;
 import com.dayz.member.domain.Member;
 import com.dayz.member.domain.MemberRepository;
 import com.dayz.onedayclass.domain.OneDayClass;
@@ -12,6 +13,7 @@ import com.dayz.post.domain.Post;
 import com.dayz.post.domain.PostImage;
 import com.dayz.post.dto.PostCreateRequest;
 import com.dayz.post.dto.PostCreateRequest.PostImagesRequest;
+import com.dayz.post.dto.ReadPostDetailResponse;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -26,11 +28,14 @@ public class PostConverter {
 
     private final MemberRepository memberRepository;
 
+    private final ImageUrlUtil imageUrlUtil;
+
     public Post convertToPost(PostCreateRequest request) {
 
         Atelier atelier = atelierRepository.findById(request.getAtelierId()).orElseThrow(() -> new BusinessException(ErrorInfo.ATELIER_NOT_FOUND));
         Member member = memberRepository.findById(atelier.getMember().getId()).orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
-        OneDayClass oneDayClass = oneDayClassRepository.findById(request.getOneDayClassId()).orElseThrow(() -> new BusinessException(ErrorInfo.ONE_DAY_CLASS_NOT_FOUND));
+        OneDayClass oneDayClass = oneDayClassRepository.findById(request.getOneDayClassId())
+                .orElseThrow(() -> new BusinessException(ErrorInfo.ONE_DAY_CLASS_NOT_FOUND));
 
         Post post = Post.of(
                 request.getContent(),
@@ -43,6 +48,33 @@ public class PostConverter {
 
     public PostImage convertToImage(PostImagesRequest postImagesRequest) {
         return PostImage.of(postImagesRequest.getFileName(), postImagesRequest.getSequence());
+    }
+
+    public ReadPostDetailResponse convertToReadPostDetailResponse(Post post) {
+        return ReadPostDetailResponse.of(
+                post.getId(),
+                post.getContent(),
+                post.getPostImages().stream()
+                        .map(this::convertToReadPostDetailPostImageResult)
+                        .collect(Collectors.toList()),
+                convertToReadPostDetailAtelierResult(post.getMember()),
+                post.getCreatedAt()
+        );
+    }
+
+    public ReadPostDetailResponse.PostImageResult convertToReadPostDetailPostImageResult(PostImage postImage) {
+        return ReadPostDetailResponse.PostImageResult.of(
+                imageUrlUtil.makeImageUrl(postImage.getImageFileName()),
+                postImage.getSequence()
+        );
+    }
+
+    public ReadPostDetailResponse.AtelierResult convertToReadPostDetailAtelierResult(Member member) {
+        return ReadPostDetailResponse.AtelierResult.of(
+                member.getAtelier().getId(),
+                member.getAtelier().getName(),
+                member.getProfileImageUrl()
+        );
     }
 
 }
