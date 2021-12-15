@@ -11,7 +11,7 @@ import com.dayz.onedayclass.domain.OneDayClassRepository;
 import com.dayz.post.converter.PostConverter;
 import com.dayz.post.domain.PostRepository;
 import com.dayz.post.dto.PostCreateRequest;
-im용port lombok.RequiredArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
