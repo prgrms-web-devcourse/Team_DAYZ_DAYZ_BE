@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @EntityGraph(attributePaths = {"address", "permission"})
-    Optional<Member> findById(@Param("id")Long id);
+    Optional<Member> findById(@Param("id") Long id);
 
     @Query("select m from Member m join fetch m.permission where m.username = :username and m.useFlag = true")
     Optional<Member> findByUsername(@Param("username") String username);

@@ -72,6 +72,7 @@ public class ReviewRepositoryImpl implements CustomRepository {
             .fetchResults();
 
         return new PageImpl<>(results.getResults(), pageable, results.getTotal());
+
     }
 
 }

@@ -1,6 +1,7 @@
 package com.dayz.post.domain;
 
 import com.dayz.common.entity.BaseEntity;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.util.Assert;
 
 @Entity
 @Getter
@@ -27,22 +29,33 @@ public class PostImage extends BaseEntity {
     @Column(name = "post_image_id")
     private Long id;
 
-    @Column(name = "image_file_name", nullable = false)
-    private String imageFileName;
+    @Column(name = "file_name", nullable = false)
+    private String fileName;
 
     @Column(name = "sequence")
     private int sequence;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
 
-    public static PostImage of(Long id, String imageFileName, int sequence, Post post) {
+    public static PostImage of(Long id, String fileName, int sequence) {
+        Assert.notNull(fileName, "FileName must not be null.");
+
         PostImage postImage = new PostImage();
         postImage.setId(id);
-        postImage.setImageFileName(imageFileName);
+        postImage.setFileName(fileName);
         postImage.setSequence(sequence);
-        postImage.setPost(post);
+
+        return postImage;
+    }
+
+    public static PostImage of(String fileName, int sequence) {
+        Assert.notNull(fileName, "FileName must not be null.");
+
+        PostImage postImage = new PostImage();
+        postImage.setFileName(fileName);
+        postImage.setSequence(sequence);
 
         return postImage;
     }

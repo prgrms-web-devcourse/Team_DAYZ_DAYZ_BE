@@ -3,6 +3,9 @@ package com.dayz.onedayclass.domain;
 import com.dayz.atelier.domain.Atelier;
 import com.dayz.category.domain.Category;
 import com.dayz.common.entity.BaseEntity;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -52,7 +56,14 @@ public class OneDayClass extends BaseEntity {
     @JoinColumn(name = "atelier_id")
     private Atelier atelier;
 
-    public static OneDayClass of(Long id, String name, String intro, int price, Long requiredTime, int maxPeopleNumber, Category category, Atelier atelier) {
+    @OneToMany(mappedBy = "oneDayClass")
+    List<OneDayClassImage> oneDayClassImages = new ArrayList<>();
+
+    @OneToMany(mappedBy = "oneDayClass")
+    List<Curriculum> curriculums = new ArrayList<>();
+
+    public static OneDayClass of(Long id, String name, String intro, int price, Long requiredTime, int maxPeopleNumber, Category category,
+            Atelier atelier, List<OneDayClassImage> oneDayClassImages, List<Curriculum> curriculums) {
         OneDayClass oneDayClass = new OneDayClass();
         oneDayClass.setId(id);
         oneDayClass.setName(name);
@@ -61,11 +72,21 @@ public class OneDayClass extends BaseEntity {
         oneDayClass.setRequiredTime(requiredTime);
         oneDayClass.setMaxPeopleNumber(maxPeopleNumber);
         oneDayClass.setCategory(category);
+        oneDayClass.changeAtelier(atelier);
+
+        if (Objects.nonNull(oneDayClassImages) && oneDayClassImages.size() > 0) {
+            oneDayClassImages.forEach(oneDayClass::addOneDayClassImage);
+        }
+
+        if (Objects.nonNull(curriculums) && curriculums.size() > 0) {
+            curriculums.forEach(oneDayClass::addCurriculum);
+        }
 
         return oneDayClass;
     }
 
-    public static OneDayClass of(String name, String intro, int price, Long requiredTime, int maxPeopleNumber, Category category, Atelier atelier) {
+    public static OneDayClass of(String name, String intro, int price, Long requiredTime, int maxPeopleNumber, Category category, Atelier atelier,
+            List<OneDayClassImage> oneDayClassImages, List<Curriculum> curriculums) {
         OneDayClass oneDayClass = new OneDayClass();
         oneDayClass.setName(name);
         oneDayClass.setIntro(intro);
@@ -73,8 +94,29 @@ public class OneDayClass extends BaseEntity {
         oneDayClass.setRequiredTime(requiredTime);
         oneDayClass.setMaxPeopleNumber(maxPeopleNumber);
         oneDayClass.setCategory(category);
+        oneDayClass.changeAtelier(atelier);
+
+        if (Objects.nonNull(oneDayClassImages) && oneDayClassImages.size() > 0) {
+            oneDayClassImages.forEach(oneDayClass::addOneDayClassImage);
+        }
+
+        if (Objects.nonNull(curriculums) && curriculums.size() > 0) {
+            curriculums.forEach(oneDayClass::addCurriculum);
+        }
 
         return oneDayClass;
+    }
+
+    public void changeAtelier(Atelier atelier) {
+        this.setAtelier(atelier);
+    }
+
+    public void addOneDayClassImage(OneDayClassImage oneDayClassImage) {
+        oneDayClassImage.changeOneDayClass(this);
+    }
+
+    public void addCurriculum(Curriculum curriculum) {
+        curriculum.changeOneDayClass(this);
     }
 
 }
