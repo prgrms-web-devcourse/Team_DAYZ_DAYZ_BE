@@ -30,10 +30,10 @@ public class PostImage extends BaseEntity {
     @Column(name = "image_file_name", nullable = false)
     private String imageFileName;
 
-    @Column(name = "sequence")
+    @Column(name = "sequence", nullable = false)
     private int sequence;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "post_id")
     private Post post;
 

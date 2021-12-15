@@ -41,11 +41,11 @@ public class Post extends BaseEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_id", nullable = false)
     private Member member;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "onedayclass_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "onedayclass_id", nullable = false)
     private OneDayClass oneDayClass;
 
     @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL, orphanRemoval = true)
