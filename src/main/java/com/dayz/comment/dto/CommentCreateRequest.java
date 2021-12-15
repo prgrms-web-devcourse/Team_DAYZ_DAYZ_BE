@@ -11,13 +11,13 @@ import lombok.Setter;
 @Setter
 public class CommentCreateRequest {
 
-//    @NotNull
+    @NotNull(message = "comment must not be null or blank.")
     private String content;
 
-    @NotNull
+    @NotNull(message = "post must not be null.")
     private Post post;
 
-    @NotNull
+    @NotNull(message = "post must not be null.")
     private Member member;
 
 }
