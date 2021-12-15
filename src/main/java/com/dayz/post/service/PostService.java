@@ -36,11 +36,9 @@ public class PostService {
     @Transactional
     public CustomPageResponse getAllPostByAtelierId(Long atelierId, CustomPageRequest pageRequest) {
         PageRequest pageable = pageRequest.convertToPageRequest(Post.class);
-//        Page<PostReadAllResult> postReadAllResults =
-//                postRepository.findPostByAtelierIdAndUseFlagTrue(atelierId, pageable)
-//                        .map(postConverter.convertToPostReadAllResult());
-        Page<Post> foundedPosts = postRepository.findPostByAtelierIdAndUseFlagTrue(atelierId, pageable);
-        Page<PostReadAllResult> postReadAllResults = foundedPosts.map(post -> postConverter.convertToPostReadAllResult(post));
+        Page<PostReadAllResult> postReadAllResults =
+                postRepository.findPostByAtelierIdAndUseFlagTrue(atelierId, pageable)
+                        .map(postConverter::convertToPostReadAllResult);
 
         return CustomPageResponse.of(postReadAllResults);
     }

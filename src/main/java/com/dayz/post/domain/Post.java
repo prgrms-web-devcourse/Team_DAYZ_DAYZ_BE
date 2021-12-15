@@ -83,7 +83,7 @@ public class Post extends BaseEntity {
     }
 
     public void addPostImages(List<PostImage> postImageList) {
-        this.postImages = postImageList;
+        postImageList.forEach(postImage -> postImage.changePost(this));
     }
 
     public void changeOneDayClass(OneDayClass oneDayClass) {

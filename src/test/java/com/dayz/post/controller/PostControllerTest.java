@@ -1,6 +1,5 @@
 package com.dayz.post.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -10,8 +9,6 @@ import com.dayz.atelier.domain.WorkTime;
 import com.dayz.category.domain.Category;
 import com.dayz.common.dto.CustomPageRequest;
 import com.dayz.common.dto.CustomSort;
-import com.dayz.common.enums.ErrorInfo;
-import com.dayz.common.exception.BusinessException;
 import com.dayz.member.domain.Address;
 import com.dayz.member.domain.Member;
 import com.dayz.member.domain.MemberRepository;
@@ -20,23 +17,21 @@ import com.dayz.onedayclass.domain.OneDayClass;
 import com.dayz.onedayclass.domain.OneDayClassRepository;
 import com.dayz.post.converter.PostConverter;
 import com.dayz.post.domain.Post;
+import com.dayz.post.domain.PostImage;
 import com.dayz.post.domain.PostImageRepository;
 import com.dayz.post.domain.PostRepository;
 import com.dayz.post.dto.PostCreateRequest;
 import com.dayz.post.dto.PostCreateRequest.PostImagesRequest;
-import com.dayz.post.dto.PostReadAllResult;
 import com.dayz.post.service.PostService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.MockMvc;
@@ -74,8 +69,6 @@ class PostControllerTest {
 
     @BeforeEach
     void setUp() {
-//    @Test
-//    public void testing() {
         Permission permission = Permission.of("USER");
         Address address = Address.of(1L, 1L, "서울시", "송파구");
         Category category = Category.of("도자기");
@@ -98,17 +91,41 @@ class PostControllerTest {
         Post post4 = Post.of(4L, "content4", member1, oneDayClass);
         Post post5 = Post.of(5L, "content5", member1, oneDayClass);
 
+        List<PostImage> postImagesRequests = new ArrayList<>();
+
+        postImagesRequests.add(PostImage.of("image1", 1));
+        postImagesRequests.add(PostImage.of("image2", 2));
+        postImagesRequests.add(PostImage.of("image3", 3));
+        post1.addPostImages(postImagesRequests);
         postRepository.save(post1);
+
+        postImagesRequests.clear();
+        postImagesRequests.add(PostImage.of("image1", 1));
+        postImagesRequests.add(PostImage.of("image2", 2));
+        postImagesRequests.add(PostImage.of("image3", 3));
+        post2.addPostImages(postImagesRequests);
         postRepository.save(post2);
+
+        postImagesRequests.clear();
+        postImagesRequests.add(PostImage.of("image1", 1));
+        postImagesRequests.add(PostImage.of("image2", 2));
+        postImagesRequests.add(PostImage.of("image3", 3));
+        post3.addPostImages(postImagesRequests);
         postRepository.save(post3);
+
+        postImagesRequests.clear();
+        postImagesRequests.add(PostImage.of("image1", 1));
+        postImagesRequests.add(PostImage.of("image2", 2));
+        postImagesRequests.add(PostImage.of("image3", 3));
+        post4.addPostImages(postImagesRequests);
         postRepository.save(post4);
+
+        postImagesRequests.clear();
+        postImagesRequests.add(PostImage.of("image1", 1));
+        postImagesRequests.add(PostImage.of("image2", 2));
+        postImagesRequests.add(PostImage.of("image3", 3));
+        post5.addPostImages(postImagesRequests);
         postRepository.save(post5);
-
-//        List<Post> by2 = postRepository.findPostByAtelierIdAndUseFlagTrue2(1L);
-//
-//        List<Post> byId = postRepository.findAll();
-//        byId.forEach(post -> System.out.println("post Id : "+post.getId() + " / member Id : " + post.getMember().getId() + " / atelier Id : " + post.getMember().getAtelier().getId()));
-
     }
 
     @Test
@@ -141,7 +158,7 @@ class PostControllerTest {
 
         mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/posts/ateliers/{atelierId}", atelier.getId())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(CustomPageRequest.of(1, 10, CustomSort.of("createdAt", "ASC")))))
+                .content(objectMapper.writeValueAsString(CustomPageRequest.of(0, 10, CustomSort.of("createdAt", "ASC")))))
                 .andDo(print());
 
     }
