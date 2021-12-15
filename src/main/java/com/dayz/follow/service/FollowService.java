@@ -21,14 +21,19 @@ public class FollowService {
 
     private final AtelierRepository atelierRepository;
 
-    public Long following(Long memberId, Long atelierId) {
+    public boolean followingUnfollowing(Long memberId, Long atelierId) {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
         Atelier atelier = atelierRepository.findById(atelierId).orElseThrow(() -> new BusinessException(ErrorInfo.ATELIER_NOT_FOUND));
 
-        return followRepository.save(Follow.of(member, atelier)).getId();
+        if (followRepository.existsByMemberIdAndAtelierId(memberId, atelierId)) {
+            Follow follow = followRepository.findByMemberIdAndAtelierId(memberId, atelierId);
+            follow.changeUseFlag(false);
+            followRepository.save(follow);
+            return false;
+        } else {
+            followRepository.save(Follow.of(member, atelier));
+            return true;
+        }
     }
-    public void unFollowing(Long memberId, Long atelierId) {
-        Follow followFindByIds = followRepository.findByMemberIdAndAtelierId(memberId, atelierId);
-        followRepository.deleteById(followFindByIds.getId());
-    }
+
 }

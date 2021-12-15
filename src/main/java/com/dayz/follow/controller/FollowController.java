@@ -6,7 +6,6 @@ import com.dayz.follow.service.FollowService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,13 +19,8 @@ public class FollowController {
     private final FollowService followService;
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ApiResponse following(@RequestBody @Valid FollowRequest request) {
-        return ApiResponse.ok(followService.following(request.getMemberId(), request.getAtelierId()));
-    }
-
-    @DeleteMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void unFollowing(@RequestBody @Valid FollowRequest request) {
-        followService.unFollowing(request.getMemberId(), request.getAtelierId());
+    public ApiResponse followingUnfollowing(@RequestBody @Valid FollowRequest request) {
+        return ApiResponse.ok(followService.followingUnfollowing(request.getMemberId(), request.getAtelierId()));
     }
 
 }

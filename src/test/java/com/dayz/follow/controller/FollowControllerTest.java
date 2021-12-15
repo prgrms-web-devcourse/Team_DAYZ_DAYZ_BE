@@ -61,6 +61,7 @@ class FollowControllerTest {
         WorkTime workTime = WorkTime.of(202002020L, 2020202020L);
         Atelier atelier = Atelier.of("atelier", address, "100", "intro Test", workTime, "123-123-123", memberRepository.findAll().get(0));
         atelierRepository.save(atelier);
+
     }
 
     @Test
@@ -84,16 +85,16 @@ class FollowControllerTest {
         List<Member> memberAll = memberRepository.findAll();
         List<Atelier> atelierAll = atelierRepository.findAll();
 
-        followService.following(memberAll.get(0).getId(), atelierAll.get(0).getId());
+        followService.followingUnfollowing(memberAll.get(0).getId(), atelierAll.get(0).getId());
 
         FollowRequest fr = FollowRequest.of(memberAll.get(0).getId(), atelierAll.get(0).getId());
 
-        mockMvc.perform(delete("/api/v1/follows")
+        mockMvc.perform(post("/api/v1/follows")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(objectMapper.writeValueAsString(fr)))
                 .andDo(print());
 
-        List<Follow> all2 = followRepository.findAll();
-        assertThat(all2.size(), is(0));
+        assertThat(followRepository.findAll().get(0).isUseFlag(), is(false));
     }
+
 }
