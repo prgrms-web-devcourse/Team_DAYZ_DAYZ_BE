@@ -38,6 +38,12 @@ public class ReviewController {
         return ApiResponse.ok(reviewService.getAllAtelierReviews(pageRequest, atelierId));
     }
 
+    @GetMapping(value = "/reviews/classes/{classId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResponse<CustomPageResponse> getOneDayClassReviews(
+        @PathVariable("classId") Long classId, @RequestBody CustomPageRequest pageRequest) {
+        return ApiResponse.ok(reviewService.getAllOneDayClassReviews(pageRequest, classId));
+    }
+
     @PostMapping(value = "/reviews", produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<Map<String,Long>> saveReviews(@LoginMember Member member,@Valid @RequestBody SaveReviewRequest saveReviewRequest) {
         return ApiResponse.ok(Map.of("reviewId",reviewService.saveReview(saveReviewRequest, member)));
