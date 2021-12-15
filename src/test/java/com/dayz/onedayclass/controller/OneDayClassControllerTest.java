@@ -88,11 +88,11 @@ class OneDayClassControllerTest {
         atelierRepository.save(atelier);
 
         List<OneDayClass> oneDayClasses = List.of(
-                OneDayClass.of("도자기 만들기 클래스 1", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>()),
-                OneDayClass.of("도자기 만들기 클래스 2", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>()),
-                OneDayClass.of("도자기 만들기 클래스 3", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>()),
-                OneDayClass.of("도자기 만들기 클래스 4", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>()),
-                OneDayClass.of("도자기 만들기 클래스 5", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>())
+                OneDayClass.of("도자기 만들기 클래스 1", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>(), new ArrayList<>()),
+                OneDayClass.of("도자기 만들기 클래스 2", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>(), new ArrayList<>()),
+                OneDayClass.of("도자기 만들기 클래스 3", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>(), new ArrayList<>()),
+                OneDayClass.of("도자기 만들기 클래스 4", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>(), new ArrayList<>()),
+                OneDayClass.of("도자기 만들기 클래스 5", "도자기 만들기 입니다.", 14000, 50000L, 10, category, atelier, new ArrayList<>(), new ArrayList<>())
         );
         oneDayClassRepository.saveAll(oneDayClasses);
 
