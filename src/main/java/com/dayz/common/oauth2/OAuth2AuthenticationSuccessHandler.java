@@ -25,15 +25,21 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
 
     public final String REDIRECT_URI_PARAM_COOKIE_NAME = "redirect_uri";
+
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     private final Jwt jwt;
 
     private final MemberService memberService;
 
-    public OAuth2AuthenticationSuccessHandler(Jwt jwt, MemberService memberService) {
+    private final HttpCookieOAuth2AuthorizationRequestRepository authorizationRequestRepository;
+
+
+    public OAuth2AuthenticationSuccessHandler(Jwt jwt, MemberService memberService,
+            HttpCookieOAuth2AuthorizationRequestRepository authorizationRequestRepository) {
         this.jwt = jwt;
         this.memberService = memberService;
+        this.authorizationRequestRepository = authorizationRequestRepository;
     }
 
     @Override
@@ -51,6 +57,8 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
             String token = generateToken(member);
 
             String targetUrl = determineTargetUrl(request, response, token, member);
+
+            clearAuthenticationAttributes(request, response);
             getRedirectStrategy().sendRedirect(request, response, targetUrl);
         } else {
             super.onAuthenticationSuccess(request, response, authentication);
@@ -74,7 +82,6 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
 //        if(redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
 //            throw new IllegalArgumentException("Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication");
 //        }
-
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
 
         String auth = member.getPermission().getName();
@@ -100,6 +107,11 @@ public class OAuth2AuthenticationSuccessHandler extends SavedRequestAwareAuthent
             }
         }
         return Optional.empty();
+    }
+
+    protected void clearAuthenticationAttributes(HttpServletRequest request, HttpServletResponse response) {
+        super.clearAuthenticationAttributes(request);
+        authorizationRequestRepository.removeAuthorizationRequestCookies(request, response);
     }
 
     private String generateLoginSuccessJson(Member member) throws JsonProcessingException {

@@ -20,7 +20,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
 @DisplayName("AddressController 통합 테스트")
 class AddressControllerTest {
 
@@ -51,6 +50,8 @@ class AddressControllerTest {
     @Test
     @DisplayName("주소 목록을 조회 할 수 있다.")
     void addresses() throws Exception {
+        // given
+        // when // then
         mockMvc.perform(get("/api/v1/addresses"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());

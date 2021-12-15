@@ -28,7 +28,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
 @DisplayName("MemberController 통합 테스트")
 class MemberControllerTest {
 
