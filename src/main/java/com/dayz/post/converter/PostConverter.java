@@ -14,6 +14,7 @@ import com.dayz.post.domain.PostImage;
 import com.dayz.post.dto.PostCreateRequest;
 import com.dayz.post.dto.PostCreateRequest.PostImagesRequest;
 import com.dayz.post.dto.ReadPostDetailResponse;
+import com.dayz.post.dto.ReadPostDetailsResult;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -71,6 +72,34 @@ public class PostConverter {
 
     public ReadPostDetailResponse.AtelierResult convertToReadPostDetailAtelierResult(Member member) {
         return ReadPostDetailResponse.AtelierResult.of(
+                member.getAtelier().getId(),
+                member.getAtelier().getName(),
+                member.getProfileImageUrl()
+        );
+    }
+
+    public ReadPostDetailsResult convertToReadPostDetailsResult(Post post) {
+        return ReadPostDetailsResult.of(
+                post.getId(),
+                post.getContent(),
+                post.getPostImages().stream()
+                        .map(this::convertToReadPostDetailsPostImageResult)
+                        .collect(Collectors.toList()),
+                convertToReadPostDetailsAtelierResult(post.getMember()),
+                post.getOneDayClass().getId(),
+                post.getCreatedAt()
+        );
+    }
+
+    public ReadPostDetailsResult.PostImageResult convertToReadPostDetailsPostImageResult(PostImage postImage) {
+        return ReadPostDetailsResult.PostImageResult.of(
+                imageUrlUtil.makeImageUrl(postImage.getImageFileName()),
+                postImage.getSequence()
+        );
+    }
+
+    public ReadPostDetailsResult.AtelierResult convertToReadPostDetailsAtelierResult(Member member) {
+        return ReadPostDetailsResult.AtelierResult.of(
                 member.getAtelier().getId(),
                 member.getAtelier().getName(),
                 member.getProfileImageUrl()
