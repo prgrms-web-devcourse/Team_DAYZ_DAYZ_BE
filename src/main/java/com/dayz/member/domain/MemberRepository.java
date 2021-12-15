@@ -18,6 +18,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByProviderAndProviderId(@Param("provider") String provider, @Param("providerId") String providerId);
 
     @Query("select m from Member m where m.id = :memberId and m.useFlag = true")
-    Member findMemberByIdAndUseFlagIsTrue(@Param("memberId") Long memberId);
+    Optional<Member> findMemberByIdAndUseFlagIsTrue(@Param("memberId") Long memberId);
 
 }

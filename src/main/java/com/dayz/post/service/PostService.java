@@ -2,20 +2,16 @@ package com.dayz.post.service;
 
 import com.dayz.atelier.domain.Atelier;
 import com.dayz.atelier.domain.AtelierRepository;
-import com.dayz.common.dto.CustomPageRequest;
-import com.dayz.common.dto.CustomPageResponse;
+import com.dayz.common.enums.ErrorInfo;
+import com.dayz.common.exception.BusinessException;
 import com.dayz.member.domain.Member;
 import com.dayz.member.domain.MemberRepository;
 import com.dayz.onedayclass.domain.OneDayClass;
 import com.dayz.onedayclass.domain.OneDayClassRepository;
 import com.dayz.post.converter.PostConverter;
-import com.dayz.post.domain.Post;
 import com.dayz.post.domain.PostRepository;
 import com.dayz.post.dto.PostCreateRequest;
-import com.dayz.post.dto.PostReadAllResult;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,9 +31,12 @@ public class PostService {
 
     @Transactional
     public Long save(PostCreateRequest request) {
-        Atelier atelier = atelierRepository.findAtelierByIdAAndUseFlagIsTrue(request.getAtelierId());
-        Member member = memberRepository.findMemberByIdAndUseFlagIsTrue(atelier.getMember().getId());
-        OneDayClass oneDayClass = oneDayClassRepository.findOneDayClassByIdAAndUseFlagIsTrue(request.getOneDayClassId());
+        Atelier atelier = atelierRepository.findAtelierByIdAAndUseFlagIsTrue(request.getAtelierId())
+                .orElseThrow(() -> new BusinessException(ErrorInfo.ATELIER_NOT_FOUND));
+        Member member = memberRepository.findMemberByIdAndUseFlagIsTrue(atelier.getMember().getId())
+                .orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
+        OneDayClass oneDayClass = oneDayClassRepository.findOneDayClassByIdAAndUseFlagIsTrue(request.getOneDayClassId())
+                .orElseThrow(() -> new BusinessException(ErrorInfo.ONEDAYCLASS_NOT_FOUND));
 
         return postRepository.save(
                 postConverter.convertToPost(
@@ -45,16 +44,6 @@ public class PostService {
                         member,
                         oneDayClass,
                         request.getPostImages())).getId();
-    }
-
-    @Transactional
-    public CustomPageResponse getAllPostByAtelierId(Long atelierId, CustomPageRequest pageRequest) {
-        PageRequest pageable = pageRequest.convertToPageRequest(Post.class);
-        Page<PostReadAllResult> postReadAllResults =
-                postRepository.findPostByAtelierIdAndUseFlagTrue(atelierId, pageable)
-                        .map(postConverter::convertToPostReadAllResult);
-
-        return CustomPageResponse.of(postReadAllResults);
     }
 
 }
