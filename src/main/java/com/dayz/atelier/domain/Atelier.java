@@ -3,6 +3,7 @@ package com.dayz.atelier.domain;
 import com.dayz.common.entity.BaseEntity;
 import com.dayz.member.domain.Address;
 import com.dayz.member.domain.Member;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -34,7 +35,7 @@ public class Atelier extends BaseEntity {
     @Column(name = "name", nullable = false, length = 50)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
 
@@ -50,7 +51,7 @@ public class Atelier extends BaseEntity {
     @Column(name = "business_number", nullable = false, length = 20)
     private String businessNumber;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "member_id")
     private Member member;
 

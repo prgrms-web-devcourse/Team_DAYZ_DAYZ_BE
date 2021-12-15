@@ -1,5 +1,6 @@
 package com.dayz.post.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
@@ -7,27 +8,37 @@ import com.dayz.atelier.domain.Atelier;
 import com.dayz.atelier.domain.AtelierRepository;
 import com.dayz.atelier.domain.WorkTime;
 import com.dayz.category.domain.Category;
+import com.dayz.common.dto.CustomPageRequest;
+import com.dayz.common.dto.CustomSort;
+import com.dayz.common.enums.ErrorInfo;
+import com.dayz.common.exception.BusinessException;
 import com.dayz.member.domain.Address;
 import com.dayz.member.domain.Member;
 import com.dayz.member.domain.MemberRepository;
 import com.dayz.member.domain.Permission;
 import com.dayz.onedayclass.domain.OneDayClass;
 import com.dayz.onedayclass.domain.OneDayClassRepository;
+import com.dayz.post.converter.PostConverter;
 import com.dayz.post.domain.Post;
 import com.dayz.post.domain.PostImageRepository;
 import com.dayz.post.domain.PostRepository;
 import com.dayz.post.dto.PostCreateRequest;
 import com.dayz.post.dto.PostCreateRequest.PostImagesRequest;
+import com.dayz.post.dto.PostReadAllResult;
 import com.dayz.post.service.PostService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
@@ -58,25 +69,53 @@ class PostControllerTest {
     @Autowired
     MemberRepository memberRepository;
 
-    @Test
-    @DisplayName("게시글을 생성 할 수 있다")
-    public void createPost() throws Exception {
+    @Autowired
+    PostConverter postConverter;
 
+    @BeforeEach
+    void setUp() {
+//    @Test
+//    public void testing() {
         Permission permission = Permission.of("USER");
         Address address = Address.of(1L, 1L, "서울시", "송파구");
         Category category = Category.of("도자기");
         OneDayClass oneDayClass = OneDayClass.of(1L,"원데이클래스", "클래스설명", 30000, 2310923000L, 5, category);
-        Member member = Member.of("TestMember", "kakao", "1231424", "url", permission, address);
+        Member member = Member.of(1L,"TestMember", "kakao", "1231424", "url", permission, address);
         WorkTime workTime = WorkTime.of(2020202020L, 202020202020L);
-        Atelier atelier = Atelier.of(1L, "공방", address, "100", "intro", workTime, "01010101010", "image", member);
+        Atelier atelier = Atelier.of(3L,"공방",address,"100번지","intro",workTime,"0101",member);
 
         atelierRepository.save(atelier);
+        memberRepository.save(member);
+        oneDayClassRepository.save(oneDayClass);
 
         Atelier atelier1 = atelierRepository.findAll().get(0);
+        Member member1 = memberRepository.findAll().get(0);
+        member1.changeAtelier(atelier1);
 
-        memberRepository.save(member);
+        Post post1 = Post.of(1L, "content1", member1, oneDayClass);
+        Post post2 = Post.of(2L, "content2", member1, oneDayClass);
+        Post post3 = Post.of(3L, "content3", member1, oneDayClass);
+        Post post4 = Post.of(4L, "content4", member1, oneDayClass);
+        Post post5 = Post.of(5L, "content5", member1, oneDayClass);
 
-        oneDayClassRepository.save(oneDayClass);
+        postRepository.save(post1);
+        postRepository.save(post2);
+        postRepository.save(post3);
+        postRepository.save(post4);
+        postRepository.save(post5);
+
+//        List<Post> by2 = postRepository.findPostByAtelierIdAndUseFlagTrue2(1L);
+//
+//        List<Post> byId = postRepository.findAll();
+//        byId.forEach(post -> System.out.println("post Id : "+post.getId() + " / member Id : " + post.getMember().getId() + " / atelier Id : " + post.getMember().getAtelier().getId()));
+
+    }
+
+    @Test
+    @DisplayName("게시글을 생성 할 수 있다")
+    public void createPost() throws Exception {
+
+        Atelier atelier1 = atelierRepository.findAll().get(0);
 
         OneDayClass oneDayClass1 = oneDayClassRepository.findAll().get(0);
 
@@ -94,4 +133,16 @@ class PostControllerTest {
                         .andDo(print());
     }
 
+    @Test
+    @DisplayName("공방의 게시글 목록을 불러온다")
+    public void readAllPosts() throws Exception{
+
+        Atelier atelier = atelierRepository.findAll().get(0);
+
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/posts/ateliers/{atelierId}", atelier.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(CustomPageRequest.of(1, 10, CustomSort.of("createdAt", "ASC")))))
+                .andDo(print());
+
+    }
 }

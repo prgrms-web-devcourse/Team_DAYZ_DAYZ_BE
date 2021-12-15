@@ -2,7 +2,12 @@ package com.dayz.member.domain;
 
 import com.dayz.atelier.domain.Atelier;
 import com.dayz.common.entity.BaseEntity;
+import com.dayz.post.domain.Post;
+import com.dayz.post.domain.PostImage;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -12,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.AccessLevel;
@@ -44,15 +50,15 @@ public class Member extends BaseEntity {
     @Column(name = "profile_image_url")
     private String profileImageUrl;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "permission_id")
     private Permission permission;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @OneToOne(optional = false, mappedBy = "member")
+    @OneToOne(fetch = FetchType.EAGER, optional = false, mappedBy = "member", cascade = CascadeType.ALL)
     private Atelier atelier;
 
     public static Member of(Long id,
@@ -106,6 +112,10 @@ public class Member extends BaseEntity {
 
     public void changeAddress(Address address) {
         this.setAddress(address);
+    }
+
+    public void changeAtelier(Atelier atelier) {
+        this.setAtelier(atelier);
     }
 
 }

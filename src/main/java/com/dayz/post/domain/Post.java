@@ -40,15 +40,15 @@ public class Post extends BaseEntity {
     @Column(name = "content", nullable = false, length = 1000)
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "onedayclass_id")
     private OneDayClass oneDayClass;
 
-    @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "post" , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostImage> postImages = new ArrayList<>();
 
     public static Post of(Long id, String content, Member member, OneDayClass oneDayClass) {
@@ -60,7 +60,7 @@ public class Post extends BaseEntity {
         post.setId(id);
         post.setContent(content);
         post.changeMember(member);
-        post.changeClass(oneDayClass);
+        post.changeOneDayClass(oneDayClass);
 
         return post;
     }
@@ -73,17 +73,13 @@ public class Post extends BaseEntity {
         Post post = new Post();
         post.setContent(content);
         post.changeMember(member);
-        post.changeClass(oneDayClass);
+        post.changeOneDayClass(oneDayClass);
 
         return post;
     }
 
     public void changeMember(Member member) {
         this.setMember(member);
-    }
-
-    public void changeClass(OneDayClass oneDayClass) {
-        this.setOneDayClass(oneDayClass);
     }
 
     public void addPostImages(List<PostImage> postImageList) {
