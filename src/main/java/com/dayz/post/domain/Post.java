@@ -90,8 +90,4 @@ public class Post extends BaseEntity {
         this.postImages = postImageList;
     }
 
-    public void changeOneDayClass(OneDayClass oneDayClass) {
-        this.setOneDayClass(oneDayClass);
-    }
-
 }

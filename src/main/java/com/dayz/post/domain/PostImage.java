@@ -1,10 +1,8 @@
 package com.dayz.post.domain;
 
 import com.dayz.common.entity.BaseEntity;
-import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,8 +27,8 @@ public class PostImage extends BaseEntity {
     @Column(name = "post_image_id")
     private Long id;
 
-    @Column(name = "file_name", nullable = false)
-    private String fileName;
+    @Column(name = "image_file_name", nullable = false)
+    private String imageFileName;
 
     @Column(name = "sequence")
     private int sequence;
@@ -39,29 +37,25 @@ public class PostImage extends BaseEntity {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    public static PostImage of(Long id, String fileName, int sequence) {
-        Assert.notNull(fileName, "FileName must not be null.");
+    public static PostImage of(Long id, String imageFileName, int sequence) {
+        Assert.notNull(imageFileName, "ImageFileName must not be null.");
 
         PostImage postImage = new PostImage();
         postImage.setId(id);
-        postImage.setFileName(fileName);
+        postImage.setImageFileName(imageFileName);
         postImage.setSequence(sequence);
 
         return postImage;
     }
 
-    public static PostImage of(String fileName, int sequence) {
-        Assert.notNull(fileName, "FileName must not be null.");
+    public static PostImage of(String imageFileName, int sequence) {
+        Assert.notNull(imageFileName, "ImageFileName must not be null.");
 
         PostImage postImage = new PostImage();
-        postImage.setFileName(fileName);
+        postImage.setImageFileName(imageFileName);
         postImage.setSequence(sequence);
 
         return postImage;
-    }
-
-    public void changePost(Post post) {
-        this.setPost(post);
     }
 
 }
