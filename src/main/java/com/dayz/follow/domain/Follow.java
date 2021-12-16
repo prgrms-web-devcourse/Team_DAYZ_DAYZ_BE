@@ -36,7 +36,6 @@ public class Follow extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "atelier_id")
     private Atelier atelier;

@@ -11,10 +11,10 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FollowRequest {
 
-    @NotNull
+    @NotNull(message = "memberId must not be null.")
     private Long memberId;
 
-    @NotNull
+    @NotNull(message = "atelierId must not be null.")
     private Long atelierId;
 
     public static FollowRequest of(Long memberId, Long atelierId) {
