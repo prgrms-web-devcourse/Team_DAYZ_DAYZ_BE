@@ -10,14 +10,14 @@ public class ApiResponse<T> {
 
     private boolean success;
 
-    private T payload;
+    private T data;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime serverDatetime;
 
-    protected ApiResponse(boolean success, T payload) {
+    protected ApiResponse(boolean success, T data) {
         this.success = success;
-        this.payload = payload;
+        this.data = data;
         this.serverDatetime = LocalDateTime.now();
     }
 

@@ -1,7 +1,7 @@
 package com.dayz.onedayclass.domain;
 
 import com.dayz.common.entity.BaseEntity;
-import java.util.UUID;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -47,7 +47,7 @@ public class OneDayClassImage extends BaseEntity {
         oneDayClassImage.setId(id);
         oneDayClassImage.setImageFileName(imageFileName);
         oneDayClassImage.setSequence(sequence);
-        oneDayClassImage.setOneDayClass(oneDayClass);
+        oneDayClassImage.changeOneDayClass(oneDayClass);
 
         return oneDayClassImage;
     }
@@ -60,9 +60,17 @@ public class OneDayClassImage extends BaseEntity {
         OneDayClassImage oneDayClassImage = new OneDayClassImage();
         oneDayClassImage.setImageFileName(imageFileName);
         oneDayClassImage.setSequence(sequence);
-        oneDayClassImage.setOneDayClass(oneDayClass);
+        oneDayClassImage.changeOneDayClass(oneDayClass);
 
         return oneDayClassImage;
+    }
+
+    public void changeOneDayClass(OneDayClass oneDayClass) {
+        if (Objects.nonNull(oneDayClass)) {
+            oneDayClass.getOneDayClassImages().remove(this);
+        }
+        this.setOneDayClass(oneDayClass);
+        oneDayClass.getOneDayClassImages().add(this);
     }
 
 }

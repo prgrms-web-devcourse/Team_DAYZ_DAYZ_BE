@@ -55,7 +55,7 @@ cors:
   allowed-headers: '*'
   max-age: 3600
 server:
-  port: 8080
+  port: 63458
 jwt:
   header: Authorization
   issuer: dayz

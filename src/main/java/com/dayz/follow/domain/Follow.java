@@ -3,6 +3,8 @@ package com.dayz.follow.domain;
 import com.dayz.atelier.domain.Atelier;
 import com.dayz.common.entity.BaseEntity;
 import com.dayz.member.domain.Member;
+import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,6 +18,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.util.Assert;
 
 @Entity
 @Getter
@@ -29,6 +32,7 @@ public class Follow extends BaseEntity {
     @Column(name = "follow_id")
     private Long id;
 
+    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
@@ -38,6 +42,9 @@ public class Follow extends BaseEntity {
     private Atelier atelier;
 
     public static Follow of(Long id, Member member, Atelier atelier) {
+        Assert.notNull(member, "Member must not be null.");
+        Assert.notNull(atelier, "Atelier must not be null.");
+
         Follow follow = new Follow();
         follow.setId(id);
         follow.changeMember(member);
@@ -47,6 +54,9 @@ public class Follow extends BaseEntity {
     }
 
     public static Follow of(Member member, Atelier atelier) {
+        Assert.notNull(member, "Member must not be null.");
+        Assert.notNull(atelier, "Atelier must not be null.");
+
         Follow follow = new Follow();
         follow.changeMember(member);
         follow.changeAtelier(atelier);

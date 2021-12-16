@@ -18,6 +18,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.util.Assert;
 
 @Entity
 @Getter
@@ -50,7 +51,7 @@ public class Atelier extends BaseEntity {
     @Column(name = "business_number", nullable = false, length = 20)
     private String businessNumber;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
@@ -86,7 +87,7 @@ public class Atelier extends BaseEntity {
         this.setAddress(address);
     }
 
-    private void changeMember(Member member) {
+    public void changeMember(Member member) {
         this.setMember(member);
     }
 
