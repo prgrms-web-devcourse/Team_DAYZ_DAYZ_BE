@@ -17,6 +17,8 @@ public class AtelierConverter {
 
     private final TimeUtil timeUtil;
 
+    private final ImageUrlUtil imageUrlUtil;
+
     public ReadAtelierDetailResponse convertToReadAtelierDetailResponse(Atelier atelier) {
         return ReadAtelierDetailResponse.of(
                 atelier.getId(),
@@ -25,7 +27,8 @@ public class AtelierConverter {
                 getFullAddress(atelier.getAddress(), atelier.getDetail()),
                 null,
                 timeUtil.secondToTimeString(atelier.getWorkTime().getStartTime()),
-                timeUtil.secondToTimeString(atelier.getWorkTime().getEndTime())
+                timeUtil.secondToTimeString(atelier.getWorkTime().getEndTime()),
+                imageUrlUtil.makeImageUrl(atelier.getMember().getProfileImageUrl())
         );
     }
 
