@@ -2,6 +2,11 @@ package com.dayz.post.dto;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,21 +17,25 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PostCreateRequest {
 
-    private List<PostImagesRequest> postImages = new ArrayList<>();
+    @NotNull(message = "atelierId must be not null")
+    private Long atelierId;
+
+    @NotNull(message = "oneDayClassId must be not null")
+    private Long oneDayClassId;
 
     private String content;
 
-    private Long atelierId;
+    @Valid
+    @NotNull(message = "postImages must be not null")
+    private List<PostImagesRequest> images = new ArrayList<>();
 
-    private Long oneDayClassId;
-
-    public static PostCreateRequest of(String content, Long atelierId, Long oneDayClassId, List<PostImagesRequest> postImages) {
+    public static PostCreateRequest of(String content, Long atelierId, Long oneDayClassId, List<PostImagesRequest> images) {
         PostCreateRequest postCreateRequest = new PostCreateRequest();
         postCreateRequest.setContent(content);
         postCreateRequest.setAtelierId(atelierId);
         postCreateRequest.setOneDayClassId(oneDayClassId);
-        if(postImages.size() > 0) {
-            postCreateRequest.setPostImages(postImages);
+        if(images.size() > 0) {
+            postCreateRequest.setImages(images);
         }
 
         return postCreateRequest;
@@ -37,14 +46,17 @@ public class PostCreateRequest {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class PostImagesRequest {
 
-        private String fileName;
+        @NotBlank(message = "imageUrl must be not blank")
+        private String imageUrl;
 
+        @Min(value = 1, message = "sequence must be greater than 1")
+        @Positive(message = "sequence must be positive")
         private int sequence;
 
-        public static PostImagesRequest of(String fileName, int sequence) {
+        public static PostImagesRequest of(String imageUrl, int sequence) {
             PostImagesRequest postImagesRequest = new PostImagesRequest();
             postImagesRequest.setSequence(sequence);
-            postImagesRequest.setFileName(fileName);
+            postImagesRequest.setImageUrl(imageUrl);
 
             return postImagesRequest;
         }

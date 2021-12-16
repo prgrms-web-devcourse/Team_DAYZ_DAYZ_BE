@@ -44,14 +44,14 @@ public class Post extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "onedayclass_id")
     private OneDayClass oneDayClass;
 
     @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostImage> postImages = new ArrayList<>();
 
-    public static Post of(Long id, String content, Member member, OneDayClass oneDayClass) {
+    public static Post of(Long id, String content, Member member, OneDayClass oneDayClass, List<PostImage> postImages) {
         Assert.notNull(content, "Content must not be null.");
         Assert.notNull(member, "Member must not be null.");
         Assert.notNull(oneDayClass, "OneDayClass must not be null.");
@@ -60,20 +60,22 @@ public class Post extends BaseEntity {
         post.setId(id);
         post.setContent(content);
         post.changeMember(member);
-        post.changeClass(oneDayClass);
+        post.changeOneDayClass(oneDayClass);
+        postImages.forEach(post::addPostImage);
 
         return post;
     }
 
-    public static Post of(String content, Member member, OneDayClass oneDayClass) {
+    public static Post of(String content, Member member, OneDayClass oneDayClass, List<PostImage> postImages) {
         Assert.notNull(content, "Content must not be null.");
         Assert.notNull(member, "Member must not be null.");
-        Assert.notNull(oneDayClass, "OneDayClass must not be null.");
+        Assert.notNull(oneDayClass, "oneDayClass must not be null.");
 
         Post post = new Post();
         post.setContent(content);
         post.changeMember(member);
-        post.changeClass(oneDayClass);
+        post.changeOneDayClass(oneDayClass);
+        postImages.forEach(post::addPostImage);
 
         return post;
     }
@@ -82,16 +84,12 @@ public class Post extends BaseEntity {
         this.setMember(member);
     }
 
-    public void changeClass(OneDayClass oneDayClass) {
-        this.setOneDayClass(oneDayClass);
-    }
-
-    public void addPostImages(List<PostImage> postImageList) {
-        this.postImages = postImageList;
-    }
-
     public void changeOneDayClass(OneDayClass oneDayClass) {
         this.setOneDayClass(oneDayClass);
+    }
+
+    public void addPostImage(PostImage postImage) {
+        postImage.changePost(this);
     }
 
 }

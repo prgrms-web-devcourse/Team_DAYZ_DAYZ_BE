@@ -2,6 +2,7 @@ package com.dayz.onedayclass.domain;
 
 import com.dayz.common.entity.BaseEntity;
 import com.dayz.common.enums.TimeStatus;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,7 +33,7 @@ public class OneDayClassTime extends BaseEntity {
     private Long id;
 
     @Column(name = "class_date", nullable = false)
-    private LocalDateTime classDate;
+    private LocalDate classDate;
 
     @Column(name = "start_time", nullable = false)
     private Long startTime;
@@ -48,7 +49,7 @@ public class OneDayClassTime extends BaseEntity {
     private OneDayClass oneDayClass;
 
     public static OneDayClassTime of(Long id,
-            LocalDateTime classDate,
+            LocalDate classDate,
             Long startTime,
             Long endTime,
             TimeStatus status,
@@ -65,7 +66,7 @@ public class OneDayClassTime extends BaseEntity {
         return oneDayClassTime;
     }
 
-    public static OneDayClassTime of(LocalDateTime classDate,
+    public static OneDayClassTime of(LocalDate classDate,
             Long startTime,
             Long endTime,
             TimeStatus status,

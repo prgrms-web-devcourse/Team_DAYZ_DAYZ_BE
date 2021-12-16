@@ -93,33 +93,3 @@ configurations {
 dependencyManagement {
     imports { mavenBom 'org.springframework.cloud:spring-cloud-aws:2.2.1.RELEASE' }
 }
-
-//test {
-//    outputs.dir snippetsDir
-//    useJUnitPlatform()
-//}
-//
-//asciidoctor {
-//    inputs.dir snippetsDir
-//    dependsOn test
-//}
-//
-//bootJar {
-//    dependsOn asciidoctor
-//    from("${asciidoctor.outputDir}")
-//    into 'static/docs'
-//}
-//
-//asciidoctor.doFirst {
-//    delete file('src/main/resources/static/docs')
-//}
-//
-//task copyDocument(type: Copy) {
-//    dependsOn asciidoctor
-//    from file("build/docs/asciidoc")
-//    into file("src/main/resources/static/docs")
-//}
-//
-//build {
-//    dependsOn copyDocument
-//}
