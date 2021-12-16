@@ -51,33 +51,6 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PostImage> postImages = new ArrayList<>();
 
-    public static Post of(Long id, String content, Member member, OneDayClass oneDayClass) {
-        Assert.notNull(content, "Content must not be null.");
-        Assert.notNull(member, "Member must not be null.");
-        Assert.notNull(oneDayClass, "OneDayClass must not be null.");
-
-        Post post = new Post();
-        post.setId(id);
-        post.setContent(content);
-        post.changeMember(member);
-        post.changeOneDayClass(oneDayClass);
-
-        return post;
-    }
-
-    public static Post of(String content, Member member, OneDayClass oneDayClass) {
-        Assert.notNull(content, "Content must not be null.");
-        Assert.notNull(member, "Member must not be null.");
-        Assert.notNull(oneDayClass, "OneDayClass must not be null.");
-
-        Post post = new Post();
-        post.setContent(content);
-        post.changeMember(member);
-        post.changeOneDayClass(oneDayClass);
-
-        return post;
-    }
-
     public static Post of(Long id, String content, Member member, OneDayClass oneDayClass, List<PostImage> postImages) {
         Assert.notNull(content, "Content must not be null.");
         Assert.notNull(member, "Member must not be null.");
@@ -96,7 +69,7 @@ public class Post extends BaseEntity {
     public static Post of(String content, Member member, OneDayClass oneDayClass, List<PostImage> postImages) {
         Assert.notNull(content, "Content must not be null.");
         Assert.notNull(member, "Member must not be null.");
-        Assert.notNull(oneDayClass, "OneDayClass must not be null.");
+        Assert.notNull(oneDayClass, "oneDayClass must not be null.");
 
         Post post = new Post();
         post.setContent(content);
@@ -109,10 +82,6 @@ public class Post extends BaseEntity {
 
     public void changeMember(Member member) {
         this.setMember(member);
-    }
-
-    public void addPostImages(List<PostImage> postImageList) {
-        this.postImages = postImageList;
     }
 
     public void changeOneDayClass(OneDayClass oneDayClass) {

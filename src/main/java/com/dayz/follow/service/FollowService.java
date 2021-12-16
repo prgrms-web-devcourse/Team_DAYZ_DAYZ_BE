@@ -15,10 +15,13 @@ import com.dayz.member.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class FollowService {
 
     private final FollowRepository followRepository;
@@ -29,14 +32,16 @@ public class FollowService {
 
     private final FollowConverter followConverter;
 
+    @Transactional
     public boolean followingUnfollowing(Long memberId, Long atelierId) {
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
-        Atelier atelier = atelierRepository.findById(atelierId).orElseThrow(() -> new BusinessException(ErrorInfo.ATELIER_NOT_FOUND));
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
+        Atelier atelier = atelierRepository.findById(atelierId)
+                .orElseThrow(() -> new BusinessException(ErrorInfo.ATELIER_NOT_FOUND));
 
-        if (followRepository.existsByMemberIdAndAtelierId(memberId, atelierId)) {
-            Follow follow = followRepository.findByMemberIdAndAtelierId(memberId, atelierId);
+        if (followRepository.existsByMemberIdAndAtelierIdAndUseFlagIsTrue(member.getId(), atelier.getId())) {
+            Follow follow = followRepository.findByMemberIdAndAtelierId(member.getId(), atelier.getId());
             follow.changeUseFlag(false);
-            followRepository.save(follow);
             return false;
         } else {
             followRepository.save(Follow.of(member, atelier));
@@ -44,10 +49,12 @@ public class FollowService {
         }
     }
 
-    public CustomPageResponse getAllFollowings(CustomPageRequest pageRequest, Long memberId) {
-        PageRequest pageable = pageRequest.convertToPageRequest(Follow.class);
+    public CustomPageResponse getAllFollowings(Long memberId, Pageable pageRequest) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
+
         Page<ReadAllFollowingResponse> readAllFollowingResponses =
-                followRepository.findAllByMemberIdAndUseFlagIsTrue(memberId, pageable)
+                followRepository.findAllByMemberIdAndUseFlagIsTrue(member.getId(), pageRequest)
                         .map(followConverter::convertToFollowingResult);
 
         return CustomPageResponse.of(readAllFollowingResponses);

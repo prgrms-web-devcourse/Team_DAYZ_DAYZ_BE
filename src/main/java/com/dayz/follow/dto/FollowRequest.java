@@ -11,9 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class FollowRequest {
 
-    @NotNull
-    private Long memberId;
-
     @NotNull(message = "memberId must not be null.")
     private Long memberId;
 

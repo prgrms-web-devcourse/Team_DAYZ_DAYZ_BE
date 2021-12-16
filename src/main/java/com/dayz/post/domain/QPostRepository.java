@@ -11,4 +11,6 @@ public interface QPostRepository {
 
     Page<Post> findPostsByFollows(List<Long> ids, Pageable pageRequest);
 
+    Page<Post> findPostsByAtelier(Long atelierId, Pageable pageRequest);
+
 }

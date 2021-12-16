@@ -19,7 +19,9 @@ public class ReadPostDetailResponse {
 
     private List<PostImageResult> images;
 
-    private AtelierResult atelierResult;
+    private AtelierResult atelier;
+
+    private Long oneDayClassId;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createdAt;
@@ -27,13 +29,15 @@ public class ReadPostDetailResponse {
     public static ReadPostDetailResponse of(Long postId,
             String content,
             List<PostImageResult> images,
-            AtelierResult atelierResult,
+            AtelierResult atelier,
+            Long oneDayClassId,
             LocalDateTime createdAt) {
         ReadPostDetailResponse readPostDetailResponse = new ReadPostDetailResponse();
         readPostDetailResponse.setPostId(postId);
         readPostDetailResponse.setContent(content);
         readPostDetailResponse.setImages(images);
-        readPostDetailResponse.setAtelierResult(atelierResult);
+        readPostDetailResponse.setAtelier(atelier);
+        readPostDetailResponse.setOneDayClassId(oneDayClassId);
         readPostDetailResponse.setCreatedAt(createdAt);
 
         return readPostDetailResponse;
