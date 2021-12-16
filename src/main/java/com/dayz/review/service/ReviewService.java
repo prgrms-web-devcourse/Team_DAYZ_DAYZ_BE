@@ -75,4 +75,10 @@ public class ReviewService {
         return reviewRepository.save(review).getId();
     }
 
+    //공방별 리뷰 평점 계산 API
+    public Double avgScore(Long atelierId){
+        double score = reviewRepository.getReviewAverageByAtelier(atelierId);
+        return Math.round(score * 10) / 10.0;
+    }
+
 }

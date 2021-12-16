@@ -21,4 +21,6 @@ public interface ReviewRepository extends JpaRepository<Review,Long>,CustomRepos
     @Query("select coalesce(avg(r.score),0) from Review r where r.oneDayClass.id= :classId and r.useFlag = true")
     double getReviewAverageByOneDayClass(@Param("classId") Long classId);
 
+    @Query("select coalesce(avg(r.score),0) from Review r where r.oneDayClass.atelier.id= :atelierId and r.useFlag = true")
+    double getReviewAverageByAtelier(@Param("atelierId") Long atelierId);
 }

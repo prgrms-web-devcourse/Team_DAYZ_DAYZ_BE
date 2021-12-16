@@ -44,6 +44,11 @@ public class ReviewController {
         return ApiResponse.ok(reviewService.getAllOneDayClassReviews(pageRequest, classId));
     }
 
+    @GetMapping(value = "/reviews/score/ateliers/{atelierId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResponse<Map<String,Double>>getAvgScore(@PathVariable("atelierId") Long atelierId) {
+        return ApiResponse.ok(Map.of("avgScore",reviewService.avgScore(atelierId)));
+    }
+
     @PostMapping(value = "/reviews", produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<Map<String,Long>> saveReviews(@LoginMember Member member,@Valid @RequestBody SaveReviewRequest saveReviewRequest) {
         return ApiResponse.ok(Map.of("reviewId",reviewService.saveReview(saveReviewRequest, member)));
