@@ -44,7 +44,7 @@ public class Member extends BaseEntity {
     @Column(name = "profile_image_url")
     private String profileImageUrl;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "permission_id")
     private Permission permission;
 

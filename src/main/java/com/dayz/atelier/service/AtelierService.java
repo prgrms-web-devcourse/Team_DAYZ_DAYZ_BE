@@ -4,8 +4,10 @@ import com.dayz.atelier.converter.AtelierConverter;
 import com.dayz.atelier.domain.Atelier;
 import com.dayz.atelier.domain.AtelierRepository;
 import com.dayz.atelier.domain.WorkTime;
+import com.dayz.atelier.dto.ReadAteliersResult;
 import com.dayz.atelier.dto.SaveAtelierRequest;
 import com.dayz.atelier.dto.SaveAtelierResponse;
+import com.dayz.common.dto.CustomPageResponse;
 import com.dayz.common.enums.Auth;
 import com.dayz.common.enums.ErrorInfo;
 import com.dayz.common.exception.BusinessException;
@@ -22,6 +24,8 @@ import com.dayz.member.domain.PermissionRepository;
 import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -79,6 +83,21 @@ public class AtelierService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         return atelierConverter.convertToSaveAtelierResponse(savedAtelier.getId(), token);
+    }
+
+    public CustomPageResponse<ReadAteliersResult> getAteliers(Long memberId, PageRequest pageRequest) {
+        Member foundMember = memberRepository.findById(memberId)
+                .orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
+
+        Address foundMemberAddress = foundMember.getAddress();
+
+        Page<ReadAteliersResult> readAteliersResultPage = atelierRepository.findAteliersByAddress(
+                foundMemberAddress.getCityId(),
+                foundMemberAddress.getRegionId(), 
+                pageRequest
+        ).map(atelierConverter::convertToReadAteliersResult);
+
+        return CustomPageResponse.<ReadAteliersResult>of(readAteliersResultPage);
     }
 
 }
