@@ -10,11 +10,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.dayz.atelier.domain.Atelier;
 import com.dayz.atelier.domain.AtelierRepository;
 import com.dayz.atelier.domain.WorkTime;
+import com.dayz.common.dto.CustomPageRequest;
+import com.dayz.common.dto.CustomSort;
 import com.dayz.follow.domain.Follow;
 import com.dayz.follow.domain.FollowRepository;
 import com.dayz.follow.dto.FollowRequest;
 import com.dayz.follow.service.FollowService;
 import com.dayz.member.domain.Address;
+import com.dayz.member.domain.AddressRepository;
+import com.dayz.member.domain.Member;
+import com.dayz.member.domain.MemberRepository;
+import com.dayz.member.domain.Permission;
+import com.dayz.member.domain.PermissionRepository;
 import com.dayz.member.domain.Member;
 import com.dayz.member.domain.MemberRepository;
 import com.dayz.member.domain.Permission;
@@ -27,6 +34,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
@@ -51,17 +61,62 @@ class FollowControllerTest {
     @Autowired
     FollowService followService;
 
+    @Autowired
+    AddressRepository addressRepository;
+
+    @Autowired
+    PermissionRepository permissionRepository;
+
     @BeforeEach
     void setUp() {
-        Permission permission = Permission.of("USER");
-        Address address = Address.of(1L, 1L, "서울시", "송파구");
-        Member member = Member.of("나는야카카오인증자", "kakao", "123456", "url", permission, address);
-        memberRepository.save(member);
+        Permission permission1 = Permission.of("USER");
+        Permission permission2 = Permission.of("ATELIER");
+        permissionRepository.save(permission1);
+        permissionRepository.save(permission2);
 
-        WorkTime workTime = WorkTime.of(202002020L, 2020202020L);
-        Atelier atelier = Atelier.of("atelier", address, "100", "intro Test", workTime, "123-123-123", memberRepository.findAll().get(0));
-        atelierRepository.save(atelier);
+        Address address1 = Address.of(1L, 1L, "서울시", "송파구");
+        Address address2 = Address.of(1L, 1L, "서울시", "송파구");
+        addressRepository.save(address1);
+        addressRepository.save(address2);
 
+//        Member member1 = Member.of("나는야이용자", "kakao", "123456", "url", Permission.of("USER"));
+//        memberRepository.save(member1);
+//        Member member2 = Member.of("나는야공방주인", "kakao", "34536", "url", Permission.of("ATELIER"));
+//        memberRepository.save(member2);
+//        Member member3 = Member.of("나는야공방주인", "kakao", "34536", "url", Permission.of("ATELIER"));
+//        memberRepository.save(member3);
+//        Member member4 = Member.of("나는야공방주인", "kakao", "34536", "url", Permission.of("ATELIER"));
+//        memberRepository.save(member4);
+//        Member member5 = Member.of("나는야공방주인", "kakao", "34536", "url", Permission.of("ATELIER"));
+//        memberRepository.save(member5);
+//        Member member6 = Member.of("나는야공방주인", "kakao", "34536", "url", Permission.of("ATELIER"));
+//        memberRepository.save(member6);
+
+        Member member11 = Member.of("나는야이용자", "kakao", "123456", "url", Permission.of("USER"));
+        Atelier atelier1 = Atelier.of("atelier", "100", "intro Test", WorkTime.of(202002020L, 2020202020L), "123-123-123", member11);
+        atelierRepository.save(atelier1);
+        Member member22 = Member.of("나는야공방주인", "kakao", "34536", "url", Permission.of("ATELIER"));
+        Atelier atelier2 = Atelier.of("atelier", "100", "intro Test", WorkTime.of(202002020L, 2020202020L), "123-123-123", member22);
+        atelierRepository.save(atelier2);
+        Member member33 = Member.of("나는야공방주인", "kakao", "34536", "url", Permission.of("ATELIER"));
+        Atelier atelier3 = Atelier.of("atelier", "100", "intro Test", WorkTime.of(202002020L, 2020202020L), "123-123-123", member33);
+        atelierRepository.save(atelier3);
+        Member member44 = Member.of("나는야공방주인", "kakao", "34536", "url", Permission.of("ATELIER"));
+        Atelier atelier4 = Atelier.of("atelier", "100", "intro Test", WorkTime.of(202002020L, 2020202020L), "123-123-123", member44);
+        atelierRepository.save(atelier4);
+        Member member55 = Member.of("나는야공방주인", "kakao", "34536", "url", Permission.of("ATELIER"));
+        Atelier atelier5 = Atelier.of("atelier", "100", "intro Test", WorkTime.of(202002020L, 2020202020L), "123-123-123", member55);
+        atelierRepository.save(atelier5);
+
+        List<Member> memberList = memberRepository.findAllByUseFlagIsTrue();
+        Long id = memberList.get(0).getId();
+        List<Atelier> atelierAll = atelierRepository.findAll();
+
+        followService.followingUnfollowing(id, atelierAll.get(0).getId());
+        followService.followingUnfollowing(id, atelierAll.get(1).getId());
+        followService.followingUnfollowing(id, atelierAll.get(2).getId());
+        followService.followingUnfollowing(id, atelierAll.get(3).getId());
+        followService.followingUnfollowing(id, atelierAll.get(4).getId());
     }
 
     @Test
@@ -95,6 +150,18 @@ class FollowControllerTest {
                 .andDo(print());
 
         assertThat(followRepository.findAll().get(0).isUseFlag(), is(false));
+    }
+
+    @Test
+    @DisplayName("팔로잉 목록을 조회할 수 있다")
+    @Transactional
+    public void readAllFollowing() throws Exception {
+        List<Member> memberAll = memberRepository.findAll();
+
+        mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/follows/{memberId}", memberAll.get(0).getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(CustomPageRequest.of(0, 10, CustomSort.of("createdAt", "ASC")))))
+                .andDo(print());
     }
 
 }

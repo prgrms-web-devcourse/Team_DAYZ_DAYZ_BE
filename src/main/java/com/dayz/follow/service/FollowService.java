@@ -2,13 +2,19 @@ package com.dayz.follow.service;
 
 import com.dayz.atelier.domain.Atelier;
 import com.dayz.atelier.domain.AtelierRepository;
+import com.dayz.common.dto.CustomPageRequest;
+import com.dayz.common.dto.CustomPageResponse;
 import com.dayz.common.enums.ErrorInfo;
 import com.dayz.common.exception.BusinessException;
+import com.dayz.follow.converter.FollowConverter;
 import com.dayz.follow.domain.Follow;
 import com.dayz.follow.domain.FollowRepository;
+import com.dayz.follow.dto.ReadAllFollowingResponse;
 import com.dayz.member.domain.Member;
 import com.dayz.member.domain.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +26,8 @@ public class FollowService {
     private final MemberRepository memberRepository;
 
     private final AtelierRepository atelierRepository;
+
+    private final FollowConverter followConverter;
 
     public boolean followingUnfollowing(Long memberId, Long atelierId) {
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
@@ -36,4 +44,15 @@ public class FollowService {
         }
     }
 
+    public CustomPageResponse getAllFollowings(CustomPageRequest pageRequest, Long memberId) {
+        PageRequest pageable = pageRequest.convertToPageRequest(Follow.class);
+        Page<ReadAllFollowingResponse> readAllFollowingResponses =
+                followRepository.findAllByMemberIdAndUseFlagIsTrue(memberId, pageable)
+                        .map(followConverter::convertToFollowingResult);
+
+        return CustomPageResponse.of(readAllFollowingResponses);
+    }
+
 }
+
+
