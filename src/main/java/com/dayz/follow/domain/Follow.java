@@ -3,6 +3,7 @@ package com.dayz.follow.domain;
 import com.dayz.atelier.domain.Atelier;
 import com.dayz.common.entity.BaseEntity;
 import com.dayz.member.domain.Member;
+import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -64,7 +65,12 @@ public class Follow extends BaseEntity {
     }
 
     public void changeMember(Member member) {
+        if (Objects.nonNull(member)) {
+            member.getFollows().remove(this);
+        }
+
         this.setMember(member);
+        member.getFollows().add(this);
     }
 
     public void changeAtelier(Atelier atelier) {
