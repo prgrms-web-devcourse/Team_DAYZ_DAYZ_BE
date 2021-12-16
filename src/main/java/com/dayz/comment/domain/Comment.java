@@ -1,7 +1,9 @@
 package com.dayz.comment.domain;
 
 import com.dayz.common.entity.BaseEntity;
+import com.dayz.member.domain.Member;
 import com.dayz.post.domain.Post;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -29,24 +31,42 @@ public class Comment extends BaseEntity {
     @Column(name = "comment_id")
     private Long id;
 
-    @Column(name = "content", nullable = false, length = 1000)
+    @Column(name = "content", length = 1000)
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "post_id")
     private Post post;
 
-    public static Comment of(Long id, String content, Post post) {
+    @ManyToOne(fetch = FetchType.LAZY,  cascade = CascadeType.ALL)
+    @JoinColumn(name = "member_id")
+    private Member member;
+
+    public static Comment of(Long id, String content, Post post, Member member) {
         Comment comment = new Comment();
         comment.setId(id);
         comment.setContent(content);
         comment.changePost(post);
+        comment.changeMember(member);
+
+        return comment;
+    }
+
+    public static Comment of(String content, Post post, Member member) {
+        Comment comment = new Comment();
+        comment.setContent(content);
+        comment.changePost(post);
+        comment.changeMember(member);
 
         return comment;
     }
 
     public void changePost(Post post) {
         this.setPost(post);
+    }
+
+    public void changeMember(Member member) {
+        this.setMember(member);
     }
 
 }
