@@ -29,7 +29,7 @@ public class PostImage extends BaseEntity {
     @Column(name = "post_image_id")
     private Long id;
 
-    @Column(name = "file_name", nullable = false)
+    @Column(name = "image_file_name", nullable = false)
     private String fileName;
 
     @Column(name = "sequence")

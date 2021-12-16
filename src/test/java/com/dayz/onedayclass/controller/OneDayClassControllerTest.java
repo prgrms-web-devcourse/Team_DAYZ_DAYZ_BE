@@ -37,7 +37,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
 @DisplayName("OneDayClassController 통합 테스트")
 class OneDayClassControllerTest {
 

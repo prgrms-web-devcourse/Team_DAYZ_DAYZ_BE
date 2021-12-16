@@ -7,12 +7,15 @@ import com.dayz.member.domain.Address;
 import com.dayz.onedayclass.domain.Curriculum;
 import com.dayz.onedayclass.domain.OneDayClass;
 import com.dayz.onedayclass.domain.OneDayClassImage;
+import com.dayz.onedayclass.dto.ReadOneDayClassByAtelierResult;
 import com.dayz.onedayclass.dto.ReadOneDayClassDetailResponse;
 import com.dayz.onedayclass.dto.ReadOneDayClassesByCategoryResult;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 @RequiredArgsConstructor
@@ -27,11 +30,7 @@ public class OneDayClassConverter {
                 oneDayClass.getId(),
                 oneDayClass.getName(),
                 oneDayClass.getIntro(),
-                oneDayClass.getOneDayClassImages().size() > 0 ?
-                        imageUrlUtil.makeImageUrl(oneDayClass.getOneDayClassImages()
-                                .get(0)
-                                .getImageFileName()) :
-                        null
+                getFirstImageUrl(oneDayClass.getOneDayClassImages())
         );
     }
 
@@ -80,11 +79,33 @@ public class OneDayClassConverter {
         );
     }
 
+    public ReadOneDayClassByAtelierResult convertToReadOneDayClassByAtelierResult(OneDayClass oneDayClass) {
+        return ReadOneDayClassByAtelierResult.of(
+                oneDayClass.getId(),
+                oneDayClass.getName(),
+                getFirstImageUrl(oneDayClass.getOneDayClassImages())
+        );
+    }
+
     private String getFullAddress(Address address, String detail) {
         String cityName = address.getCityName();
         String regionName = address.getRegionName();
 
         return cityName + " " + regionName + " " + detail;
+    }
+
+    private String getFirstImageUrl(List<OneDayClassImage> oneDayClassImages) {
+        if (Objects.isNull(oneDayClassImages) || (oneDayClassImages.size() <= 0)) {
+            return null;
+        }
+
+        String firstImageFileName = oneDayClassImages.get(0).getImageFileName();
+
+        if (StringUtils.isEmpty(firstImageFileName)) {
+            return null;
+        }
+
+        return imageUrlUtil.makeImageUrl(firstImageFileName);
     }
 
 }
