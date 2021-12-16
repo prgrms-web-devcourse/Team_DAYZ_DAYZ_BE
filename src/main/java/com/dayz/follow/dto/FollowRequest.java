@@ -14,7 +14,10 @@ public class FollowRequest {
     @NotNull
     private Long memberId;
 
-    @NotNull
+    @NotNull(message = "memberId must not be null.")
+    private Long memberId;
+
+    @NotNull(message = "atelierId must not be null.")
     private Long atelierId;
 
     public static FollowRequest of(Long memberId, Long atelierId) {
@@ -24,4 +27,5 @@ public class FollowRequest {
 
         return followRequest;
     }
+
 }

@@ -21,14 +21,10 @@ public class FollowController {
 
     private final FollowService followService;
 
-    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ApiResponse followingUnfollowing(@RequestBody @Valid FollowRequest request) {
-        return ApiResponse.ok(followService.followingUnfollowing(request.getMemberId(), request.getAtelierId()));
-    }
-
     @GetMapping(value = "/{memberId}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse getAllFollowings(@PathVariable("memberId") Long memberId, @RequestBody @Valid CustomPageRequest pageRequest) {
         return ApiResponse.ok(followService.getAllFollowings(pageRequest, memberId));
     }
 
 }
+
