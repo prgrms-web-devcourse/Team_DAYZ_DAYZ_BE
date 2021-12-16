@@ -2,16 +2,20 @@ package com.dayz.onedayclass.service;
 
 import com.dayz.atelier.domain.Atelier;
 import com.dayz.atelier.domain.AtelierRepository;
+import com.dayz.category.domain.Category;
+import com.dayz.category.domain.CategoryRepository;
 import com.dayz.common.dto.CustomPageResponse;
 import com.dayz.common.enums.ErrorInfo;
 import com.dayz.common.exception.BusinessException;
 import com.dayz.member.domain.Member;
+import com.dayz.member.domain.MemberRepository;
 import com.dayz.onedayclass.converter.OneDayClassConverter;
 import com.dayz.onedayclass.domain.OneDayClass;
 import com.dayz.onedayclass.domain.OneDayClassRepository;
 import com.dayz.onedayclass.dto.ReadOneDayClassByAtelierResult;
 import com.dayz.onedayclass.dto.ReadOneDayClassDetailResponse;
 import com.dayz.onedayclass.dto.ReadOneDayClassesByCategoryResult;
+import com.dayz.onedayclass.dto.SaveOneDayClassRequest;
 import com.dayz.review.domain.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -30,14 +34,24 @@ public class OneDayClassService {
 
     private final AtelierRepository atelierRepository;
 
+    private final CategoryRepository categoryRepository;
+
+    private final MemberRepository memberRepository;
+
     private final OneDayClassConverter oneDayClassConverter;
 
-    // TODO : CategoryId 정합성 검증이 필요
     public CustomPageResponse<CustomPageResponse<ReadOneDayClassesByCategoryResult>> getOneDayClassesByCategory(Member member, Long categoryId, Pageable pageRequest) {
+
+        Category foundCategory = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new BusinessException(ErrorInfo.CATEGORY_NOT_FOUND));
+
+        Member foundMember = memberRepository.findById(member.getId())
+                .orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
+
         Page<ReadOneDayClassesByCategoryResult> readOneDayClassesByCategoryResultPage = oneDayClassRepository.findOneDayClassByCategoryId(
-                categoryId,
-                member.getAddress().getCityId(),
-                member.getAddress().getRegionId(),
+                foundCategory.getId(),
+                foundMember.getAddress().getCityId(),
+                foundMember.getAddress().getRegionId(),
                 pageRequest
         ).map(oneDayClassConverter::convertToReadOneDayClassesByCategoryResult);
 
@@ -61,6 +75,21 @@ public class OneDayClassService {
                 .map(oneDayClassConverter::convertToReadOneDayClassByAtelierResult);
 
         return CustomPageResponse.<CustomPageResponse<ReadOneDayClassByAtelierResult>> of(readOneDayClassByAtelierResultPage);
+    }
+
+    @Transactional
+    public Long createOneDayClass(SaveOneDayClassRequest request) {
+        Atelier foundAtelier = atelierRepository.findById(request.getAtelierId())
+                .orElseThrow(() -> new BusinessException(ErrorInfo.ATELIER_NOT_FOUND));
+
+        Category foundCategory = categoryRepository.findById(request.getCategoryId())
+                .orElseThrow(() -> new BusinessException(ErrorInfo.CATEGORY_NOT_FOUND));
+
+        OneDayClass newOneDayClass = oneDayClassConverter.convertToOneDayClass(request, foundCategory, foundAtelier);
+
+        OneDayClass savedOneDayClass = oneDayClassRepository.save(newOneDayClass);
+
+        return savedOneDayClass.getId();
     }
 
 }
