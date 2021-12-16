@@ -68,8 +68,8 @@ public class Review extends BaseEntity {
         Assert.notNull(title,"Review title이 null 입니다.");
         Assert.notNull(content,"Review content이 null 입니다.");
         Assert.notNull(score,"Review score이 null 입니다.");
-        Assert.notNull(member,"Review score이 null 입니다.");
-        Assert.notNull(oneDayClass,"Review score이 null 입니다.");
+        Assert.notNull(member,"Review member null 입니다.");
+        Assert.notNull(oneDayClass,"Review oneDayClass null 입니다.");
 
         Review review = new Review();
         review.setId(id);

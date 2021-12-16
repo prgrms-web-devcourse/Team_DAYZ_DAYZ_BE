@@ -75,4 +75,30 @@ public class ReviewRepositoryImpl implements CustomRepository {
 
     }
 
+    @Override
+    public Page<Review> findAllByOneDayClassId(Long id, Pageable pageable) {
+        List<OrderSpecifier> orderlist = new ArrayList<>();
+
+        for (Sort.Order o : pageable.getSort()) {
+            PathBuilder pathBuilder = new PathBuilder(QReview.review.getType(),
+                QReview.review.getMetadata());
+            orderlist.add(new OrderSpecifier(o.isAscending() ? Order.ASC : Order.DESC,
+                pathBuilder.get(o.getProperty())));
+        }
+
+        QueryResults<Review> results = jpaQueryFactory
+            .selectFrom(QReview.review)
+            .innerJoin(QReview.review.member, QMember.member).fetchJoin()
+            .innerJoin(QReview.review.oneDayClass, QOneDayClass.oneDayClass).fetchJoin()
+            .where(QReview.review.useFlag.eq(true),
+                QOneDayClass.oneDayClass.id.eq(id))
+            .offset(pageable.getOffset())
+            .limit(pageable.getPageSize())
+            .orderBy(orderlist.stream().toArray(OrderSpecifier[]::new))
+            .fetchResults();
+
+        return new PageImpl<>(results.getResults(), pageable, results.getTotal());
+
+    }
+
 }
