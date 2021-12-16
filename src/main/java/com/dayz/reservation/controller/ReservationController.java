@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "api/v1")
+@RequestMapping(path = "/api/v1")
 public class ReservationController {
 
     private final ReservationService reservationService;
