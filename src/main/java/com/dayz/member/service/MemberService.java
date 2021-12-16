@@ -103,4 +103,13 @@ public class MemberService {
         return addressConverter.convertToEditMemberAddressResponse(foundAddress);
     }
 
+    @Transactional
+    public void editMemberProfile(Long memberId, String name, String imageUrl) {
+        Member foundMember = memberRepository.findById(memberId)
+                .orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
+
+        foundMember.changeUserName(name);
+        foundMember.changeProfileImageUrl(imageUrl);
+    }
+
 }

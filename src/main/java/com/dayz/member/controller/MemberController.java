@@ -4,6 +4,7 @@ import com.dayz.common.aop.LoginMember;
 import com.dayz.common.dto.ApiResponse;
 import com.dayz.common.jwt.JwtAuthentication;
 import com.dayz.member.domain.Member;
+import com.dayz.member.dto.EditMemberProfileRequest;
 import com.dayz.member.dto.ReadMemberInfoResponse;
 import com.dayz.member.dto.EditMemberAddressRequest;
 import com.dayz.member.dto.EditMemberAddressResponse;
@@ -15,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -41,6 +43,16 @@ public class MemberController {
                 .editMemberAddress(request.getCityId(), request.getRegionId(), member);
 
         return ApiResponse.<EditMemberAddressResponse>ok(editedAddress);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResponse editMemberProfile(
+            @AuthenticationPrincipal JwtAuthentication authentication,
+            @RequestBody @Valid EditMemberProfileRequest request) {
+        memberService.editMemberProfile(authentication.getId(), request.getName(), request.getImageUrl());
+
+        return ApiResponse.<EditMemberAddressResponse>ok(null);
     }
 
 }
