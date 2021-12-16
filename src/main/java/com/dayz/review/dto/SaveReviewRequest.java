@@ -1,7 +1,9 @@
 package com.dayz.review.dto;
 
 
+import java.util.ArrayList;
 import java.util.List;
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -29,7 +31,8 @@ public class SaveReviewRequest {
     @Max(5)
     private int score;
 
-    private List<SaveReviewImageRequest> images;
+    @Valid
+    private List<SaveReviewImageRequest> images = new ArrayList<>();
 
     public static SaveReviewRequest of(Long reservationId, String title, String content, int score,
         List<SaveReviewImageRequest> images) {
@@ -61,4 +64,5 @@ public class SaveReviewRequest {
             return saveReviewImageRequest;
         }
     }
+
 }
