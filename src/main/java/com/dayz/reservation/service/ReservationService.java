@@ -39,4 +39,24 @@ public class ReservationService {
 
         return reservationRepository.save(reservation).getId();
     }
+
+    public CustomPageResponse <ReadAllMyReservationResponse> getMyReservation(CustomPageRequest pageRequest, Long memberId) {
+        PageRequest pageable = pageRequest.convertToPageRequest(Reservation.class);
+
+        Page<ReadAllMyReservationResponse> responsePage = reservationRepository.findMyReservation(memberId, pageable)
+            .map(reservationConverter::convertReadAllMyReviewsResponse);
+
+        return CustomPageResponse.of(responsePage);
+    }
+
+    public CustomPageResponse <ReadAllAtelierReservationResponse> getAtelierReservation(CustomPageRequest pageRequest, Long atelierId) {
+        PageRequest pageable = pageRequest.convertToPageRequest(Reservation.class);
+
+        Page<ReadAllAtelierReservationResponse> responsePage = reservationRepository.findAtelierReservation(atelierId, pageable)
+            .map(reservationConverter::convertReadAllAtelierReviewsResponse);
+
+        return CustomPageResponse.of(responsePage);
+    }
+
+
 }

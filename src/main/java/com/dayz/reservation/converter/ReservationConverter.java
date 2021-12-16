@@ -19,9 +19,40 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class ReservationConverter {
 
+    private final TimeUtil timeUtil;
+
     public Reservation convertReservation(SaveReservationRequest saveReservationRequest,
         Member member, OneDayClassTime oneDayClassTime) {
         return Reservation.of(saveReservationRequest.getPeopleNumber(), saveReservationRequest.getPrice(),
             LocalDate.now(), member, oneDayClassTime);
+    }
+
+    public ReadAllMyReservationResponse convertReadAllMyReviewsResponse(
+        ReadAllMyReservationRequest reservation) {
+
+        return ReadAllMyReservationResponse.of(reservation.getReservationId(),
+            reservation.getClassName()
+            , convertDate(reservation.getReservationDate())
+            , convertDate(reservation.getClassDate())
+            , timeUtil.secondToTimeString(reservation.getStartTime())
+            , timeUtil.secondToTimeString(reservation.getEndTime())
+            , reservation.getStatus());
+    }
+
+    public ReadAllAtelierReservationResponse convertReadAllAtelierReviewsResponse(
+        ReadAllAtelierReservationRequest reservation) {
+
+        return ReadAllAtelierReservationResponse.of(reservation.getReservationId(),
+            reservation.getClassName()
+            , convertDate(reservation.getReservationDate())
+            , convertDate(reservation.getClassDate())
+            , timeUtil.secondToTimeString(reservation.getStartTime())
+            , timeUtil.secondToTimeString(reservation.getEndTime())
+            , reservation.getStatus());
+    }
+
+    public String convertDate(LocalDate date) {
+
+        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
     }
 }
