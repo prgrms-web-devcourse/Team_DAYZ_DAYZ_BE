@@ -15,7 +15,6 @@ import com.dayz.review.dto.ReadAllAtelierReviewsResponse;
 import com.dayz.review.dto.ReadAllMyReviewsResponse;
 import com.dayz.review.dto.ReadAllOneDayClassReviewsResponse;
 import com.dayz.review.dto.SaveReviewRequest;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -51,6 +50,17 @@ public class ReviewService {
                 atelierId, pageable)
             .map(reviewConverter::convertReadAllAtelierReviewsResponse);
 
+        return CustomPageResponse.of(reviewsResponses);
+    }
+    //원데이 클래스별 후기 조회
+    public CustomPageResponse getAllOneDayClassReviews(CustomPageRequest pageRequest,Long oneDayClassId){
+
+        PageRequest pageable = pageRequest.convertToPageRequest(Review.class);
+
+        Page<ReadAllOneDayClassReviewsResponse> reviewsResponses = reviewRepository.findAllByOneDayClassId(
+                oneDayClassId, pageable)
+            .map(reviewConverter::convertReadAllOneDayClassReviewsResponse);
+        
         return CustomPageResponse.of(reviewsResponses);
     }
 
