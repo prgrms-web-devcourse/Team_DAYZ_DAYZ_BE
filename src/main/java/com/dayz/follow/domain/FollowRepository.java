@@ -5,15 +5,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 public interface FollowRepository extends JpaRepository<Follow, Long> {
 
-    @Query("select f from Follow f where f.member.id = :memberId and f.atelier.id = :atelierId")
-    Follow findByMemberIdAndAtelierId(Long memberId, Long atelierId);
+    @Query("select f from Follow f join fetch f.member m join fetch f.atelier a where m.id = :memberId and a.id = :atelierId and f.useFlag = true")
+    Follow findByMemberIdAndAtelierId(@Param("memberId") Long memberId, @Param("atelierId") Long atelierId);
 
-    boolean existsByMemberIdAndAtelierId(Long memberId, Long atelier);
+    boolean existsByMemberIdAndAtelierIdAndUseFlagIsTrue(Long memberId, Long atelier);
 
+    // TODO: QueryDSL로 성늘 최적화가 필요함
     @Query("select f from Follow f where f.member.id = :memberId and f.useFlag = true")
-    Page<Follow> findAllByMemberIdAndUseFlagIsTrue(Long memberId, Pageable pageable);
+    Page<Follow> findAllByMemberIdAndUseFlagIsTrue(@Param("memberId") Long memberId, Pageable pageable);
 
 }

@@ -65,12 +65,7 @@ public class Follow extends BaseEntity {
     }
 
     public void changeMember(Member member) {
-        if (Objects.nonNull(member)) {
-            member.getFollows().remove(this);
-        }
-
         this.setMember(member);
-        member.getFollows().add(this);
     }
 
     public void changeAtelier(Atelier atelier) {
