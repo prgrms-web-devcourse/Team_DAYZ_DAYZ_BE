@@ -1,6 +1,7 @@
 package com.dayz.onedayclass.domain;
 
 import com.dayz.common.entity.BaseEntity;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -64,7 +65,12 @@ public class Curriculum extends BaseEntity {
     }
 
     public void changeOneDayClass(OneDayClass oneDayClass) {
+        if (Objects.nonNull(oneDayClass)) {
+            oneDayClass.getCurriculums().remove(this);
+        }
+
         this.setOneDayClass(oneDayClass);
+        oneDayClass.getCurriculums().add(this);
     }
 
 }

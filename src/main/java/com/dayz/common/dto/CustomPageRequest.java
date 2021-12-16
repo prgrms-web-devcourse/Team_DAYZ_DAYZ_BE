@@ -14,13 +14,13 @@ public class CustomPageRequest {
 
     private int pageSize;
 
-    private CustomSort customSort;
+    private CustomSort sort;
 
-    public static CustomPageRequest of(int pageIndex, int pageSize, CustomSort customSort) {
+    public static CustomPageRequest of(int pageIndex, int pageSize, CustomSort sort) {
         CustomPageRequest pageRequest = new CustomPageRequest();
         pageRequest.setPageIndex(pageIndex);
         pageRequest.setPageSize(pageSize);
-        pageRequest.setCustomSort(customSort);
+        pageRequest.setSort(sort);
 
         return pageRequest;
     }
@@ -34,7 +34,7 @@ public class CustomPageRequest {
     }
 
     public PageRequest convertToPageRequest(Class entityClass) {
-        return PageRequest.of(pageIndex, pageSize, customSort.convertToSort(entityClass));
+        return PageRequest.of(pageIndex, pageSize, sort.convertToSort(entityClass));
     }
 
 }
