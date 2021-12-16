@@ -11,4 +11,6 @@ public interface CustomRepository {
     Page<Review> findAllByMemberId(Long memberId, Pageable pageable);
 
     Page<Review> findAllByAtelierId(@Param("id") Long id, Pageable pageable);
+
+    Page<Review> findAllByOneDayClassId(@Param("id") Long id, Pageable pageable);
 }

@@ -13,6 +13,7 @@ public enum ErrorInfo {
     ONE_DAY_CLASS_NOT_FOUND("ERR003", "존재하지 않는 원데이클래스입니다."),
     ATELIER_NOT_FOUND("ERR004", "존재하지 않는 공방입니다."),
     POST_NOT_FOUND("ERR005", "존재하지 않는 게시글입니다.");
+    RESERVATION_NOT_FOUND ("ERR201", "존재하지 않는 예약입니다.");
 
     ErrorInfo(String code, String message) {
         this.code = code;
