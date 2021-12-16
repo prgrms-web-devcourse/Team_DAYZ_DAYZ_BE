@@ -15,7 +15,12 @@ public interface ReviewRepository extends JpaRepository<Review,Long>,CustomRepos
     //공방별 후기 조회
     Page<Review> findAllByAtelierId(@Param("id") Long id, Pageable pageable);
 
+    //원데이 클래스별 후기 조회
+    Page<Review> findAllByOneDayClassId(@Param("id") Long id, Pageable pageable);
+
     @Query("select coalesce(avg(r.score),0) from Review r where r.oneDayClass.id= :classId and r.useFlag = true")
     double getReviewAverageByOneDayClass(@Param("classId") Long classId);
 
+    @Query("select coalesce(avg(r.score),0) from Review r where r.oneDayClass.atelier.id= :atelierId and r.useFlag = true")
+    double getReviewAverageByAtelier(@Param("atelierId") Long atelierId);
 }

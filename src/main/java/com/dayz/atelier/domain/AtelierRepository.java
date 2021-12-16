@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface AtelierRepository extends JpaRepository<Atelier, Long> {
+public interface AtelierRepository extends JpaRepository<Atelier, Long>, QAtelierRepository {
 
     @Query("select a from Atelier a "
            + "join fetch a.address aa "

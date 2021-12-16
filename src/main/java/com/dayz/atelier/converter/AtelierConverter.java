@@ -5,6 +5,9 @@ import com.dayz.atelier.dto.ReadAtelierDetailResponse;
 import com.dayz.atelier.dto.SaveAtelierResponse;
 import com.dayz.common.util.TimeUtil;
 import com.dayz.member.domain.Address;
+import com.dayz.atelier.dto.ReadAteliersResult;
+import com.dayz.atelier.dto.SaveAtelierResponse;
+import com.dayz.common.util.ImageUrlUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -36,4 +39,14 @@ public class AtelierConverter {
 
         return cityName + " " + regionName + " " + detail;
     }
+
+    public ReadAteliersResult convertToReadAteliersResult(Atelier atelier) {
+        return ReadAteliersResult.of(
+                atelier.getId(),
+                atelier.getName(),
+                atelier.getMember().getProfileImageUrl(),
+                atelier.getIntro()
+        );
+    }
+
 }
