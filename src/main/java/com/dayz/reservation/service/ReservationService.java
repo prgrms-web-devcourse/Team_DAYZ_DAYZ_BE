@@ -58,5 +58,10 @@ public class ReservationService {
         return CustomPageResponse.of(responsePage);
     }
 
-
+    @Transactional
+    public void deleteReservation(Long reservationId){
+        Reservation reservation = reservationRepository.findById(reservationId)
+            .orElseThrow(() -> new BusinessException(ErrorInfo.RESERVATION_NOT_FOUND));
+        reservation.changeUseFlag(false);
+    }
 }
