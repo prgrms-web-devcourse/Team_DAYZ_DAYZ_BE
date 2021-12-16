@@ -34,4 +34,22 @@ public class ReservationController {
         return ApiResponse.ok(Map.of("reservationId",
             reservationService.saveReservation(saveReservationRequest, member)));
     }
+
+    @GetMapping(value = "/reservations", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResponse<CustomPageResponse> getMyReservations(@LoginMember Member member,
+        @RequestBody CustomPageRequest pageRequest) {
+        CustomPageResponse<ReadAllMyReservationResponse> myReservation = reservationService.getMyReservation(
+            pageRequest, member.getId());
+        return ApiResponse.ok(myReservation);
+    }
+
+    @GetMapping(value = "/reservations/ateliers/{atelierId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResponse<CustomPageResponse> getAtelierReservations(
+        @PathVariable("atelierId") Long atelierId, @RequestBody CustomPageRequest pageRequest) {
+        CustomPageResponse<ReadAllAtelierReservationResponse> myReservation = reservationService.getAtelierReservation(
+            pageRequest, atelierId);
+        return ApiResponse.ok(myReservation);
+    }
+
+
 }
