@@ -64,6 +64,16 @@ public class Curriculum extends BaseEntity {
         return curriculum;
     }
 
+    public static Curriculum of(int step,
+            String content
+    ) {
+        Curriculum curriculum = new Curriculum();
+        curriculum.setStep(step);
+        curriculum.setContent(content);
+
+        return curriculum;
+    }
+
     public void changeOneDayClass(OneDayClass oneDayClass) {
         if (Objects.nonNull(oneDayClass)) {
             oneDayClass.getCurriculums().remove(this);

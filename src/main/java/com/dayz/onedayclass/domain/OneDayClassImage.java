@@ -65,6 +65,17 @@ public class OneDayClassImage extends BaseEntity {
         return oneDayClassImage;
     }
 
+    public static OneDayClassImage of(
+            String imageFileName,
+            int sequence
+    ) {
+        OneDayClassImage oneDayClassImage = new OneDayClassImage();
+        oneDayClassImage.setImageFileName(imageFileName);
+        oneDayClassImage.setSequence(sequence);
+
+        return oneDayClassImage;
+    }
+
     public void changeOneDayClass(OneDayClass oneDayClass) {
         if (Objects.nonNull(oneDayClass)) {
             oneDayClass.getOneDayClassImages().remove(this);

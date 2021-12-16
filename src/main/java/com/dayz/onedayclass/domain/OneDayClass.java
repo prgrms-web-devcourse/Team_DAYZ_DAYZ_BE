@@ -6,6 +6,7 @@ import com.dayz.common.entity.BaseEntity;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -56,10 +57,10 @@ public class OneDayClass extends BaseEntity {
     @JoinColumn(name = "atelier_id")
     private Atelier atelier;
 
-    @OneToMany(mappedBy = "oneDayClass")
+    @OneToMany(mappedBy = "oneDayClass", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     List<OneDayClassImage> oneDayClassImages = new ArrayList<>();
 
-    @OneToMany(mappedBy = "oneDayClass")
+    @OneToMany(mappedBy = "oneDayClass", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     List<Curriculum> curriculums = new ArrayList<>();
 
     public static OneDayClass of(Long id, String name, String intro, int price, Long requiredTime, int maxPeopleNumber, Category category,
