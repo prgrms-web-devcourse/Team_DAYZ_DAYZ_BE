@@ -82,6 +82,20 @@ public class OneDayClassTime extends BaseEntity {
         return oneDayClassTime;
     }
 
+    public static OneDayClassTime of(LocalDate classDate,
+            Long startTime,
+            Long endTime,
+            TimeStatus status
+    ) {
+        OneDayClassTime oneDayClassTime = new OneDayClassTime();
+        oneDayClassTime.setClassDate(classDate);
+        oneDayClassTime.setStartTime(startTime);
+        oneDayClassTime.setEndTime(endTime);
+        oneDayClassTime.setStatus(status);
+
+        return oneDayClassTime;
+    }
+
     public void changeOneDayClass(OneDayClass oneDayClass) {
         this.setOneDayClass(oneDayClass);
     }
