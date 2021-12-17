@@ -49,9 +49,9 @@ public class CustomReservationRepositoryImpl implements CustomReservationReposit
                 reservation.oneDayClassTime.oneDayClass.name,
                 reservation.reservationDate,
                 reservation.oneDayClassTime.classDate,
-                reservation.oneDayClassTime.startTime
-                ,reservation.oneDayClassTime.endTime
-                , reservation.status.stringValue()))
+                reservation.oneDayClassTime.startTime,
+                reservation.oneDayClassTime.endTime,
+                reservation.status.stringValue()))
             .from(reservation)
             .leftJoin(reservation.member).on(reservation.member.id.eq(memberId))
             .where(reservation.useFlag.eq(true))

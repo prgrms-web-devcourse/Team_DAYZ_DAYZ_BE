@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "api/v1")
+@RequestMapping(path = "/api/v1")
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -51,5 +51,9 @@ public class ReservationController {
         return ApiResponse.ok(myReservation);
     }
 
-
+    @DeleteMapping(value = "/reservations/{reservationId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResponse deleteReservation(@PathVariable("reservationId") Long reservationId){
+        reservationService.deleteReservation(reservationId);
+        return ApiResponse.noContent();
+    }
 }
