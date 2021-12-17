@@ -16,15 +16,15 @@ public class SearchOneDayClassResponse {
 
     private String intro;
 
-    private String imageFileUrl;
+    private String imageUrl;
 
     public static SearchOneDayClassResponse of(Long classId, String name, String intro,
-        String imageFileUrl) {
+        String imageUrl) {
         SearchOneDayClassResponse searchOneDayClassResponse = new SearchOneDayClassResponse();
         searchOneDayClassResponse.setClassId(classId);
         searchOneDayClassResponse.setName(name);
         searchOneDayClassResponse.setIntro(intro);
-        searchOneDayClassResponse.setImageFileUrl(imageFileUrl);
+        searchOneDayClassResponse.setImageUrl(imageUrl);
 
         return searchOneDayClassResponse;
     }

@@ -86,37 +86,4 @@ public class QOneDayClassRepositoryImpl implements QOneDayClassRepository {
         return PageableExecutionUtils.getPage(results.fetch(), pageRequest, results::fetchCount);
     }
 
-//    @Override
-//    public Page<SearchOneDayClassResponse> searchOneDayClass(Long cityId, Long regionId,
-//        String keyWord,
-//        Pageable pageRequest) {
-//
-//        JPAQuery<SearchOneDayClassResponse> results = jpaQueryFactory
-//            .select(new QSearchOneDayClassResult(
-//                oneDayClass.id,
-//                oneDayClass.name,
-//                oneDayClass.intro,
-//                oneDayClass.oneDayClassImages))
-//            .from(oneDayClass)
-//            .leftJoin(oneDayClass.atelier, atelier)
-//            .leftJoin(oneDayClassImage).on(oneDayClass.id.eq(oneDayClassImage.oneDayClass.id))
-//            .where(oneDayClass.useFlag.eq(true)
-//                .and(oneDayClassImage.sequence.eq(1))
-//                .and(oneDayClass.name.contains(keyWord))
-//                .and(atelier.address.cityId.eq(cityId))
-//                .and(atelier.address.regionId.eq(regionId))
-//            )
-//            .offset(pageRequest.getOffset())
-//            .limit(pageRequest.getPageSize());
-//
-//        for (Sort.Order o : pageRequest.getSort()) {
-//            PathBuilder pathBuilder = new PathBuilder(oneDayClass.getType(),
-//                oneDayClass.getMetadata());
-//            results.orderBy(new OrderSpecifier<>(o.isAscending() ? Order.ASC : Order.DESC,
-//                pathBuilder.get(o.getProperty())));
-//        }
-//
-//        return PageableExecutionUtils.getPage(results.fetch(), pageRequest, results::fetchCount);
-//    }
-
 }
