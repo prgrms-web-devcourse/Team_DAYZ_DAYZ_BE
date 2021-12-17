@@ -13,6 +13,7 @@ import com.dayz.onedayclass.domain.OneDayClassTime;
 import com.dayz.onedayclass.dto.ReadOneDayClassByAtelierResult;
 import com.dayz.onedayclass.dto.ReadOneDayClassDetailResponse;
 import com.dayz.onedayclass.dto.ReadOneDayClassesByCategoryResult;
+import com.dayz.onedayclass.dto.SearchOneDayClassResponse;
 import com.dayz.onedayclass.dto.ReadPopularOneDayClassesResponse;
 import com.querydsl.core.Tuple;
 import com.dayz.onedayclass.dto.SaveOneDayClassRequest;
@@ -93,6 +94,11 @@ public class OneDayClassConverter {
                 oneDayClass.getName(),
                 getFirstImageUrl(oneDayClass.getOneDayClassImages())
         );
+    }
+
+    public SearchOneDayClassResponse convertSearchOneDayClassResponse(OneDayClass oneDayClass){
+        return SearchOneDayClassResponse.of(oneDayClass.getId(), oneDayClass.getName(),
+            oneDayClass.getIntro(), getFirstImageUrl(oneDayClass.getOneDayClassImages()));
     }
 
     public ReadPopularOneDayClassesResponse converToReadPopularOneDayClassesResponse(List<OneDayClass> oneDayClasses) {
