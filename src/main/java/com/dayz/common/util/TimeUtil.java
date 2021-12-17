@@ -4,6 +4,7 @@ import com.dayz.common.enums.ErrorInfo;
 import com.dayz.common.exception.BusinessException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -36,6 +37,10 @@ public class TimeUtil {
                 TimeUnit.SECONDS.toMinutes(seconds) -
                 TimeUnit.HOURS.toMinutes(TimeUnit.SECONDS.toHours(seconds))
         );
+    }
+
+    public Long localTimeToSecond(LocalTime nowTime) {
+        return Long.valueOf( (nowTime.getHour() * 3600) + (nowTime.getMinute() * 60) + nowTime.getSecond() );
     }
 
 }

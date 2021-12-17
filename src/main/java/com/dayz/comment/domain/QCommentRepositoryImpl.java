@@ -26,7 +26,7 @@ public class QCommentRepositoryImpl implements QCommentRepository {
 
         JPAQuery<Comment> contentQuery = jpaQueryFactory.selectFrom(comment)
                 .innerJoin(comment.post, post).fetchJoin()
-                .innerJoin(post.member, member).fetchJoin()
+                .innerJoin(comment.member, member).fetchJoin()
                 .where(post.id.eq(postId)
                         .and(comment.useFlag.eq(true)))
                 .offset(pageRequest.getOffset())
@@ -42,7 +42,7 @@ public class QCommentRepositoryImpl implements QCommentRepository {
 
         JPAQuery<Comment> countQuery = jpaQueryFactory.selectFrom(comment)
                 .innerJoin(comment.post, post).fetchJoin()
-                .innerJoin(post.member, member).fetchJoin()
+                .innerJoin(comment.member, member).fetchJoin()
                 .where(post.id.eq(postId)
                         .and(comment.useFlag.eq(true)));
 
