@@ -3,7 +3,11 @@ package com.dayz.atelier.domain;
 import static com.dayz.atelier.domain.QAtelier.atelier;
 import static com.dayz.member.domain.QAddress.address;
 import static com.dayz.member.domain.QMember.member;
+import static com.dayz.onedayclass.domain.QOneDayClass.oneDayClass;
 
+import com.dayz.atelier.dto.QSearchAtelierResponse;
+import com.dayz.atelier.dto.SearchAtelierResponse;
+import com.dayz.onedayclass.domain.OneDayClass;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.PathBuilder;
@@ -53,6 +57,37 @@ public class QAtelierRepositoryImpl implements QAtelierRepository {
                 );
 
         return PageableExecutionUtils.getPage(content, pageRequest, countQuery::fetchCount);
+    }
+
+    @Override
+    public Page<SearchAtelierResponse> searchAteliers(Long cityId, Long regionId, String keyWord,
+        Pageable pageRequest) {
+        JPAQuery<SearchAtelierResponse> query = jpaQueryFactory
+            .select(new QSearchAtelierResponse(
+                atelier.id,
+                atelier.name,
+                atelier.intro,
+                atelier.member.profileImageUrl
+            ))
+            .from(atelier)
+            .leftJoin(atelier.member, member)
+            .leftJoin(atelier.address, address)
+            .where(address.cityId.eq(cityId)
+                .and(address.regionId.eq(regionId))
+                .and(address.useFlag.eq(true))
+                .and(atelier.name.contains(keyWord))
+                .and(atelier.useFlag.eq(true))
+            ).offset(pageRequest.getOffset())
+            .limit(pageRequest.getPageSize());
+
+        for (Sort.Order o : pageRequest.getSort()) {
+            PathBuilder pathBuilder = new PathBuilder(atelier.getType(),
+                atelier.getMetadata());
+            query.orderBy(new OrderSpecifier<>(o.isAscending() ? Order.ASC : Order.DESC,
+                pathBuilder.get(o.getProperty())));
+        }
+
+        return PageableExecutionUtils.getPage(query.fetch(), pageRequest, query::fetchCount);
     }
 
 }
