@@ -79,7 +79,6 @@ public class OneDayClassController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-
     @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse searchOneDayClass(@LoginMember Member member, @RequestParam String keyWord,
         @Valid @RequestBody CustomPageRequest request) {
