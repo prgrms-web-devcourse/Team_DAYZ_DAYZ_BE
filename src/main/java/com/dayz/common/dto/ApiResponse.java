@@ -33,4 +33,8 @@ public class ApiResponse<T> {
         return new ApiResponse<>(false, ApiError.of(code, messages));
     }
 
+    public static ApiResponse noContent(){
+        return new ApiResponse<>(true,null);
+    }
+
 }

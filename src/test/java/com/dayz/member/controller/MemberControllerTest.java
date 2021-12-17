@@ -89,7 +89,7 @@ class MemberControllerTest {
         mockMvc.perform(post("/api/v1/members/address")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(request))
-                .header("Authorization", token))
+                .header("Authorization", memberRepository.findById(1L)))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
