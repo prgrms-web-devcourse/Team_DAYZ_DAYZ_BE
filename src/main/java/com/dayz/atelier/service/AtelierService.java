@@ -8,6 +8,7 @@ import com.dayz.atelier.dto.ReadAtelierDetailResponse;
 import com.dayz.atelier.dto.ReadAteliersResult;
 import com.dayz.atelier.dto.SaveAtelierRequest;
 import com.dayz.atelier.dto.SaveAtelierResponse;
+import com.dayz.atelier.dto.SearchAtelierResponse;
 import com.dayz.common.dto.CustomPageResponse;
 import com.dayz.common.enums.Auth;
 import com.dayz.common.enums.ErrorInfo;
@@ -22,11 +23,13 @@ import com.dayz.member.domain.Member;
 import com.dayz.member.domain.MemberRepository;
 import com.dayz.member.domain.Permission;
 import com.dayz.member.domain.PermissionRepository;
+import com.dayz.onedayclass.dto.SearchOneDayClassResponse;
 import java.util.Arrays;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -107,6 +110,15 @@ public class AtelierService {
         ).map(atelierConverter::convertToReadAteliersResult);
 
         return CustomPageResponse.<ReadAteliersResult>of(readAteliersResultPage);
+    }
+
+    public CustomPageResponse searchOneDayClass(Member member, String keyWord,
+        Pageable pageRequest) {
+        Page<SearchAtelierResponse> searchOneDayClassResponsePage = atelierRepository.searchAteliers(
+                member.getAddress().getCityId(),member.getAddress().getRegionId(),keyWord, pageRequest);
+
+        return CustomPageResponse.of(searchOneDayClassResponsePage);
+
     }
 
 }

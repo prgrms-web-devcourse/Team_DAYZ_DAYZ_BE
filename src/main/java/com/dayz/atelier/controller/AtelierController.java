@@ -13,6 +13,7 @@ import com.dayz.common.dto.CustomPageRequest;
 import com.dayz.common.dto.CustomPageResponse;
 import com.dayz.common.jwt.JwtAuthentication;
 import com.dayz.member.domain.Member;
+import com.dayz.onedayclass.domain.OneDayClass;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -60,6 +62,15 @@ public class AtelierController {
         SaveAtelierResponse response = atelierService.savaAtelierInfo(authentication.getId(), request);
 
         return ApiResponse.<SaveAtelierResponse>ok(response);
+    }
+
+    @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResponse searchOneDayClass(@LoginMember Member member, @RequestParam String keyWord,
+        @Valid @RequestBody CustomPageRequest request) {
+        CustomPageResponse response = atelierService.searchOneDayClass(
+            member,keyWord,request.convertToPageRequest(Atelier.class));
+
+        return ApiResponse.ok(response);
     }
 
 }
