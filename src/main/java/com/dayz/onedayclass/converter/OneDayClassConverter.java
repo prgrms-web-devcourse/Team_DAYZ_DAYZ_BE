@@ -1,15 +1,24 @@
 package com.dayz.onedayclass.converter;
 
 import com.dayz.atelier.domain.Atelier;
+import com.dayz.category.domain.Category;
+import com.dayz.common.enums.TimeStatus;
 import com.dayz.common.util.ImageUrlUtil;
 import com.dayz.common.util.TimeUtil;
 import com.dayz.member.domain.Address;
 import com.dayz.onedayclass.domain.Curriculum;
 import com.dayz.onedayclass.domain.OneDayClass;
 import com.dayz.onedayclass.domain.OneDayClassImage;
+import com.dayz.onedayclass.domain.OneDayClassTime;
 import com.dayz.onedayclass.dto.ReadOneDayClassByAtelierResult;
 import com.dayz.onedayclass.dto.ReadOneDayClassDetailResponse;
 import com.dayz.onedayclass.dto.ReadOneDayClassesByCategoryResult;
+import com.dayz.onedayclass.dto.SearchOneDayClassResponse;
+import com.dayz.onedayclass.dto.ReadPopularOneDayClassesResponse;
+import com.querydsl.core.Tuple;
+import com.dayz.onedayclass.dto.SaveOneDayClassRequest;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -87,6 +96,29 @@ public class OneDayClassConverter {
         );
     }
 
+    public SearchOneDayClassResponse convertSearchOneDayClassResponse(OneDayClass oneDayClass){
+        return SearchOneDayClassResponse.of(oneDayClass.getId(), oneDayClass.getName(),
+            oneDayClass.getIntro(), getFirstImageUrl(oneDayClass.getOneDayClassImages()));
+    }
+
+    public ReadPopularOneDayClassesResponse converToReadPopularOneDayClassesResponse(List<OneDayClass> oneDayClasses) {
+        return ReadPopularOneDayClassesResponse.of(
+                oneDayClasses.stream()
+                        .map(this::converToReadPopularOneDayClassesOneDayClassResult)
+                        .collect(Collectors.toList())
+        );
+    }
+
+    public ReadPopularOneDayClassesResponse.OneDayClassResult converToReadPopularOneDayClassesOneDayClassResult(
+            OneDayClass oneDayClasses) {
+        return ReadPopularOneDayClassesResponse.OneDayClassResult.of(
+                oneDayClasses.getId(),
+                oneDayClasses.getName(),
+                oneDayClasses.getIntro(),
+                getFirstImageUrl(oneDayClasses.getOneDayClassImages())
+        );
+    }
+
     private String getFullAddress(Address address, String detail) {
         String cityName = address.getCityName();
         String regionName = address.getRegionName();
@@ -107,5 +139,47 @@ public class OneDayClassConverter {
 
         return imageUrlUtil.makeImageUrl(firstImageFileName);
     }
+
+    public OneDayClass convertToOneDayClass(SaveOneDayClassRequest request, Category category, Atelier atelier) {
+        return OneDayClass.of(
+                request.getName(),
+                request.getIntro(),
+                request.getPrice(),
+                timeUtil.timeStringToSecond(request.getRequiredTime()),
+                request.getMaxPeopleNumber(),
+                category,
+                atelier,
+                request.getImages().stream()
+                        .map(this::convertToOneDayClassImage)
+                        .collect(Collectors.toList()),
+                request.getCurriculums().stream()
+                        .map(this::convertToCurriculum)
+                        .collect(Collectors.toList())
+        );
+    }
+
+    public OneDayClassImage convertToOneDayClassImage(SaveOneDayClassRequest.OneDayClassImageRequest imageRequest) {
+        return OneDayClassImage.of(
+                imageUrlUtil.extractFileName(imageRequest.getImageUrl()),
+                imageRequest.getSequence()
+        );
+    }
+
+    public Curriculum convertToCurriculum(SaveOneDayClassRequest.CurriculumRequest curriculumRequest) {
+        return Curriculum.of(
+                curriculumRequest.getStep(),
+                curriculumRequest.getContent()
+        );
+    }
+
+    public OneDayClassTime convertToOneDayClassTime(SaveOneDayClassRequest.OneDayClassTimeRequest oneDayClassTimeRequest) {
+        return OneDayClassTime.of(
+                LocalDate.parse(oneDayClassTimeRequest.getDate(), DateTimeFormatter.ofPattern("yyyy-MM-dd")),
+                timeUtil.timeStringToSecond(oneDayClassTimeRequest.getStartTime()),
+                timeUtil.timeStringToSecond(oneDayClassTimeRequest.getEndTime()),
+                TimeStatus.PROCESS
+        );
+    }
+
 
 }

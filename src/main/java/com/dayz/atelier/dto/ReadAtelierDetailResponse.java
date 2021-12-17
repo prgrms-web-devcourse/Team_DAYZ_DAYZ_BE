@@ -24,13 +24,16 @@ public class ReadAtelierDetailResponse {
 
     private String endTime;
 
+    private String imageUrl;
+
     public static ReadAtelierDetailResponse of(Long atelierId,
             String name,
             String intro,
             String address,
             String callNumber,
             String startTime,
-            String endTime) {
+            String endTime,
+            String imageUrl) {
         ReadAtelierDetailResponse readAtelierDetailResponse = new ReadAtelierDetailResponse();
         readAtelierDetailResponse.setAtelierId(atelierId);
         readAtelierDetailResponse.setName(name);
@@ -39,6 +42,7 @@ public class ReadAtelierDetailResponse {
         readAtelierDetailResponse.setCallNumber(callNumber);
         readAtelierDetailResponse.setStartTime(startTime);
         readAtelierDetailResponse.setEndTime(endTime);
+        readAtelierDetailResponse.setImageUrl(imageUrl);
 
         return readAtelierDetailResponse;
     }

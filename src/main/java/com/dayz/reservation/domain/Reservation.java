@@ -60,8 +60,8 @@ public class Reservation extends BaseEntity {
     public static Reservation of(Long id,int peopleNumber, int price, LocalDate date,
             Member member, OneDayClassTime oneDayClassTime) {
         Assert.notNull(id,"Reservation id null 입니다.");
-        Assert.notNull(peopleNumber,"Reservation peopleNumber null 입니다.");
-        Assert.notNull(price,"Reservation price null 입니다.");
+        Assert.isTrue(peopleNumber>=0,"Reservation peopleNumber은 0이상이어야 합니다.");
+        Assert.isTrue(price>=0,"Reservation price 0이상이어야 합니다.");
         Assert.notNull(date,"Reservation date null 입니다.");
         Assert.notNull(member,"Reservation member null 입니다.");
         Assert.notNull(oneDayClassTime,"Reservation oneDayClassTime null 입니다.");
@@ -80,11 +80,13 @@ public class Reservation extends BaseEntity {
 
     public static Reservation of(int peopleNumber, int price, LocalDate date,
             Member member, OneDayClassTime oneDayClassTime) {
-        Assert.notNull(peopleNumber,"Reservation peopleNumber null 입니다.");
-        Assert.notNull(price,"Reservation price null 입니다.");
+
+        Assert.isTrue(peopleNumber>=0,"Reservation peopleNumber은 0이상이어야 합니다.");
+        Assert.isTrue(price>=0,"Reservation price 0이상이어야 합니다.");
         Assert.notNull(date,"Reservation date null 입니다.");
         Assert.notNull(member,"Reservation member null 입니다.");
         Assert.notNull(oneDayClassTime,"Reservation oneDayClassTime null 입니다.");
+
         Reservation reservation = new Reservation();
         reservation.setPeopleNumber(peopleNumber);
         reservation.setPrice(price);

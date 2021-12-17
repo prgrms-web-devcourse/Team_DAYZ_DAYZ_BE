@@ -8,17 +8,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter(AccessLevel.PRIVATE)
 @NoArgsConstructor
 public class SaveReservationRequest {
 
-    @NotNull
+    @NotNull(message = "classTimeId null이 될 수 없습니다.")
     private Long classTimeId;
 
-    @Min(1)
+    @Min(value = 1,message = "price값은 1 이상이어야 합니다")
     private int price;
 
-    @Min(1)
+    @Min(value = 1,message = "peopelNumber의 값은 1이상이어야 합니다.")
     private int peopleNumber;
 
 }

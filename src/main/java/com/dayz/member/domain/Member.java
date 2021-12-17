@@ -124,6 +124,14 @@ public class Member extends BaseEntity {
         this.setPermission(permission);
     }
 
+    public void changeUserName(String userName) {
+        this.setUsername(userName);
+    }
+
+    public void changeProfileImageUrl(String profileImageUrl) {
+        this.setProfileImageUrl(profileImageUrl);
+    }
+
     public void addFollow(Follow follow) {
         follow.changeMember(this);
     }

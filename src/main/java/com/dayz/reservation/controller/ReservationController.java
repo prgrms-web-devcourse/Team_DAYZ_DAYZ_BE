@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "api/v1")
+@RequestMapping(path = "/api/v1")
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -33,5 +33,27 @@ public class ReservationController {
         @Valid @RequestBody SaveReservationRequest saveReservationRequest) {
         return ApiResponse.ok(Map.of("reservationId",
             reservationService.saveReservation(saveReservationRequest, member)));
+    }
+
+    @GetMapping(value = "/reservations", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResponse<CustomPageResponse> getMyReservations(@LoginMember Member member,
+        @RequestBody CustomPageRequest pageRequest) {
+        CustomPageResponse<ReadAllMyReservationResponse> myReservation = reservationService.getMyReservation(
+            pageRequest, member.getId());
+        return ApiResponse.ok(myReservation);
+    }
+
+    @GetMapping(value = "/reservations/ateliers/{atelierId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResponse<CustomPageResponse> getAtelierReservations(
+        @PathVariable("atelierId") Long atelierId, @RequestBody CustomPageRequest pageRequest) {
+        CustomPageResponse<ReadAllAtelierReservationResponse> myReservation = reservationService.getAtelierReservation(
+            pageRequest, atelierId);
+        return ApiResponse.ok(myReservation);
+    }
+
+    @DeleteMapping(value = "/reservations/{reservationId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ApiResponse deleteReservation(@PathVariable("reservationId") Long reservationId){
+        reservationService.deleteReservation(reservationId);
+        return ApiResponse.noContent();
     }
 }
