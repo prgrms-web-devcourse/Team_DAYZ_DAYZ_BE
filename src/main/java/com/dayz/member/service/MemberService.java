@@ -10,6 +10,7 @@ import com.dayz.member.domain.Member;
 import com.dayz.member.domain.MemberRepository;
 import com.dayz.member.domain.Permission;
 import com.dayz.member.domain.PermissionRepository;
+import com.dayz.member.dto.EditMemberProfileResponse;
 import com.dayz.member.dto.ReadMemberInfoResponse;
 import com.dayz.member.dto.EditMemberAddressResponse;
 import java.util.Map;
@@ -101,6 +102,17 @@ public class MemberService {
         member.changeAddress(foundAddress);
 
         return addressConverter.convertToEditMemberAddressResponse(foundAddress);
+    }
+
+    @Transactional
+    public EditMemberProfileResponse editMemberProfile(Long memberId, String name, String imageUrl) {
+        Member foundMember = memberRepository.findById(memberId)
+                .orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
+
+        foundMember.changeUserName(name);
+        foundMember.changeProfileImageUrl(imageUrl);
+
+        return memberConverter.convertToEditMemberProfileResponse(foundMember);
     }
 
 }
