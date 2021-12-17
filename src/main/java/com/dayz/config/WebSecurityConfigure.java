@@ -126,8 +126,8 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
             .cors()
             .and()
             .authorizeRequests()
-            .antMatchers("/api/v1/login").permitAll()
-            .antMatchers("/api/v1/*").hasAnyRole("USER", "ATELIER","ADMIN")
+//            .antMatchers("/api/v1/login").permitAll()
+//            .antMatchers("/api/v1/*").hasAnyRole("USER", "ATELIER","ADMIN")
             .anyRequest().permitAll()
             .and()
             /**
