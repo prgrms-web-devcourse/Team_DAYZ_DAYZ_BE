@@ -7,6 +7,7 @@ import com.dayz.category.domain.CategoryRepository;
 import com.dayz.common.dto.CustomPageResponse;
 import com.dayz.common.enums.ErrorInfo;
 import com.dayz.common.exception.BusinessException;
+import com.dayz.member.domain.Address;
 import com.dayz.member.domain.Member;
 import com.dayz.member.domain.MemberRepository;
 import com.dayz.onedayclass.converter.OneDayClassConverter;
@@ -15,8 +16,13 @@ import com.dayz.onedayclass.domain.OneDayClassRepository;
 import com.dayz.onedayclass.dto.ReadOneDayClassByAtelierResult;
 import com.dayz.onedayclass.dto.ReadOneDayClassDetailResponse;
 import com.dayz.onedayclass.dto.ReadOneDayClassesByCategoryResult;
+import com.dayz.onedayclass.dto.ReadPopularOneDayClassesResponse;
 import com.dayz.onedayclass.dto.SaveOneDayClassRequest;
 import com.dayz.review.domain.ReviewRepository;
+import com.querydsl.core.Tuple;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +33,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class OneDayClassService {
+
+    private final int POPULAR_ONEDAYCLASS_LIMIT = 3;
 
     private final OneDayClassRepository oneDayClassRepository;
 
@@ -77,6 +85,28 @@ public class OneDayClassService {
         return CustomPageResponse.<CustomPageResponse<ReadOneDayClassByAtelierResult>> of(readOneDayClassByAtelierResultPage);
     }
 
+    public ReadPopularOneDayClassesResponse getPopularOneDayClasses(Long memberId) {
+        Member foundMember = memberRepository.findById(memberId)
+                .orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
+
+        // 이번주 시작, 끝 날짜 구하기
+        LocalDate today = LocalDate.now();
+        LocalDate startDate = today.with(DayOfWeek.MONDAY);
+        LocalDate endDate = today.with(DayOfWeek.SUNDAY);
+        Address address = foundMember.getAddress();
+
+        List<Long> ids = oneDayClassRepository.findPopularOneDayClassIds(
+                address.getCityId(),
+                address.getRegionId(),
+                startDate,
+                endDate,
+                POPULAR_ONEDAYCLASS_LIMIT);
+
+        List<OneDayClass> oneDayClassesByIds = oneDayClassRepository.findOneDayClassesByIds(ids);
+
+        return oneDayClassConverter.converToReadPopularOneDayClassesResponse(oneDayClassesByIds);
+    }
+  
     @Transactional
     public Long createOneDayClass(SaveOneDayClassRequest request) {
         Atelier foundAtelier = atelierRepository.findById(request.getAtelierId())

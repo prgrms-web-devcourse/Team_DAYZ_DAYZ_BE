@@ -10,6 +10,7 @@ import com.dayz.onedayclass.domain.OneDayClass;
 import com.dayz.onedayclass.dto.ReadOneDayClassDetailResponse;
 import com.dayz.onedayclass.dto.ReadOneDayClassByAtelierResult;
 import com.dayz.onedayclass.dto.ReadOneDayClassesByCategoryResult;
+import com.dayz.onedayclass.dto.ReadPopularOneDayClassesResponse;
 import com.dayz.onedayclass.dto.SaveOneDayClassRequest;
 import com.dayz.onedayclass.service.OneDayClassService;
 import java.util.Map;
@@ -77,6 +78,18 @@ public class OneDayClassController {
     }
 
     @ResponseStatus(HttpStatus.OK)
+    @GetMapping(
+            value = "/popular",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ApiResponse<ReadPopularOneDayClassesResponse> readPopularOneDayClasses(
+            @AuthenticationPrincipal JwtAuthentication authentication
+    ) {
+        ReadPopularOneDayClassesResponse response = oneDayClassService.getPopularOneDayClasses(authentication.getId());
+
+        return ApiResponse.<ReadPopularOneDayClassesResponse>ok(response);
+    }
+
     @PostMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
