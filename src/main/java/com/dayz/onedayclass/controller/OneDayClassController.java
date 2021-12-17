@@ -4,16 +4,19 @@ import com.dayz.common.aop.LoginMember;
 import com.dayz.common.dto.ApiResponse;
 import com.dayz.common.dto.CustomPageRequest;
 import com.dayz.common.dto.CustomPageResponse;
+import com.dayz.common.jwt.JwtAuthentication;
 import com.dayz.member.domain.Member;
 import com.dayz.onedayclass.domain.OneDayClass;
 import com.dayz.onedayclass.dto.ReadOneDayClassDetailResponse;
 import com.dayz.onedayclass.dto.ReadOneDayClassByAtelierResult;
 import com.dayz.onedayclass.dto.ReadOneDayClassesByCategoryResult;
+import com.dayz.onedayclass.dto.ReadPopularOneDayClassesResponse;
 import com.dayz.onedayclass.service.OneDayClassService;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -71,4 +74,16 @@ public class OneDayClassController {
         return ApiResponse.<CustomPageResponse<ReadOneDayClassByAtelierResult>>ok(response);
     }
 
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(
+            value = "/popular",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ApiResponse<ReadPopularOneDayClassesResponse> readPopularOneDayClasses(
+            @AuthenticationPrincipal JwtAuthentication authentication
+    ) {
+        ReadPopularOneDayClassesResponse response = oneDayClassService.getPopularOneDayClasses(authentication.getId());
+
+        return ApiResponse.<ReadPopularOneDayClassesResponse>ok(response);
+    }
 }
