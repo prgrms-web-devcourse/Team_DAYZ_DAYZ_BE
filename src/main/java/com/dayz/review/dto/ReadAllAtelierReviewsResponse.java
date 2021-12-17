@@ -14,8 +14,6 @@ public class ReadAllAtelierReviewsResponse {
 
     private Long id;
 
-    private String title;
-
     private String content;
 
     private int score;
@@ -28,12 +26,11 @@ public class ReadAllAtelierReviewsResponse {
 
     private List<AtelierReviewImageResult> reviewImages;
 
-    public static ReadAllAtelierReviewsResponse of(Long id, String title, String content, int score,
+    public static ReadAllAtelierReviewsResponse of(Long id, String content, int score,
         LocalDateTime createdAt,
         AtelierMemberResult member, AtelierOneDayClassResult oneDayClass, List<AtelierReviewImageResult> reviewImages) {
         ReadAllAtelierReviewsResponse reviewResponse = new ReadAllAtelierReviewsResponse();
         reviewResponse.setId(id);
-        reviewResponse.setTitle(title);
         reviewResponse.setContent(content);
         reviewResponse.setScore(score);
         reviewResponse.setCreatedAt(createdAt);
