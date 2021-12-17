@@ -10,6 +10,7 @@ import com.dayz.onedayclass.domain.OneDayClassImage;
 import com.dayz.onedayclass.dto.ReadOneDayClassByAtelierResult;
 import com.dayz.onedayclass.dto.ReadOneDayClassDetailResponse;
 import com.dayz.onedayclass.dto.ReadOneDayClassesByCategoryResult;
+import com.dayz.onedayclass.dto.SearchOneDayClassResponse;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -85,6 +86,12 @@ public class OneDayClassConverter {
                 oneDayClass.getName(),
                 getFirstImageUrl(oneDayClass.getOneDayClassImages())
         );
+    }
+
+    public SearchOneDayClassResponse convertSearchOneDayClassResponse(OneDayClass oneDayClass){
+        return SearchOneDayClassResponse.of(oneDayClass.getId(), oneDayClass.getName(),
+            oneDayClass.getIntro(), getFirstImageUrl(oneDayClass.getOneDayClassImages()));
+
     }
 
     private String getFullAddress(Address address, String detail) {
