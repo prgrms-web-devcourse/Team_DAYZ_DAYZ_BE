@@ -53,11 +53,14 @@ public class CommentService {
 
     public CustomPageResponse getAllComments(CustomPageRequest pageRequest, Long postId) {
         PageRequest pageable = pageRequest.convertToPageRequest(Comment.class);
+
+        Page<Comment> allByPostId = commentRepository.findAllByPostId(postId, pageable);
+
         Page<ReadAllCommentsResult> readAllCommentsResponses =
-                commentRepository
-                        .findAllByPostId(postId, pageable)
+                commentRepository.findAllByPostId(postId, pageable)
                         .map(comment -> commentConverter.convertReadAllCommentsResult(comment));
 
         return CustomPageResponse.of(readAllCommentsResponses);
     }
+
 }
