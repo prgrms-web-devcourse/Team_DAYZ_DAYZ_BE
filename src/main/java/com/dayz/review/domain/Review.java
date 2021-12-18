@@ -35,9 +35,6 @@ public class Review extends BaseEntity {
     @Column(name = "review_id")
     private Long id;
 
-    @Column(name = "title")
-    private String title;
-
     @Column(name = "content", nullable = false, length = 1000)
     private String content;
 
@@ -57,7 +54,6 @@ public class Review extends BaseEntity {
 
 
     public static Review of(Long id,
-        String title,
         String content,
         int score,
         Member member,
@@ -65,15 +61,13 @@ public class Review extends BaseEntity {
         List<ReviewImage> reviewImages
     ) {
         Assert.notNull(id,"Review id 값이 null입니다");
-        Assert.notNull(title,"Review title이 null 입니다.");
         Assert.notNull(content,"Review content이 null 입니다.");
-        Assert.notNull(score,"Review score이 null 입니다.");
+        Assert.isTrue(score>=0,"Review score 0이상이어야 합니다.");
         Assert.notNull(member,"Review member null 입니다.");
         Assert.notNull(oneDayClass,"Review oneDayClass null 입니다.");
 
         Review review = new Review();
         review.setId(id);
-        review.setTitle(title);
         review.setContent(content);
         review.setScore(score);
         review.changeMember(member);
@@ -85,21 +79,19 @@ public class Review extends BaseEntity {
         return review;
     }
 
-    public static Review of(String title,
+    public static Review of(
         String content,
         int score,
         Member member,
         OneDayClass oneDayClass,
         List<ReviewImage> reviewImages
     ) {
-        Assert.notNull(title,"Review title이 null 입니다.");
         Assert.notNull(content,"Review content이 null 입니다.");
-        Assert.notNull(score,"Review score이 null 입니다.");
-        Assert.notNull(member,"Review score이 null 입니다.");
-        Assert.notNull(oneDayClass,"Review score이 null 입니다.");
+        Assert.isTrue(score>=0,"Review score 0이상이어야 합니다.");
+        Assert.notNull(member,"Review member null 입니다.");
+        Assert.notNull(oneDayClass,"Review oneDayClass null 입니다.");
 
         Review review = new Review();
-        review.setTitle(title);
         review.setContent(content);
         review.setScore(score);
         review.changeMember(member);
@@ -111,20 +103,19 @@ public class Review extends BaseEntity {
         return review;
     }
 
-    public static Review of(String title,
+    public static Review of(
         String content,
         int score,
         Member member,
         OneDayClass oneDayClass
     ) {
-        Assert.notNull(title,"Review title이 null 입니다.");
         Assert.notNull(content,"Review content이 null 입니다.");
-        Assert.notNull(score,"Review score이 null 입니다.");
-        Assert.notNull(member,"Review score이 null 입니다.");
-        Assert.notNull(oneDayClass,"Review score이 null 입니다.");
+        Assert.isTrue(score>=0,"Review score 0이상이어야 합니다.");
+        Assert.notNull(member,"Review member null 입니다.");
+        Assert.notNull(oneDayClass,"Review oneDayClass null 입니다.");
+
 
         Review review = new Review();
-        review.setTitle(title);
         review.setContent(content);
         review.setScore(score);
         review.changeMember(member);
@@ -132,7 +123,6 @@ public class Review extends BaseEntity {
 
         return review;
     }
-
 
     public void changeMember(Member member) {
         this.setMember(member);

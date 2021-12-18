@@ -18,27 +18,23 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SaveReviewRequest {
 
-    @NotNull
+    @NotNull(message = "리뷰 아이디 값이 null일 수 없습니다.")
     private Long reservationId;
 
-    @NotBlank
-    private String title;
-
-    @NotBlank
+    @NotBlank(message = "리뷰 내용은 빈킨이 될 수 없습니다.")
     private String content;
 
-    @Min(1)
+    @Min(value = 1,message = "score는 1이상이어야 합니다.")
     @Max(5)
     private int score;
 
     @Valid
     private List<SaveReviewImageRequest> images = new ArrayList<>();
 
-    public static SaveReviewRequest of(Long reservationId, String title, String content, int score,
+    public static SaveReviewRequest of(Long reservationId, String content, int score,
         List<SaveReviewImageRequest> images) {
         SaveReviewRequest saveReviewRequest = new SaveReviewRequest();
         saveReviewRequest.setReservationId(reservationId);
-        saveReviewRequest.setTitle(title);
         saveReviewRequest.setContent(content);
         saveReviewRequest.setScore(score);
         saveReviewRequest.setImages(images);
@@ -53,7 +49,7 @@ public class SaveReviewRequest {
         @NotBlank(message = "파일 이름이 null이 될 수 없습니다.")
         private String imageUrl;
 
-        @Min(1)
+        @Min(value = 1,message = "sequence는 1이상이어야 합니다.")
         private int sequence;
 
         public static SaveReviewImageRequest of(String imageUrl, int sequence) {
