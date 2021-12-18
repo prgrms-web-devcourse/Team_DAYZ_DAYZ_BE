@@ -14,6 +14,7 @@ public enum ErrorInfo {
     ATELIER_NOT_FOUND("ERR004", "존재하지 않는 공방입니다."),
     POST_NOT_FOUND("ERR005", "존재하지 않는 게시글입니다."),
     CATEGORY_NOT_FOUND("ERR006", "존재하지 않는 카테고리입니다."),
+    DUPLICATED_ATELIER_ID("ERR007", "이미 공방이 존재합니다."),
     RESERVATION_NOT_FOUND ("ERR101", "존재하지 않는 예약입니다."),
     ONE_DAY_CLASS_TIME_NOT_FOUND ("ERR102", "존재하지 원데이 클래스 시간입니다.");
 

@@ -55,7 +55,13 @@ cors:
   allowed-headers: '*'
   max-age: 3600
 server:
-  port: 63458
+  port: ${PORT}
+#  ssl:
+#    key-store: ${KEY_STORE_PATH}
+#    key-store-type: ${KEY_STORE_TYPE}
+#    key-store-password: ${KEY_STORE_PASSWORD}
+#  http2:
+#    enabled: true
 jwt:
   header: Authorization
   issuer: dayz

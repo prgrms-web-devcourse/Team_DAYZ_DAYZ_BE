@@ -25,7 +25,7 @@ public class AtelierConverter {
                 atelier.getName(),
                 atelier.getIntro(),
                 getFullAddress(atelier.getAddress(), atelier.getDetail()),
-                null,
+                atelier.getCallNumber(),
                 timeUtil.secondToTimeString(atelier.getWorkTime().getStartTime()),
                 timeUtil.secondToTimeString(atelier.getWorkTime().getEndTime()),
                 imageUrlUtil.makeImageUrl(atelier.getMember().getProfileImageUrl())

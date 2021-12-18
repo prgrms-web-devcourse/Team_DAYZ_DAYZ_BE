@@ -14,8 +14,6 @@ public class ReadAllMyReviewsResponse {
 
     private Long id;
 
-    private String title;
-
     private String content;
 
     private int score;
@@ -28,12 +26,11 @@ public class ReadAllMyReviewsResponse {
 
     private List<ReviewImageResult> reviewImage;
 
-    public static ReadAllMyReviewsResponse of(Long id, String title, String content, int score,
+    public static ReadAllMyReviewsResponse of(Long id, String content, int score,
         LocalDateTime createdAt,
         MemberResult member, OneDayClassResult oneDayClass, List<ReviewImageResult> reviewImages) {
         ReadAllMyReviewsResponse reviewResponse = new ReadAllMyReviewsResponse();
         reviewResponse.setId(id);
-        reviewResponse.setTitle(title);
         reviewResponse.setContent(content);
         reviewResponse.setScore(score);
         reviewResponse.setCreatedAt(createdAt);

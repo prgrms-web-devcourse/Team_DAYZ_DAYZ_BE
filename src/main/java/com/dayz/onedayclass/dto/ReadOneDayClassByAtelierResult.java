@@ -10,7 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ReadOneDayClassByAtelierResult {
 
-    private Long oneDayClassId;
+    private Long classId;
 
     private String name;
 
@@ -18,7 +18,7 @@ public class ReadOneDayClassByAtelierResult {
 
     public static ReadOneDayClassByAtelierResult of(Long oneDayClassId, String name, String imageUrl) {
         ReadOneDayClassByAtelierResult readOneDayClassByAtelierResult = new ReadOneDayClassByAtelierResult();
-        readOneDayClassByAtelierResult.setOneDayClassId(oneDayClassId);
+        readOneDayClassByAtelierResult.setClassId(oneDayClassId);
         readOneDayClassByAtelierResult.setName(name);
         readOneDayClassByAtelierResult.setImageUrl(imageUrl);
 

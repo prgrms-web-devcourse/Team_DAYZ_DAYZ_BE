@@ -23,7 +23,9 @@ import com.dayz.review.domain.ReviewRepository;
 import com.querydsl.core.Tuple;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -118,7 +120,10 @@ public class OneDayClassService {
                 endDate,
                 POPULAR_ONEDAYCLASS_LIMIT);
 
-        List<OneDayClass> oneDayClassesByIds = oneDayClassRepository.findOneDayClassesByIds(ids);
+        List<OneDayClass> oneDayClassesByIds = new ArrayList<OneDayClass>();
+        if( (Objects.nonNull(ids)) && (ids.size() > 0) ){
+            oneDayClassesByIds = oneDayClassRepository.findOneDayClassesByIds(ids);
+        }
 
         return oneDayClassConverter.converToReadPopularOneDayClassesResponse(oneDayClassesByIds);
     }

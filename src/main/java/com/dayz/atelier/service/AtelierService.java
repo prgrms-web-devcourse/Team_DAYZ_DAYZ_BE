@@ -70,11 +70,16 @@ public class AtelierService {
 
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
 
+        if (atelierRepository.existsAtelierByMemberId(member.getId())) {
+            throw new BusinessException(ErrorInfo.DUPLICATED_ATELIER_ID);
+        }
+
         Atelier newAtelier = Atelier.of(
                 request.getName(),
                 address,
                 request.getAddress().getDetail(),
                 request.getIntro(),
+                request.getCallNumber(),
                 WorkTime.of(timeUtil.timeStringToSecond(request.getWorkStartTime()),
                         timeUtil.timeStringToSecond(request.getWorkEndTime())),
                 request.getBusinessNumber(),

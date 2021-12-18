@@ -40,7 +40,7 @@ public class ReviewConverter {
             .map(reviewImage -> ReviewImageResult.of(imageUrlUtil.makeImageUrl(reviewImage.getImageFileName()),
                 reviewImage.getSequence())).collect(Collectors.toList());
 
-        return ReadAllMyReviewsResponse.of(review.getId(), review.getTitle(), review.getContent(),
+        return ReadAllMyReviewsResponse.of(review.getId(), review.getContent(),
             review.getScore(), review.getCreatedAt(), memberResult, oneDayClassResult,
             reviewImageResult);
     }
@@ -57,7 +57,7 @@ public class ReviewConverter {
             .map(reviewImage -> AtelierReviewImageResult.of(imageUrlUtil.makeImageUrl(reviewImage.getImageFileName()),
                 reviewImage.getSequence())).collect(Collectors.toList());
 
-        return ReadAllAtelierReviewsResponse.of(review.getId(), review.getTitle(), review.getContent(),
+        return ReadAllAtelierReviewsResponse.of(review.getId(), review.getContent(),
             review.getScore(), review.getCreatedAt(), atelierMemberResult, atelierOneDayClassResult,
             atelierReviewImageResult);
     }
@@ -71,7 +71,7 @@ public class ReviewConverter {
             .map(reviewImage -> OneDayClassReviewImageResult.of(imageUrlUtil.makeImageUrl(reviewImage.getImageFileName()),
                 reviewImage.getSequence())).collect(Collectors.toList());
 
-        return ReadAllOneDayClassReviewsResponse.of(review.getId(), review.getTitle(), review.getContent(),
+        return ReadAllOneDayClassReviewsResponse.of(review.getId(), review.getContent(),
             review.getScore(), review.getCreatedAt(),memberResult,reviewImageResults);
     }
 
@@ -80,7 +80,7 @@ public class ReviewConverter {
             imageRequest -> ReviewImage.of(imageUrlUtil.extractFileName(imageRequest.getImageUrl()),
                 imageRequest.getSequence())).collect(Collectors.toList());
 
-        return Review.of(saveReviewRequest.getTitle(), saveReviewRequest.getContent(), saveReviewRequest.getScore(),member,oneDayClass,reviewImages);
+        return Review.of(saveReviewRequest.getContent(), saveReviewRequest.getScore(),member,oneDayClass,reviewImages);
     }
 
 }

@@ -42,3 +42,5 @@ out/
 ### test resouce file ###
 application-test.yml
 
+### keystore ###
+keystore.p12

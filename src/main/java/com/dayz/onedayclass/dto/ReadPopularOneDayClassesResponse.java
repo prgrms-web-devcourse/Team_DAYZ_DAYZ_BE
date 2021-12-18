@@ -26,7 +26,7 @@ public class ReadPopularOneDayClassesResponse {
     @NoArgsConstructor(access = AccessLevel.PROTECTED)
     public static class OneDayClassResult {
 
-        private Long oneDayClassId;
+        private Long classId;
 
         private String name;
 
@@ -36,7 +36,7 @@ public class ReadPopularOneDayClassesResponse {
 
         public static OneDayClassResult of(Long oneDayClassId, String name, String intro, String imageUrl) {
             OneDayClassResult oneDayClassResult = new OneDayClassResult();
-            oneDayClassResult.setOneDayClassId(oneDayClassId);
+            oneDayClassResult.setClassId(oneDayClassId);
             oneDayClassResult.setName(name);
             oneDayClassResult.setIntro(intro);
             oneDayClassResult.setImageUrl(imageUrl);

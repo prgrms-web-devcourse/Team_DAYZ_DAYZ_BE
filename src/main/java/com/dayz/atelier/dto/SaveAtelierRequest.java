@@ -1,5 +1,6 @@
 package com.dayz.atelier.dto;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -21,10 +22,14 @@ public class SaveAtelierRequest {
     @NotBlank(message = "businessNumber is not blank")
     private String businessNumber;
 
+    @Valid
     @NotNull(message = "address is not null")
     private AddressResult address;
 
     private String intro;
+
+    @NotBlank(message = "callNumber is not blank")
+    private String callNumber;
 
     @NotBlank(message = "workStartTime is not blank")
     @Pattern(regexp = "^(([0-1]{1}[0-9]{1})|([2]{1}[0-3]{1})):(([0-5]{1}[0-9]{1}))$", message = "workStartTime must be HH:mm format")
@@ -34,11 +39,12 @@ public class SaveAtelierRequest {
     @Pattern(regexp = "^(([0-1]{1}[0-9]{1})|([2]{1}[0-3]{1})):(([0-5]{1}[0-9]{1}))$", message = "workEndTime must be HH:mm format")
     private String workEndTime;
 
-    public static SaveAtelierRequest of(String name, String businessNumber, AddressResult address, String workStartTime, String workEndTime) {
+    public static SaveAtelierRequest of(String name, String businessNumber, AddressResult address, String callNumber, String workStartTime, String workEndTime) {
         SaveAtelierRequest saveAtelierRequest = new SaveAtelierRequest();
         saveAtelierRequest.setName(name);
         saveAtelierRequest.setBusinessNumber(businessNumber);
         saveAtelierRequest.setAddress(address);
+        saveAtelierRequest.setCallNumber(callNumber);
         saveAtelierRequest.setWorkStartTime(workStartTime);
         saveAtelierRequest.setWorkEndTime(workEndTime);
 
