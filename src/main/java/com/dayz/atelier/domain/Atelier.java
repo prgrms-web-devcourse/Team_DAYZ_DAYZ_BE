@@ -45,6 +45,9 @@ public class Atelier extends BaseEntity {
     @Column(name = "intro", length = 1000)
     private String intro;
 
+    @Column(name = "call_number", length = 20)
+    private String callNumber;
+
     @Embedded
     private WorkTime workTime;
 
@@ -63,6 +66,7 @@ public class Atelier extends BaseEntity {
         atelier.changeAddress(address);
         atelier.setDetail(detail);
         atelier.setIntro(intro);
+        atelier.setCallNumber(null);
         atelier.setWorkTime(workTime);
         atelier.setBusinessNumber(businessNumber);
         atelier.changeMember(member);
@@ -76,6 +80,23 @@ public class Atelier extends BaseEntity {
         atelier.changeAddress(address);
         atelier.setDetail(detail);
         atelier.setIntro(intro);
+        atelier.setCallNumber(null);
+        atelier.setWorkTime(workTime);
+        atelier.setBusinessNumber(businessNumber);
+        atelier.changeMember(member);
+
+        return atelier;
+    }
+
+    // TODO : CallNumber가 새로 추가됨에 따라 생성자를 하나로 통일 할 필요가 있을 듯
+    // TODO : 정적 생성자는 이렇게 Entity가 비뀜에따라 추가로 생성자를 만들어야함. 이런점에서는 Builder가 확실히 편한듯
+    public static Atelier of(String name, Address address, String detail, String intro, String callNumber, WorkTime workTime, String businessNumber, Member member) {
+        Atelier atelier = new Atelier();
+        atelier.setName(name);
+        atelier.changeAddress(address);
+        atelier.setDetail(detail);
+        atelier.setIntro(intro);
+        atelier.setCallNumber(callNumber);
         atelier.setWorkTime(workTime);
         atelier.setBusinessNumber(businessNumber);
         atelier.changeMember(member);
