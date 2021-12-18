@@ -75,6 +75,7 @@ public class AtelierService {
                 address,
                 request.getAddress().getDetail(),
                 request.getIntro(),
+                request.getCallNumber(),
                 WorkTime.of(timeUtil.timeStringToSecond(request.getWorkStartTime()),
                         timeUtil.timeStringToSecond(request.getWorkEndTime())),
                 request.getBusinessNumber(),

@@ -14,4 +14,6 @@ public interface AtelierRepository extends JpaRepository<Atelier, Long>, QAtelie
            + "and a.useFlag = true")
     Optional<Atelier> findById(@Param("atelierId") Long atelierId);
 
+    boolean existsAtelierByMemberId(Long memberId);
+
 }
