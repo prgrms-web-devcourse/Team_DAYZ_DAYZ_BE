@@ -70,6 +70,10 @@ public class AtelierService {
 
         Member member = memberRepository.findById(memberId).orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
 
+        if (atelierRepository.existsAtelierByMemberId(member.getId())) {
+            throw new BusinessException(ErrorInfo.DUPLICATED_ATELIER_ID);
+        }
+
         Atelier newAtelier = Atelier.of(
                 request.getName(),
                 address,
