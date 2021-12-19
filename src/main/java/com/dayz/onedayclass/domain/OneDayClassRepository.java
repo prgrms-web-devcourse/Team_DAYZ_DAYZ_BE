@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 public interface OneDayClassRepository extends JpaRepository<OneDayClass, Long>, QOneDayClassRepository {
 
     String SQL_findPopularOneDayClassIds =
-            "SELECT o.onedayclass_id"
+            "SELECT o.onedayclass_id AS 'oneDayClassId'"
             + " FROM onedayclass o "
             + " INNER JOIN onedayclass_time ot"
             + "     ON o.onedayclass_id = ot.onedayclass_id"
@@ -23,8 +22,8 @@ public interface OneDayClassRepository extends JpaRepository<OneDayClass, Long>,
             + "     ON o.atelier_id  = a.atelier_id"
             + " INNER JOIN address aa"
             + "     ON a.address_id = aa.address_id"
-            + " WHERE ot.class_date > :startDate"
-            + "     AND ot.class_date < :endDate"
+            + " WHERE ot.class_date >= :startDate"
+            + "     AND ot.class_date <= :endDate"
             + "     AND aa.city_id = :cityId"
             + "     AND aa.region_id = :regionId"
             + " GROUP BY o.onedayclass_id"
