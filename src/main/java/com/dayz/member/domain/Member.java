@@ -53,7 +53,7 @@ public class Member extends BaseEntity {
     @JoinColumn(name = "permission_id")
     private Permission permission;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "address_id")
     private Address address;
 
