@@ -26,10 +26,10 @@ public class FollowController {
 
     private final FollowService followService;
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse getAllFollowings(
             @AuthenticationPrincipal JwtAuthentication authentication,
-            @RequestBody @Valid CustomPageRequest pageRequest) {
+            CustomPageRequest pageRequest) {
         CustomPageResponse response = followService.getAllFollowings(authentication.getId(), pageRequest.convertToPageRequest(Follow.class));
 
         return ApiResponse.ok(response);

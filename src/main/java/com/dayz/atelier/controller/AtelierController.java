@@ -11,9 +11,9 @@ import com.dayz.common.aop.LoginMember;
 import com.dayz.common.dto.ApiResponse;
 import com.dayz.common.dto.CustomPageRequest;
 import com.dayz.common.dto.CustomPageResponse;
+import com.dayz.common.dto.SearchPageRequest;
 import com.dayz.common.jwt.JwtAuthentication;
 import com.dayz.member.domain.Member;
-import com.dayz.onedayclass.domain.OneDayClass;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -44,11 +44,11 @@ public class AtelierController {
         return ApiResponse.<ReadAtelierDetailResponse>ok(response);
     }
 
-    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<CustomPageResponse<ReadAteliersResult>> getAteliers(
             @AuthenticationPrincipal JwtAuthentication authentication,
-            @Valid @RequestBody CustomPageRequest request) {
-        CustomPageResponse<ReadAteliersResult> response = atelierService.getAteliers(authentication.getId(), request.convertToPageRequest(Atelier.class));
+            CustomPageRequest pageRequest) {
+        CustomPageResponse<ReadAteliersResult> response = atelierService.getAteliers(authentication.getId(), pageRequest.convertToPageRequest(Atelier.class));
 
         return ApiResponse.<CustomPageResponse<ReadAteliersResult>>ok(response);
     }
@@ -65,10 +65,14 @@ public class AtelierController {
     }
 
     @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ApiResponse searchOneDayClass(@LoginMember Member member, @RequestParam String keyWord,
-        @Valid @RequestBody CustomPageRequest request) {
+    public ApiResponse searchOneDayClass(
+            @LoginMember Member member,
+        @Valid SearchPageRequest request) {
         CustomPageResponse response = atelierService.searchOneDayClass(
-            member,keyWord,request.convertToPageRequest(Atelier.class));
+                member,
+                request.getKeyWord(),
+                request.convertToPageRequest(Atelier.class)
+        );
 
         return ApiResponse.ok(response);
     }

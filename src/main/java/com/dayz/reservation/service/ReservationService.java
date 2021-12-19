@@ -7,13 +7,12 @@ import com.dayz.common.exception.BusinessException;
 import com.dayz.member.domain.Member;
 import com.dayz.onedayclass.domain.OneDayClassTime;
 import com.dayz.onedayclass.domain.OneDayClassTimeRepository;
+import com.dayz.reservation.converter.ReservationConverter;
 import com.dayz.reservation.domain.Reservation;
 import com.dayz.reservation.domain.ReservationRepository;
-import com.dayz.reservation.converter.ReservationConverter;
 import com.dayz.reservation.dto.ReadAllAtelierReservationResponse;
 import com.dayz.reservation.dto.ReadAllMyReservationResponse;
 import com.dayz.reservation.dto.SaveReservationRequest;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,36 +31,37 @@ public class ReservationService {
     private final OneDayClassTimeRepository oneDayClassTimeRepository;
 
     @Transactional
-    public Long saveReservation(SaveReservationRequest saveReservationRequest, Member member){
+    public Long saveReservation(SaveReservationRequest saveReservationRequest, Member member) {
         OneDayClassTime oneDayClassTime = oneDayClassTimeRepository.findById(saveReservationRequest.getClassTimeId())
-            .orElseThrow(() -> new BusinessException(ErrorInfo.ONE_DAY_CLASS_TIME_NOT_FOUND));
-        Reservation reservation = reservationConverter.convertReservation(saveReservationRequest,member,oneDayClassTime);
+                .orElseThrow(() -> new BusinessException(ErrorInfo.ONE_DAY_CLASS_TIME_NOT_FOUND));
+        Reservation reservation = reservationConverter.convertReservation(saveReservationRequest, member, oneDayClassTime);
 
         return reservationRepository.save(reservation).getId();
     }
 
-    public CustomPageResponse <ReadAllMyReservationResponse> getMyReservation(CustomPageRequest pageRequest, Long memberId) {
+    public CustomPageResponse<ReadAllMyReservationResponse> getMyReservation(CustomPageRequest pageRequest, Long memberId) {
         PageRequest pageable = pageRequest.convertToPageRequest(Reservation.class);
 
         Page<ReadAllMyReservationResponse> responsePage = reservationRepository.findMyReservation(memberId, pageable)
-            .map(reservationConverter::convertReadAllMyReviewsResponse);
+                .map(reservationConverter::convertReadAllMyReviewsResponse);
 
         return CustomPageResponse.of(responsePage);
     }
 
-    public CustomPageResponse <ReadAllAtelierReservationResponse> getAtelierReservation(CustomPageRequest pageRequest, Long atelierId) {
+    public CustomPageResponse<ReadAllAtelierReservationResponse> getAtelierReservation(CustomPageRequest pageRequest, Long atelierId) {
         PageRequest pageable = pageRequest.convertToPageRequest(Reservation.class);
 
         Page<ReadAllAtelierReservationResponse> responsePage = reservationRepository.findAtelierReservation(atelierId, pageable)
-            .map(reservationConverter::convertReadAllAtelierReviewsResponse);
+                .map(reservationConverter::convertReadAllAtelierReviewsResponse);
 
         return CustomPageResponse.of(responsePage);
     }
 
     @Transactional
-    public void deleteReservation(Long reservationId){
+    public void deleteReservation(Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId)
-            .orElseThrow(() -> new BusinessException(ErrorInfo.RESERVATION_NOT_FOUND));
+                .orElseThrow(() -> new BusinessException(ErrorInfo.RESERVATION_NOT_FOUND));
         reservation.changeUseFlag(false);
     }
+
 }

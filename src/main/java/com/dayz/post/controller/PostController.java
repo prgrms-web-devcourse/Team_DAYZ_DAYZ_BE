@@ -44,7 +44,7 @@ public class PostController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<CustomPageResponse<ReadPostDetailsResult>> readPostDetails(
             @AuthenticationPrincipal JwtAuthentication authentication,
-            @Valid @RequestBody CustomPageRequest request
+            @Valid CustomPageRequest request
     ) {
         CustomPageResponse<ReadPostDetailsResult> response = postService.getPostDetails(
                 authentication.getId(),
@@ -57,7 +57,7 @@ public class PostController {
     @GetMapping(value = "/ateliers/{atelierId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<CustomPageResponse<ReadPostsByAtelierResult> > readPostsByAtelier(
             @PathVariable("atelierId") Long atelierId,
-            @Valid @RequestBody CustomPageRequest request) {
+            @Valid CustomPageRequest request) {
         CustomPageResponse<ReadPostsByAtelierResult> response = postService.getPostsByAtelier(atelierId, request.convertToPageRequest(Post.class));
 
         return ApiResponse.<CustomPageResponse<ReadPostsByAtelierResult>>ok(response);
