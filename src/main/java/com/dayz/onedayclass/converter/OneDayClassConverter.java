@@ -82,9 +82,10 @@ public class OneDayClassConverter {
                 atelier.getId(),
                 atelier.getName(),
                 getFullAddress(atelier.getAddress(), atelier.getDetail()),
-                null,
+                atelier.getCallNumber(),
                 timeUtil.secondToTimeString(atelier.getWorkTime().getStartTime()),
-                timeUtil.secondToTimeString(atelier.getWorkTime().getEndTime())
+                timeUtil.secondToTimeString(atelier.getWorkTime().getEndTime()),
+                atelier.getMember().getProfileImageUrl()
         );
     }
 

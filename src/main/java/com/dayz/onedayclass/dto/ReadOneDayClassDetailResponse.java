@@ -113,7 +113,9 @@ public class ReadOneDayClassDetailResponse {
 
         private String endTime;
 
-        public static AtelierResult of(Long atelierId, String name, String address, String callNumber, String startTime, String endTime) {
+        private String imageUrl;
+
+        public static AtelierResult of(Long atelierId, String name, String address, String callNumber, String startTime, String endTime, String imageUrl) {
             AtelierResult atelierResult = new AtelierResult();
             atelierResult.setAtelierId(atelierId);
             atelierResult.setName(name);
@@ -121,6 +123,7 @@ public class ReadOneDayClassDetailResponse {
             atelierResult.setCallNumber(callNumber);
             atelierResult.setStartTime(startTime);
             atelierResult.setEndTime(endTime);
+            atelierResult.setImageUrl(imageUrl);
 
             return atelierResult;
         }
