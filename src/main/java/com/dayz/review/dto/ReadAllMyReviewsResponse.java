@@ -1,5 +1,6 @@
 package com.dayz.review.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AccessLevel;
@@ -18,6 +19,7 @@ public class ReadAllMyReviewsResponse {
 
     private int score;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime createdAt;
 
     private MemberResult member;
@@ -76,6 +78,7 @@ public class ReadAllMyReviewsResponse {
 
             return oneDayClassResult;
         }
+
     }
 
     @Getter
@@ -92,7 +95,9 @@ public class ReadAllMyReviewsResponse {
             reviewImageResult.setSequence(sequence);
             return reviewImageResult;
         }
+
     }
+
 }
 
 

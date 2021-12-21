@@ -1,8 +1,6 @@
 package com.dayz.review.dto;
 
-import com.dayz.review.dto.ReadAllMyReviewsResponse.MemberResult;
-import com.dayz.review.dto.ReadAllMyReviewsResponse.OneDayClassResult;
-import com.dayz.review.dto.ReadAllMyReviewsResponse.ReviewImageResult;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AccessLevel;
@@ -21,6 +19,7 @@ public class ReadAllOneDayClassReviewsResponse {
 
     private int score;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime createdAt;
 
     private OneDayClassMemberResult member;
@@ -28,10 +27,10 @@ public class ReadAllOneDayClassReviewsResponse {
     private List<OneDayClassReviewImageResult> reviewImage;
 
     public static ReadAllOneDayClassReviewsResponse of(Long id,
-        String content, int score,
-        LocalDateTime createdAt,
-        OneDayClassMemberResult member,
-        List<OneDayClassReviewImageResult> reviewImages) {
+            String content, int score,
+            LocalDateTime createdAt,
+            OneDayClassMemberResult member,
+            List<OneDayClassReviewImageResult> reviewImages) {
         ReadAllOneDayClassReviewsResponse reviewResponse = new ReadAllOneDayClassReviewsResponse();
         reviewResponse.setId(id);
         reviewResponse.setContent(content);
@@ -54,7 +53,7 @@ public class ReadAllOneDayClassReviewsResponse {
         private String profileImageUrl;
 
         public static OneDayClassMemberResult of(Long id,
-            String username, String profileImageUrl) {
+                String username, String profileImageUrl) {
             OneDayClassMemberResult memberResult = new OneDayClassMemberResult();
             memberResult.setId(id);
             memberResult.setUsername(username);
@@ -73,7 +72,7 @@ public class ReadAllOneDayClassReviewsResponse {
         private int sequence;
 
         public static OneDayClassReviewImageResult of(
-            String imageUrl, int sequence) {
+                String imageUrl, int sequence) {
             OneDayClassReviewImageResult reviewImageResult = new OneDayClassReviewImageResult();
             reviewImageResult.setImageUrl(imageUrl);
             reviewImageResult.setSequence(sequence);
