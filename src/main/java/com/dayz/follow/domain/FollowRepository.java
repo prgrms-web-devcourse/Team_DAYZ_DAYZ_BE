@@ -19,4 +19,6 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
     @Query("select f from Follow f where f.member.id = :memberId and f.useFlag = true")
     Page<Follow> findAllByMemberIdAndUseFlagIsTrue(@Param("memberId") Long memberId, Pageable pageable);
 
+    List<Follow> findFollowsByMemberIdAndUseFlagIsTrue(@Param("memberId") Long memberId);
+
 }
