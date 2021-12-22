@@ -22,8 +22,8 @@
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=ffffff&logoWidth=20"/>
 </div>
 <div align="center">
-<img src="https://img.shields.io/badge/pull%20request-92%20open-lightgrey">&nbsp;&nbsp;&nbsp;
-<img src="https://img.shields.io/badge/issues-91%20open-lightgrey">
+<img src="https://img.shields.io/badge/pull%20request-71%20open-lightgrey">&nbsp;&nbsp;&nbsp;
+<img src="https://img.shields.io/badge/issues-39%20open-lightgrey">
 </div>
 </br></br>
 
