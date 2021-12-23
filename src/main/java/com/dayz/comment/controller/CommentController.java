@@ -34,7 +34,7 @@ public class CommentController {
     @GetMapping(value = "/posts/{postId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse getAllComments(
             @PathVariable("postId") Long postId,
-            @Valid @RequestBody CustomPageRequest pageRequest) {
+            @Valid CustomPageRequest pageRequest) {
         return ApiResponse.ok(commentService.getAllComments(pageRequest, postId));
     }
 }

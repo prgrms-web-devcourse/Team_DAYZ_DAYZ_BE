@@ -1,5 +1,6 @@
 package com.dayz.review.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AccessLevel;
@@ -18,6 +19,7 @@ public class ReadAllAtelierReviewsResponse {
 
     private int score;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime createdAt;
 
     private AtelierMemberResult member;
@@ -59,6 +61,7 @@ public class ReadAllAtelierReviewsResponse {
 
             return atelierMemberResult;
         }
+
     }
 
     @Getter
@@ -76,6 +79,7 @@ public class ReadAllAtelierReviewsResponse {
 
             return atelierOneDayClassResult;
         }
+
     }
 
     @Getter
@@ -92,7 +96,9 @@ public class ReadAllAtelierReviewsResponse {
             atelierReviewImageResult.setSequence(sequence);
             return atelierReviewImageResult;
         }
+
     }
+
 }
 
 

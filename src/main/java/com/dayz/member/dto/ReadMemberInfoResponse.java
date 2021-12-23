@@ -37,10 +37,6 @@ public class ReadMemberInfoResponse {
         Assert.notNull(token,"token must not be null!");
         Assert.notNull(name,"name must not be null!");
 //        Assert.notNull(profileImageUrl,"profileImageUrl must not be null!");
-        Assert.notNull(cityId,"cityId must not be null!");
-        Assert.notNull(cityName,"cityName must not be null!");
-        Assert.notNull(regionId,"regionId must not be null!");
-        Assert.notNull(regionName,"regionName must not be null!");
         Assert.notNull(auth,"auth must not be null!");
 
         ReadMemberInfoResponse readMemberInfoResponse = new ReadMemberInfoResponse();

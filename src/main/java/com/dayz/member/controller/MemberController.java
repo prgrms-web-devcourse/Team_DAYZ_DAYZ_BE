@@ -39,9 +39,14 @@ public class MemberController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping(path = "/address", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ApiResponse<EditMemberAddressResponse> editMemberAddress(@LoginMember Member member, @RequestBody @Valid EditMemberAddressRequest request) {
-        EditMemberAddressResponse editedAddress = memberService
-                .editMemberAddress(request.getCityId(), request.getRegionId(), member);
+    public ApiResponse<EditMemberAddressResponse> editMemberAddress(
+            @AuthenticationPrincipal JwtAuthentication authentication,
+            @RequestBody @Valid EditMemberAddressRequest request) {
+        EditMemberAddressResponse editedAddress = memberService.editMemberAddress(
+                request.getCityId(),
+                request.getRegionId(),
+                authentication.getId()
+        );
 
         return ApiResponse.<EditMemberAddressResponse>ok(editedAddress);
     }

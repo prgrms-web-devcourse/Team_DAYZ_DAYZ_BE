@@ -47,7 +47,7 @@ public class CustomReservationRepositoryImpl implements CustomReservationReposit
                         reservation.status.stringValue()))
                 .from(reservation)
                 .leftJoin(reservation.member).on(reservation.member.id.eq(memberId))
-                .where(reservation.useFlag.eq(true))
+                .where(reservation.useFlag.eq(true).and(reservation.member.id.eq(memberId)))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .orderBy(orderlist.stream().toArray(OrderSpecifier[]::new))

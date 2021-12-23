@@ -16,7 +16,7 @@ public class ReadPostsByAtelierResult {
 
     private String imageUrl;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime createdAt;
 
     public static ReadPostsByAtelierResult of(Long postId, String imageUrl, LocalDateTime createdAt) {

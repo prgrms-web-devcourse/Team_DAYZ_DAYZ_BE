@@ -93,13 +93,13 @@ public class MemberService {
     }
 
     @Transactional
-    public EditMemberAddressResponse editMemberAddress(Long cityId, Long regionId, Member member) {
-        Assert.notNull(member, "member must be provided.");
-
+    public EditMemberAddressResponse editMemberAddress(Long cityId, Long regionId, Long memberId) {
+        Member foundMember = memberRepository.findById(memberId)
+                .orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
         Address foundAddress = addressRepository.findByCityIdAndRegionId(cityId, regionId)
                 .orElseThrow(() -> new BusinessException(ErrorInfo.ADDRESS_NOT_FOUND));
 
-        member.changeAddress(foundAddress);
+        foundMember.changeAddress(foundAddress);
 
         return addressConverter.convertToEditMemberAddressResponse(foundAddress);
     }

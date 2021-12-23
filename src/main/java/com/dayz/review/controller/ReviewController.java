@@ -7,7 +7,6 @@ import com.dayz.common.dto.CustomPageResponse;
 import com.dayz.member.domain.Member;
 import com.dayz.review.dto.SaveReviewRequest;
 import com.dayz.review.service.ReviewService;
-import java.util.HashMap;
 import java.util.Map;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -26,25 +25,25 @@ public class ReviewController {
 
     private final ReviewService reviewService;
 
-    @GetMapping(value = "/reviews", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/reviews", produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<CustomPageResponse> getReviews(@LoginMember Member member,
-        @RequestBody CustomPageRequest pageRequest) {
+        CustomPageRequest pageRequest) {
         return ApiResponse.ok(reviewService.getAllReviews(pageRequest, member.getId()));
     }
 
-    @GetMapping(value = "/reviews/ateliers/{atelierId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/reviews/ateliers/{atelierId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<CustomPageResponse> getAtelierReviews(
-        @PathVariable("atelierId") Long atelierId, @RequestBody CustomPageRequest pageRequest) {
+        @PathVariable("atelierId") Long atelierId, CustomPageRequest pageRequest) {
         return ApiResponse.ok(reviewService.getAllAtelierReviews(pageRequest, atelierId));
     }
 
-    @GetMapping(value = "/reviews/classes/{classId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/reviews/classes/{classId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<CustomPageResponse> getOneDayClassReviews(
-        @PathVariable("classId") Long classId, @RequestBody CustomPageRequest pageRequest) {
+        @PathVariable("classId") Long classId, CustomPageRequest pageRequest) {
         return ApiResponse.ok(reviewService.getAllOneDayClassReviews(pageRequest, classId));
     }
 
-    @GetMapping(value = "/reviews/score/ateliers/{atelierId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/reviews/score/ateliers/{atelierId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<Map<String,Double>>getAvgScore(@PathVariable("atelierId") Long atelierId) {
         return ApiResponse.ok(Map.of("avgScore",reviewService.avgScore(atelierId)));
     }

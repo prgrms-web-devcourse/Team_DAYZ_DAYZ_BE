@@ -18,15 +18,16 @@ public class MemberConverter {
         Address address = member.getAddress();
         Long atelierId = Objects.isNull(member.getAtelier()) ? null : member.getAtelier().getId();
 
+        // TODO : 리펙토링 필요
         return ReadMemberInfoResponse.of(
                 member.getId(),
                 token,
                 member.getUsername(),
                 member.getProfileImageUrl(),
-                address.getCityId(),
-                address.getCityName(),
-                address.getRegionId(),
-                address.getRegionName(),
+                Objects.nonNull(address) ? address.getCityId() : null,
+                Objects.nonNull(address) ? address.getCityName() : null,
+                Objects.nonNull(address) ? address.getRegionId() : null,
+                Objects.nonNull(address) ? address.getRegionName() : null,
                 member.getPermission().getName(),
                 atelierId
         );

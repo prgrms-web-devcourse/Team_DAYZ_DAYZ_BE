@@ -64,7 +64,7 @@ public class PostService {
         Member foundMember = memberRepository.findById(memberId)
                 .orElseThrow(() -> new BusinessException(ErrorInfo.MEMBER_NOT_FOUND));
 
-        List<Long> ids = foundMember.getFollows().stream()
+        List<Long> ids = followRepository.findFollowsByMemberIdAndUseFlagIsTrue(foundMember.getId()).stream()
                 .map(follow -> follow.getAtelier().getMember().getId())
                 .collect(Collectors.toList());
 

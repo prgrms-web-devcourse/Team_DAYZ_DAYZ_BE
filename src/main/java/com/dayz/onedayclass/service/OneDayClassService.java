@@ -20,7 +20,6 @@ import com.dayz.onedayclass.dto.SearchOneDayClassResponse;
 import com.dayz.onedayclass.dto.ReadPopularOneDayClassesResponse;
 import com.dayz.onedayclass.dto.SaveOneDayClassRequest;
 import com.dayz.review.domain.ReviewRepository;
-import com.querydsl.core.Tuple;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;

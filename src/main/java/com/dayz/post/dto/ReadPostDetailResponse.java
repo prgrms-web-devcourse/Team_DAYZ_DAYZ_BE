@@ -23,7 +23,7 @@ public class ReadPostDetailResponse {
 
     private Long oneDayClassId;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDateTime createdAt;
 
     public static ReadPostDetailResponse of(Long postId,

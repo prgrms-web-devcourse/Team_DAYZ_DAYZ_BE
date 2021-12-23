@@ -35,19 +35,19 @@ public class ReservationController {
             reservationService.saveReservation(saveReservationRequest, member)));
     }
 
-    @GetMapping(value = "/reservations", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/reservations", produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<CustomPageResponse> getMyReservations(@LoginMember Member member,
-        @RequestBody CustomPageRequest pageRequest) {
+        CustomPageRequest pageRequest) {
         CustomPageResponse<ReadAllMyReservationResponse> myReservation = reservationService.getMyReservation(
-            pageRequest, member.getId());
+                pageRequest, member.getId());
         return ApiResponse.ok(myReservation);
     }
 
-    @GetMapping(value = "/reservations/ateliers/{atelierId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/reservations/ateliers/{atelierId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiResponse<CustomPageResponse> getAtelierReservations(
-        @PathVariable("atelierId") Long atelierId, @RequestBody CustomPageRequest pageRequest) {
+        @PathVariable("atelierId") Long atelierId, CustomPageRequest pageRequest) {
         CustomPageResponse<ReadAllAtelierReservationResponse> myReservation = reservationService.getAtelierReservation(
-            pageRequest, atelierId);
+                pageRequest, atelierId);
         return ApiResponse.ok(myReservation);
     }
 
