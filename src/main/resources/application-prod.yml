@@ -69,3 +69,4 @@ jwt:
   expiry-seconds: 60000
 logging.level:
   org.hibernate.SQL: debug
+  com.amazonaws.util.EC2MetadataUtils: error
