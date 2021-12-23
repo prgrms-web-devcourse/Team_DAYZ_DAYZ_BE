@@ -23,7 +23,8 @@ echo "> DEPLOY_JAR에 실행 권한 추가 (DEPLOY_JAR 이름: $DEPLOY_JAR)"    
 chmod 755 $DEPLOY_JAR
 
 echo "> 환경 변수 적용"
-source $HOME/app/env
+export $(cat /home/ubuntu/app/.env | xargs)
+source $HOME/app/.env
 
 echo "> DEPLOY_JAR 배포 및 실행"    >> /home/ubuntu/app/deploy.log
 nohup java -jar -Dspring.profiles.active=prod $DEPLOY_JAR >> /home/ubuntu/app/deploy.log 2>/home/ubuntu/app/deploy_err.log &
