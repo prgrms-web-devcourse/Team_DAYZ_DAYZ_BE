@@ -48,7 +48,7 @@ DAYZ를 통해 원하는 원데이 클래스를 한눈에 조회하고 예약하
 
 ## 🗄 ERD
 ---
-<img src="https://user-images.githubusercontent.com/81351244/146935364-ccbe5022-08c9-4608-b769-e150cd7bb01d.png">
+<img src="https://user-images.githubusercontent.com/78334008/147358723-3561d557-4e68-4d4c-a870-19c368baf0c2.png">
 
 </br>
 </br>
