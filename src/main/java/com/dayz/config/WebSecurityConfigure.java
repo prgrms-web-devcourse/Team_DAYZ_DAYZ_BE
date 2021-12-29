@@ -23,6 +23,7 @@ import org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequ
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.context.SecurityContextPersistenceFilter;
 import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
@@ -123,11 +124,13 @@ public class WebSecurityConfigure extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
-            .cors()
+//            .cors()
+            .cors().configurationSource(corsConfigurationSource())
             .and()
             .authorizeRequests()
-//            .antMatchers("/api/v1/login").permitAll()
+            .antMatchers("/api/v1/login").permitAll()
 //            .antMatchers("/api/v1/*").hasAnyRole("USER", "ATELIER","ADMIN")
+//            .requestMatchers(CorsUtils::isPreFlightRequest).permitAll() // CORS preflight 요청은 인증처리를 하지 않겠다는 것
             .anyRequest().permitAll()
             .and()
             /**
